@@ -7,3 +7,4 @@ public import GromovFillingArea.ZetaBound
 public import GromovFillingArea.FourierEnergy
 public import GromovFillingArea.Witness
 public import GromovFillingArea.AntipodalRadius
+public import GromovFillingArea.L2Energy
