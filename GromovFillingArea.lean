@@ -1,1 +1,6 @@
-import GromovFillingArea.Basic
+module
+
+public import GromovFillingArea.Basic
+public import GromovFillingArea.Kuratowski
+public import GromovFillingArea.FourierBound
+public import GromovFillingArea.ZetaBound
