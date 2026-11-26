@@ -30,3 +30,5 @@
 {"timestamp": "2026-11-26T19:15:50.692040+00:00", "model": "claude-app", "module": "GromovFillingArea", "file": "GromovFillingArea.lean", "success": true, "has_sorry": false, "compile_ms": 39204.2, "error_tail": ""}
 {"timestamp": "2026-11-26T19:20:57.586564+00:00", "model": "claude-app", "module": "GromovFillingArea.OddLowerBound", "file": "GromovFillingArea/OddLowerBound.lean", "success": true, "has_sorry": false, "compile_ms": 50528.2, "error_tail": ""}
 {"timestamp": "2026-11-26T19:22:11.819885+00:00", "model": "claude-app", "module": "GromovFillingArea", "file": "GromovFillingArea.lean", "success": true, "has_sorry": false, "compile_ms": 67352.5, "error_tail": ""}
+{"timestamp": "2026-11-26T19:26:04.003057+00:00", "model": "claude-app", "module": "GromovFillingArea.FourierDecay", "file": "GromovFillingArea/FourierDecay.lean", "success": true, "has_sorry": false, "compile_ms": 78654.5, "error_tail": ""}
+{"timestamp": "2026-11-26T19:27:09.745323+00:00", "model": "claude-app", "module": "GromovFillingArea", "file": "GromovFillingArea.lean", "success": true, "has_sorry": false, "compile_ms": 47084.8, "error_tail": ""}

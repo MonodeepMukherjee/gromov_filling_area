@@ -16,3 +16,4 @@ public import GromovFillingArea.FourierShift
 public import GromovFillingArea.OddProjection
 public import GromovFillingArea.OddEnergy
 public import GromovFillingArea.OddLowerBound
+public import GromovFillingArea.FourierDecay
