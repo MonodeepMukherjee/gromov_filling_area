@@ -5,3 +5,4 @@ public import GromovFillingArea.Kuratowski
 public import GromovFillingArea.FourierBound
 public import GromovFillingArea.ZetaBound
 public import GromovFillingArea.FourierEnergy
+public import GromovFillingArea.Witness
