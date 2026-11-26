@@ -9,3 +9,4 @@ public import GromovFillingArea.Witness
 public import GromovFillingArea.AntipodalRadius
 public import GromovFillingArea.L2Energy
 public import GromovFillingArea.IntegralBound
+public import GromovFillingArea.ParsevalEnergy
