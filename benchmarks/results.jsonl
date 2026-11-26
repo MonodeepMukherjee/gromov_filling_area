@@ -32,3 +32,5 @@
 {"timestamp": "2026-11-26T19:22:11.819885+00:00", "model": "claude-app", "module": "GromovFillingArea", "file": "GromovFillingArea.lean", "success": true, "has_sorry": false, "compile_ms": 67352.5, "error_tail": ""}
 {"timestamp": "2026-11-26T19:26:04.003057+00:00", "model": "claude-app", "module": "GromovFillingArea.FourierDecay", "file": "GromovFillingArea/FourierDecay.lean", "success": true, "has_sorry": false, "compile_ms": 78654.5, "error_tail": ""}
 {"timestamp": "2026-11-26T19:27:09.745323+00:00", "model": "claude-app", "module": "GromovFillingArea", "file": "GromovFillingArea.lean", "success": true, "has_sorry": false, "compile_ms": 47084.8, "error_tail": ""}
+{"timestamp": "2026-11-26T19:30:14.657760+00:00", "model": "claude-app", "module": "GromovFillingArea.OddDecaySeries", "file": "GromovFillingArea/OddDecaySeries.lean", "success": true, "has_sorry": false, "compile_ms": 56318.8, "error_tail": ""}
+{"timestamp": "2026-11-26T19:31:10.298218+00:00", "model": "claude-app", "module": "GromovFillingArea", "file": "GromovFillingArea.lean", "success": true, "has_sorry": false, "compile_ms": 48001.9, "error_tail": ""}

@@ -17,3 +17,4 @@ public import GromovFillingArea.OddProjection
 public import GromovFillingArea.OddEnergy
 public import GromovFillingArea.OddLowerBound
 public import GromovFillingArea.FourierDecay
+public import GromovFillingArea.OddDecaySeries
