@@ -202,6 +202,92 @@ custom `axiom`.
 
 ---
 
+## Numerical Exploration (Genus 0–2)
+
+`scripts/explore_genus2.py` is a small numerical side experiment that runs next to
+the formal proofs. It builds orientable simplicial triangulations of genus
+`g ∈ {0, 1, 2}` with one boundary cycle of `n_b = 8` vertices. These come from an
+octahedron or from connected sums of 7-vertex tori, with one face punched out, one
+midpoint subdivision, and a boundary collar. Each mesh is checked for `χ = 1 − 2g`,
+coherent orientation, manifold vertex links, and a single boundary cycle.
+
+The metric is given by **intrinsic edge lengths**, a piecewise-flat Riemannian
+metric with no embedding. Boundary edges are fixed at `2π/n_b`, so `∂M` has length
+exactly `2π`. COBYLA (`maxiter=80`, 2 random restarts per phase) minimizes the
+total Heron area subject to:
+
+- strict triangle inequalities `ℓ_a + ℓ_b − ℓ_c ≥ 10⁻³` on every face, and
+- the isometric boundary condition `d(b_i, b_j) ≥ d_{S¹}(b_i, b_j)`, where
+  `d` is computed with `scipy.sparse.csgraph.shortest_path`.
+
+There are two choices of `d`:
+
+- **Phase 1, edge graph:** paths that run only along mesh edges.
+- **Phase 2, intrinsic:** a Steiner graph with 3 points per edge, plus straight
+  segments inside each face unfolded in the plane.
+
+Every result is re-certified with a finer Steiner graph (8 points per edge). That
+graph gives an upper bound on the true geodesic distance, so any violation it
+reports is real.
+
+Results (`benchmarks/genus_search.json`, total runtime ≈ 8 s on an M1):
+
+| Filling | Area | `A / 2π` | Median fatness `2r/R` | Certified violation (k = 8) |
+| :--- | :---: | :---: | :---: | :---: |
+| g = 0, flat Tutte embedding in ℝ² | 2.98 | 0.47 | — | **1.09** |
+| g = 0, edge-graph constraint (best) | 7.98 | 1.27 | 0.003 | **1.84** |
+| g = 0, intrinsic constraint (best) | 26.72 | 4.25 | 0.68 | 0.026 |
+| g = 1, edge-graph constraint (best) | 42.56 | 6.77 | 0.44 | 0.258 |
+| g = 1, intrinsic constraint (best) | 41.72 | 6.64 | 0.44 | 0.031 |
+| g = 2, both phases | — | — | — | no feasible run (≥ 0.74) |
+
+### Why flat fillings fail
+
+A flat disk whose boundary has length `2π` has area about `π`. Here the Tutte
+embedding gives `2.98`, and `π` is the isoperimetric maximum. The disk is too
+small to be an isometric filling, though. Antipodal boundary points are joined by
+a straight chord of length `≈ 2.05`, but the boundary arc between them has length
+`π ≈ 3.14`, so the isometric condition is violated by `≈ 1.09`. To satisfy
+`d ≥ d_{S¹}`, a filling must bulge out of the plane. The round hemisphere does
+this with area exactly `2π ≈ 6.283`, and the conjecture says nothing smaller is
+possible.
+
+### Why the edge-graph constraint is not enough
+
+Under the edge-graph constraint, the optimizer satisfies every constraint with
+**needle triangles**. The median fatness is `0.003`, every face sits on its
+triangle-inequality margin, and the area is `7.98`. The edge-graph distance never
+lets a path cut across a face, so it overestimates the true intrinsic distance.
+The certified check shows that real geodesics shortcut through the collapsed
+faces, with a violation of `1.84`. This relaxation cannot tell you anything about
+the true filling area.
+
+### What this run does and does not show
+
+- With the Steiner (intrinsic) constraint, the needle exploit goes away. Faces
+  stay well-shaped (fatness `0.44–0.68`), and the certified violations fall to
+  `≈ 0.03`. That is small but not zero, so those runs are close to feasible, not
+  exactly feasible.
+- **The areas have not converged.** The intrinsic optima found (`26.7` for g = 0,
+  `41.7` for g = 1) are far above `2π`. They are limited by the evaluation budget,
+  not by geometry. COBYLA needs `n + 1` evaluations just to build its starting
+  simplex, and with 59 / 95 / 167 free edges, `maxiter=80` leaves almost no
+  budget for real optimization steps. For g = 1 and g = 2, SciPy raised the
+  budget to the minimum of `n + 2` evaluations, so those runs are close to their
+  random starting points. No genus-2 run reached feasibility.
+- So this run does **not** show the areas converging toward `2π`. It is a
+  working, fast pipeline: valid meshes, an exact Heron objective, and a certified
+  intrinsic constraint. Getting closer to `2π` would take a larger budget,
+  gradient-based solvers, and finer meshes. Theory gives the lower bound for
+  genus 0 (Pu/Ivanov) and genus 1 (Bangert–Croke–Ivanov–Katz).
+
+```bash
+.venv/bin/python3 scripts/explore_genus2.py            # ≈ 8 s, writes benchmarks/genus_search.json
+.venv/bin/python3 scripts/explore_genus2.py --maxiter 2000 --restarts 4 --n-boundary 12
+```
+
+---
+
 ## Reproducing
 
 ```bash
@@ -231,7 +317,9 @@ CLAUDE.md              # agent protocol (compiler-in-the-loop rules)
 scripts/
   verify_and_log.py    # lake-build oracle + JSONL telemetry
   generate_report.py   # benchmark table generator
+  explore_genus2.py    # genus 0–2 discrete filling-area search (numerical)
 benchmarks/results.jsonl
+benchmarks/genus_search.json
 .github/workflows/lean_action_ci.yml
 ```
 
