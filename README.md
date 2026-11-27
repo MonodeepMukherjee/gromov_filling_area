@@ -792,6 +792,105 @@ the conjecture says nothing smaller is possible.
   the start. Getting closer to the infimum would need gradient-based constrained
   optimization, finer meshes, and more restarts. The larger areas at higher
   genus come from these meshes and this optimizer, not from any proven bound.
+  The gradient-based run below addresses the optimizer part of this.
+
+### Gradient-Based Extremal Metric Discovery (Genus 0–2)
+
+`scripts/discover_extremal_metrics.py` reruns the same search on the same meshes,
+replacing Powell / Nelder-Mead with **L-BFGS-B using exact analytical
+(sub)gradients** (`jac=True`). The optimizer never uses finite differences.
+
+- **Heron area:** `∂A/∂ℓ_a = ℓ_a (ℓ_b² + ℓ_c² − ℓ_a²) / (8K)`, vectorized over faces.
+- **Triangle log barrier** on `ℓ_a + ℓ_b − ℓ_c − 10⁻³`: `∂B/∂s = −10⁻² / s`. Below a slack
+  of `10⁻³` it continues linearly, with a stiff `10⁸ · out²` quadratic. Truly invalid
+  triangles return `10¹²`, so line searches back off. This is needed because Heron area
+  has slope `∝ 1/√slack` as a face collapses. With the softer `10⁴` extension of
+  `explore_genus2.py`, jittered restarts stepped into degenerate faces and stalled.
+- **Boundary cone angles**, from the law of cosines: `∂α/∂a = a / 2K`,
+  `∂α/∂b = −(b − c cos α) / 2K`. This makes `w Σ max(0, π + 10⁻³ − θ(b_i))²` smooth.
+  The `10⁻³` margin matches `explore_genus2.py`.
+- **Steiner distances (`k = 5`).** `dijkstra(..., return_predecessors=True)` gives the
+  shortest-path tree. For every violated pair, the script walks the path back, and each
+  segment adds `2w (d_5 − d_{S¹}) · ∂w_seg/∂ℓ` to the three edges of its face. Here
+  `w_seg` is the segment's length in the face, unfolded in the plane.
+  Where the shortest path is unique, this is the exact gradient.
+
+`--check-grad` compares the full objective's gradient against central differences in
+random directions, with every penalty active. The maximum relative error is
+`1.6·10⁻⁸` (g = 0), `4.0·10⁻⁹` (g = 1) and `7.8·10⁻⁸` (g = 2).
+
+**Schedule.** Each of the 12 parallel jobs (3 genera × 4 restarts, same seeds and
+hemisphere-profile starts as above) runs three penalty stages, `w = 10², 10³, 10⁴`. Each
+stage gets 3 000 L-BFGS-B iterations. Kinks where the shortest path switches make
+L-BFGS-B stop early, so within a stage it is restarted with fresh memory until a cycle
+gains less than `10⁻⁹`. **Feasibility polishing** reuses the rescale/blend bisection and
+requires a `k = 16` violation `≤ 10⁻¹⁰`.
+
+```bash
+.venv/bin/python3 scripts/discover_extremal_metrics.py --n-boundary 16 --restarts 4
+```
+
+Results are in `benchmarks/extremal_discovery.json`. The run took 11.5 min wall time.
+**All 12 restarts are strictly feasible:** `k = 16` violation `≤ 1.0·10⁻¹⁰`, exact
+corner-cut lower bound `0.0`, every triangle slack `≥ 10⁻³`, and every boundary angle
+`≥ π`.
+
+| Filling | Best certified `A` | `A / 2π` | Restart | Powell/NM best (above) | Min boundary angle | Median fatness |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: |
+| **g = 0** | **6.361** | **1.012** | 0 | 7.704 | 1.008 π | 0.84 |
+| **g = 1** | **6.658** | **1.060** | 0 | 11.997 | 1.013 π | 0.78 |
+| **g = 2** | **7.009** | **1.116** | 0 | 16.009 | 1.015 π | 0.67 |
+
+Every restart, with the area after each penalty stage and after polishing:
+
+| g | r | Start | `w = 10²` | `w = 10³` | `w = 10⁴` | Final `A` | `A / 2π` | Polishing |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
+| 0 | 0 | 11.52 | 6.269 | 6.268 | 6.268 | **6.361** | **1.012** | blend `t = 0.011` |
+| 0 | 1 | 12.97 | 6.232 | 6.238 | 6.235 | 6.445 | 1.026 | blend `t = 0.021` |
+| 0 | 2 | 12.92 | 6.195 | 6.198 | 6.197 | 6.595 | 1.050 | blend `t = 0.036` |
+| 0 | 3 | 12.61 | 6.220 | 6.224 | 6.224 | 6.393 | 1.018 | scale 1.014 |
+| 1 | 0 | 12.68 | 6.470 | 6.470 | 6.470 | **6.658** | **1.060** | blend `t = 0.018` |
+| 1 | 1 | 14.46 | 6.416 | 6.409 | 6.403 | 6.824 | 1.086 | blend `t = 0.034` |
+| 1 | 2 | 12.24 | 6.409 | 6.394 | 6.394 | 6.827 | 1.087 | scale 1.034 |
+| 1 | 3 | 12.51 | 6.430 | 6.396 | 6.386 | 6.772 | 1.078 | blend `t = 0.035` |
+| 2 | 0 | 16.12 | 6.661 | 6.655 | 6.657 | **7.009** | **1.116** | scale 1.026 |
+| 2 | 1 | 16.51 | 6.457 | 6.408 | 6.407 | 7.567 | 1.204 | blend `t = 0.060` |
+| 2 | 2 | 23.27 | 6.579 | 6.487 | 6.492 | 7.616 | 1.212 | blend `t = 0.040` |
+| 2 | 3 | 16.78 | 6.561 | 6.552 | 6.552 | 7.330 | 1.167 | scale 1.059 |
+
+**Structure of the extremal metrics.** The table splits each certified best metric into
+two regions:
+
+- **Handle region:** the subdivided punctured closed surface (a disk for g = 0).
+- **Collar:** the fan collar plus the quad-strip ring.
+
+| g | Handle area | Collar area | Handle / collar area | Handle share of `A` | Mean edge length handle / collar | Mean face area handle / collar |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| 0 | 1.663 | 4.697 | 0.354 | 26 % | 1.158 | 1.088 |
+| 1 | 2.203 | 4.454 | 0.495 | 33 % | 1.134 | 0.818 |
+| 2 | 3.323 | 3.687 | 0.901 | 47 % | 1.116 | 0.775 |
+
+From g = 0 to g = 2, the handle region's area roughly doubles while the collar area
+shrinks. The total grows by only `0.65`, because the handles absorb area the collar no
+longer needs. Handle edges stay about 12–16 % longer than collar edges, yet handle faces
+get relatively smaller (face-area ratio `1.09 → 0.78`). So the extra genus is packed
+into many small, slightly elongated faces, not a few large ones. These ratios describe
+these meshes and this optimizer, not a property of true minimizers.
+
+**What this shows and does not show.**
+
+- Exact gradients cut the best certified areas by 17 %, 45 % and 56 % compared with the
+  derivative-free search. The best genus-0 area, `1.012 · 2π`, is within 1.3 % of the
+  hemisphere.
+- Every certified area is still `≥ 2π`. The penalized optima *before* polishing sit
+  slightly below `2π` (`6.20–6.27` for g = 0), but those points violate the `k = 5`
+  distances by `2–4·10⁻⁵`. Polishing to `k = 16` feasibility adds 1.5–18 % area.
+  The fact that feasibility costs area is consistent with the conjecture.
+- **Not converged.** Most stages hit the 3 000-iteration cap with the objective still
+  creeping down. Final gradient sup-norms are `0.4–2.0`, not small, which is expected
+  for a nonsmooth max-of-paths objective. Restart spread is `6.36–6.60` (g = 0) and `7.01–7.62` (g = 2).
+- As above, a Steiner graph only upper-bounds intrinsic distance, so the certification
+  is numerical evidence, not a proof.
 
 ---
 
@@ -859,8 +958,10 @@ scripts/
   verify_and_log.py    # lake-build oracle + JSONL telemetry
   generate_report.py   # benchmark table generator
   explore_genus2.py    # genus 0–2 discrete filling-area search (numerical)
+  discover_extremal_metrics.py # L-BFGS-B with exact (sub)gradients, genus 0–2
 benchmarks/results.jsonl
 benchmarks/genus_search.json
+benchmarks/extremal_discovery.json
 .github/workflows/lean_action_ci.yml
 ```
 
