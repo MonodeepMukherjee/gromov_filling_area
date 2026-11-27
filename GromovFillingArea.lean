@@ -25,3 +25,4 @@ public import GromovFillingArea.AreaContraction
 public import GromovFillingArea.FourierProjection
 public import GromovFillingArea.BoundaryCircleImage
 public import GromovFillingArea.BoundaryRadius
+public import GromovFillingArea.FundamentalDiskBound
