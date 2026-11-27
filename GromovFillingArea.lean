@@ -41,3 +41,4 @@ public import GromovFillingArea.WeightedRadialBound
 public import GromovFillingArea.ConformalBoundaryLength
 public import GromovFillingArea.SharpFirstMode
 public import GromovFillingArea.QuarterCircleSquare
+public import GromovFillingArea.DiamondGeometry
