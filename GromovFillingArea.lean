@@ -18,3 +18,4 @@ public import GromovFillingArea.OddEnergy
 public import GromovFillingArea.OddLowerBound
 public import GromovFillingArea.FourierDecay
 public import GromovFillingArea.OddDecaySeries
+public import GromovFillingArea.WeightedZetaBound
