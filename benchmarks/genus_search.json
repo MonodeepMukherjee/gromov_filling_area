@@ -1,12 +1,13 @@
 {
-  "description": "Discrete piecewise-flat fillings of S^1 (length 2*pi): minimize Heron area over intrinsic edge lengths subject to strict triangle inequalities and d(b_i, b_j) >= d_S1(b_i, b_j).",
+  "description": "Discrete piecewise-flat fillings of S^1 (length 2*pi): minimize Heron area over intrinsic edge lengths subject to strict triangle inequalities and d(b_i, b_j) >= d_S1(b_i, b_j). Feasible hemisphere-profile start, Powell on a penalized objective, radial polish to a certified (k = 8) violation <= tol.",
   "config": {
-    "restarts": 2,
-    "maxiter": 80,
+    "maxiter": 400,
+    "maxfev": 4000,
+    "tol": 0.0001,
     "n_boundary": 8,
     "steiner_k": 3,
     "certify_k": 8,
-    "seed": 42,
+    "audit_k": 16,
     "genera": [
       0,
       1,
@@ -14,7 +15,9 @@
     ],
     "out": "benchmarks/genus_search.json",
     "eps_triangle": 0.001,
-    "eps_length": 0.001
+    "eps_length": 0.001,
+    "penalty": 10000.0,
+    "barrier": 0.01
   },
   "reference": {
     "pi": 3.141592653589793,
@@ -42,117 +45,51 @@
         "n_boundary": 8
       },
       "free_edges": 59,
-      "phase1_edge_graph": {
-        "runs": [
-          {
-            "graph_k": 0,
-            "method": "COBYLA",
-            "maxiter": 80,
-            "message": "Return from COBYLA because the objective function has been evaluated MAXFUN times.",
-            "nfev": 80,
-            "seconds": 1.34,
-            "area": 8.326491181693449,
-            "area_over_2pi": 1.3252022301775892,
-            "min_triangle_slack": 0.000999999999995449,
-            "median_face_fatness": 0.0023155797830643945,
-            "max_violation_edge_graph": 3.3306690738754696e-16,
-            "max_violation_steiner_k3": 1.4689589665148028,
-            "max_violation_intrinsic_k8": 1.7309676249128494,
-            "restart": 0,
-            "feasible": true
-          },
-          {
-            "graph_k": 0,
-            "method": "COBYLA",
-            "maxiter": 80,
-            "message": "Return from COBYLA because the objective function has been evaluated MAXFUN times.",
-            "nfev": 80,
-            "seconds": 1.76,
-            "area": 7.976673071725361,
-            "area_over_2pi": 1.2695269487931038,
-            "min_triangle_slack": 0.0009999999999963372,
-            "median_face_fatness": 0.002506502132297113,
-            "max_violation_edge_graph": 8.881784197001252e-16,
-            "max_violation_steiner_k3": 1.3942114310553373,
-            "max_violation_intrinsic_k8": 1.8386104237496192,
-            "restart": 1,
-            "feasible": true
-          }
-        ],
-        "best": {
-          "graph_k": 0,
-          "method": "COBYLA",
-          "maxiter": 80,
-          "message": "Return from COBYLA because the objective function has been evaluated MAXFUN times.",
-          "nfev": 80,
-          "seconds": 1.76,
-          "area": 7.976673071725361,
-          "area_over_2pi": 1.2695269487931038,
-          "min_triangle_slack": 0.0009999999999963372,
-          "median_face_fatness": 0.002506502132297113,
-          "max_violation_edge_graph": 8.881784197001252e-16,
-          "max_violation_steiner_k3": 1.3942114310553373,
-          "max_violation_intrinsic_k8": 1.8386104237496192,
-          "restart": 1,
-          "feasible": true
-        },
-        "feasible_constraint": "max_violation_edge_graph"
+      "feasible_start": {
+        "hemisphere_scale_c": 3.0517578125,
+        "seconds": 0.03,
+        "area": 62.952364046346666,
+        "area_over_2pi": 10.019179917296581,
+        "min_triangle_slack": 0.7853981633974483,
+        "median_face_fatness": 0.9741491719322118,
+        "max_violation_edge_graph": 2.6645352591003757e-15,
+        "max_violation_steiner_k3": 3.1086244689504383e-15,
+        "max_violation_intrinsic_k8": 3.552713678800501e-15,
+        "max_violation_audit_k16": 0.015603190400436784,
+        "violation_lower_bound_corner_cut": 0.01749338165114933,
+        "min_boundary_angle_over_pi": 0.9049010019036272
       },
-      "phase2_intrinsic": {
-        "runs": [
-          {
-            "graph_k": 3,
-            "method": "COBYLA",
-            "maxiter": 80,
-            "message": "Return from COBYLA because the objective function has been evaluated MAXFUN times.",
-            "nfev": 80,
-            "seconds": 0.54,
-            "area": 32.34957579398256,
-            "area_over_2pi": 5.148594894538249,
-            "min_triangle_slack": 0.0009999999999976694,
-            "median_face_fatness": 0.5098128848073874,
-            "max_violation_edge_graph": 2.220446049250313e-16,
-            "max_violation_steiner_k3": 2.220446049250313e-16,
-            "max_violation_intrinsic_k8": 0.040674427055905404,
-            "restart": 0,
-            "feasible": true
-          },
-          {
-            "graph_k": 3,
-            "method": "COBYLA",
-            "maxiter": 80,
-            "message": "Return from COBYLA because the objective function has been evaluated MAXFUN times.",
-            "nfev": 80,
-            "seconds": 1.37,
-            "area": 26.721570472936577,
-            "area_over_2pi": 4.252870027946292,
-            "min_triangle_slack": 0.0009999999999990017,
-            "median_face_fatness": 0.6758052297228083,
-            "max_violation_edge_graph": 2.220446049250313e-16,
-            "max_violation_steiner_k3": 8.881784197001252e-16,
-            "max_violation_intrinsic_k8": 0.025529442854753892,
-            "restart": 1,
-            "feasible": true
-          }
-        ],
-        "best": {
-          "graph_k": 3,
-          "method": "COBYLA",
-          "maxiter": 80,
-          "message": "Return from COBYLA because the objective function has been evaluated MAXFUN times.",
-          "nfev": 80,
-          "seconds": 1.37,
-          "area": 26.721570472936577,
-          "area_over_2pi": 4.252870027946292,
-          "min_triangle_slack": 0.0009999999999990017,
-          "median_face_fatness": 0.6758052297228083,
-          "max_violation_edge_graph": 2.220446049250313e-16,
-          "max_violation_steiner_k3": 8.881784197001252e-16,
-          "max_violation_intrinsic_k8": 0.025529442854753892,
-          "restart": 1,
-          "feasible": true
-        },
-        "feasible_constraint": "max_violation_steiner_k3"
+      "powell": {
+        "method": "Powell",
+        "maxiter": 400,
+        "maxfev": 4000,
+        "message": "Maximum number of function evaluations has been exceeded.",
+        "nit": 3,
+        "nfev": 4000,
+        "seconds": 4.12,
+        "area": 12.673094029604716,
+        "area_over_2pi": 2.016985559079977,
+        "min_triangle_slack": -3.59388763992996e-05,
+        "median_face_fatness": 0.0129502896193953,
+        "max_violation_edge_graph": 1.7763568394002505e-15,
+        "max_violation_steiner_k3": 7.471446086571021e-05,
+        "max_violation_intrinsic_k8": 0.24375687990034223
+      },
+      "certified": {
+        "mode": "blend_to_start",
+        "t": 0.299079948104918,
+        "seconds": 0.13,
+        "area": 34.92617062605669,
+        "area_over_2pi": 5.558672698407879,
+        "min_triangle_slack": 0.23627403489940457,
+        "median_face_fatness": 0.5446691672881085,
+        "max_violation_edge_graph": 1.7763568394002505e-15,
+        "max_violation_steiner_k3": 1.7763568394002505e-15,
+        "max_violation_intrinsic_k8": 9.999981207453601e-05,
+        "max_violation_audit_k16": 0.028607848727338236,
+        "violation_lower_bound_corner_cut": 0.025226366128023203,
+        "min_boundary_angle_over_pi": 0.8857528263471054,
+        "k8_certified": true
       }
     },
     {
@@ -165,117 +102,51 @@
         "n_boundary": 8
       },
       "free_edges": 95,
-      "phase1_edge_graph": {
-        "runs": [
-          {
-            "graph_k": 0,
-            "method": "COBYLA",
-            "maxiter": 80,
-            "message": "Return from COBYLA because the objective function has been evaluated MAXFUN times.",
-            "nfev": 97,
-            "seconds": 0.08,
-            "area": 60.65661587004213,
-            "area_over_2pi": 9.653800246943511,
-            "min_triangle_slack": 0.0009999999999998899,
-            "median_face_fatness": 0.9821714800503274,
-            "max_violation_edge_graph": 4.440892098500626e-16,
-            "max_violation_steiner_k3": 0.12604109528195595,
-            "max_violation_intrinsic_k8": 0.18405455110654634,
-            "restart": 0,
-            "feasible": true
-          },
-          {
-            "graph_k": 0,
-            "method": "COBYLA",
-            "maxiter": 80,
-            "message": "Return from COBYLA because the objective function has been evaluated MAXFUN times.",
-            "nfev": 97,
-            "seconds": 0.11,
-            "area": 42.556406596013716,
-            "area_over_2pi": 6.773062469984122,
-            "min_triangle_slack": 0.0009999999999992237,
-            "median_face_fatness": 0.43745988789952317,
-            "max_violation_edge_graph": 1.1102230246251565e-16,
-            "max_violation_steiner_k3": 0.2652749506644012,
-            "max_violation_intrinsic_k8": 0.2583896475682401,
-            "restart": 1,
-            "feasible": true
-          }
-        ],
-        "best": {
-          "graph_k": 0,
-          "method": "COBYLA",
-          "maxiter": 80,
-          "message": "Return from COBYLA because the objective function has been evaluated MAXFUN times.",
-          "nfev": 97,
-          "seconds": 0.11,
-          "area": 42.556406596013716,
-          "area_over_2pi": 6.773062469984122,
-          "min_triangle_slack": 0.0009999999999992237,
-          "median_face_fatness": 0.43745988789952317,
-          "max_violation_edge_graph": 1.1102230246251565e-16,
-          "max_violation_steiner_k3": 0.2652749506644012,
-          "max_violation_intrinsic_k8": 0.2583896475682401,
-          "restart": 1,
-          "feasible": true
-        },
-        "feasible_constraint": "max_violation_edge_graph"
+      "feasible_start": {
+        "hemisphere_scale_c": 3.0517578125,
+        "seconds": 0.04,
+        "area": 91.51923722530496,
+        "area_over_2pi": 14.56573899240708,
+        "min_triangle_slack": 0.7853981633974483,
+        "median_face_fatness": 0.9264532775403961,
+        "max_violation_edge_graph": 2.6645352591003757e-15,
+        "max_violation_steiner_k3": 3.1086244689504383e-15,
+        "max_violation_intrinsic_k8": 3.552713678800501e-15,
+        "max_violation_audit_k16": 0.015603190400436784,
+        "violation_lower_bound_corner_cut": 0.01749338165114933,
+        "min_boundary_angle_over_pi": 0.9049010019036272
       },
-      "phase2_intrinsic": {
-        "runs": [
-          {
-            "graph_k": 3,
-            "method": "COBYLA",
-            "maxiter": 80,
-            "message": "Did not converge to a solution satisfying the constraints. See `maxcv` for the magnitude of the violation.",
-            "nfev": 97,
-            "seconds": 0.2,
-            "area": 61.115766825621606,
-            "area_over_2pi": 9.726876391149352,
-            "min_triangle_slack": 0.46229958026729445,
-            "median_face_fatness": 0.9821714800503276,
-            "max_violation_edge_graph": 4.440892098500626e-16,
-            "max_violation_steiner_k3": 0.030185575182495317,
-            "max_violation_intrinsic_k8": 0.06505216573862072,
-            "restart": 0,
-            "feasible": false
-          },
-          {
-            "graph_k": 3,
-            "method": "COBYLA",
-            "maxiter": 80,
-            "message": "Return from COBYLA because the objective function has been evaluated MAXFUN times.",
-            "nfev": 97,
-            "seconds": 0.27,
-            "area": 41.72275914559126,
-            "area_over_2pi": 6.640383357453433,
-            "min_triangle_slack": 0.0009999999999998899,
-            "median_face_fatness": 0.4356972737058712,
-            "max_violation_edge_graph": 1.1102230246251565e-16,
-            "max_violation_steiner_k3": 8.881784197001252e-16,
-            "max_violation_intrinsic_k8": 0.031143484398003185,
-            "restart": 1,
-            "feasible": true
-          }
-        ],
-        "best": {
-          "graph_k": 3,
-          "method": "COBYLA",
-          "maxiter": 80,
-          "message": "Return from COBYLA because the objective function has been evaluated MAXFUN times.",
-          "nfev": 97,
-          "seconds": 0.27,
-          "area": 41.72275914559126,
-          "area_over_2pi": 6.640383357453433,
-          "min_triangle_slack": 0.0009999999999998899,
-          "median_face_fatness": 0.4356972737058712,
-          "max_violation_edge_graph": 1.1102230246251565e-16,
-          "max_violation_steiner_k3": 8.881784197001252e-16,
-          "max_violation_intrinsic_k8": 0.031143484398003185,
-          "restart": 1,
-          "feasible": true
-        },
-        "feasible_constraint": "max_violation_steiner_k3"
+      "powell": {
+        "method": "Powell",
+        "maxiter": 400,
+        "maxfev": 4000,
+        "message": "Maximum number of function evaluations has been exceeded.",
+        "nit": 2,
+        "nfev": 4000,
+        "seconds": 5.78,
+        "area": 14.333985667037972,
+        "area_over_2pi": 2.2813246731174717,
+        "min_triangle_slack": -2.6530881127029282e-05,
+        "median_face_fatness": 0.01794355443213878,
+        "max_violation_edge_graph": 1.7763568394002505e-15,
+        "max_violation_steiner_k3": 9.788276945954522e-05,
+        "max_violation_intrinsic_k8": 0.43038562318280693
+      },
+      "certified": {
+        "mode": "blend_to_start",
+        "t": 0.7530913790687919,
+        "seconds": 0.19,
+        "area": 77.59761887188866,
+        "area_over_2pi": 12.350044615622023,
+        "min_triangle_slack": 0.6109446704959454,
+        "median_face_fatness": 0.9108371913816633,
+        "max_violation_edge_graph": 3.3306690738754696e-16,
+        "max_violation_steiner_k3": 1.3322676295501878e-15,
+        "max_violation_intrinsic_k8": 9.999997756393597e-05,
+        "max_violation_audit_k16": 0.027875224627067485,
+        "violation_lower_bound_corner_cut": 0.02796586021308367,
+        "min_boundary_angle_over_pi": 0.8796916635979293,
+        "k8_certified": true
       }
     },
     {
@@ -288,87 +159,53 @@
         "n_boundary": 8
       },
       "free_edges": 167,
-      "phase1_edge_graph": {
-        "runs": [
-          {
-            "graph_k": 0,
-            "method": "COBYLA",
-            "maxiter": 80,
-            "message": "Did not converge to a solution satisfying the constraints. See `maxcv` for the magnitude of the violation.",
-            "nfev": 169,
-            "seconds": 0.2,
-            "area": 26.331915319712518,
-            "area_over_2pi": 4.190854484209453,
-            "min_triangle_slack": 0.0009999999999998899,
-            "median_face_fatness": 0.9588538068841623,
-            "max_violation_edge_graph": 0.2527272885385119,
-            "max_violation_steiner_k3": 0.715736571742096,
-            "max_violation_intrinsic_k8": 0.7366247751053279,
-            "restart": 0,
-            "feasible": false
-          },
-          {
-            "graph_k": 0,
-            "method": "COBYLA",
-            "maxiter": 80,
-            "message": "Did not converge to a solution satisfying the constraints. See `maxcv` for the magnitude of the violation.",
-            "nfev": 169,
-            "seconds": 0.48,
-            "area": 1.815496433047251,
-            "area_over_2pi": 0.2889452314851742,
-            "min_triangle_slack": -0.16678822448841935,
-            "median_face_fatness": 0.0,
-            "max_violation_edge_graph": 0.09497244714475084,
-            "max_violation_steiner_k3": 2.0233077680304055,
-            "max_violation_intrinsic_k8": 2.391345009381787,
-            "restart": 1,
-            "feasible": false
-          }
-        ],
-        "best": null,
-        "feasible_constraint": "max_violation_edge_graph"
+      "feasible_start": {
+        "hemisphere_scale_c": 3.0517578125,
+        "seconds": 0.06,
+        "area": 171.2447050164434,
+        "area_over_2pi": 27.254441281680453,
+        "min_triangle_slack": 0.7406658320333351,
+        "median_face_fatness": 0.9705323631895965,
+        "max_violation_edge_graph": 4.440892098500626e-16,
+        "max_violation_steiner_k3": 1.3322676295501878e-15,
+        "max_violation_intrinsic_k8": 2.220446049250313e-15,
+        "max_violation_audit_k16": 0.017557797573418465,
+        "violation_lower_bound_corner_cut": 0.018677619248489208,
+        "min_boundary_angle_over_pi": 0.901728583641915
       },
-      "phase2_intrinsic": {
-        "runs": [
-          {
-            "graph_k": 3,
-            "method": "COBYLA",
-            "maxiter": 80,
-            "message": "Did not converge to a solution satisfying the constraints. See `maxcv` for the magnitude of the violation.",
-            "nfev": 169,
-            "seconds": 0.62,
-            "area": 19.04980586647909,
-            "area_over_2pi": 3.0318707685911335,
-            "min_triangle_slack": -0.39001265321629563,
-            "median_face_fatness": 0.9623577504871867,
-            "max_violation_edge_graph": 0.3344807659443325,
-            "max_violation_steiner_k3": 0.6180878988680911,
-            "max_violation_intrinsic_k8": 0.8615498866880111,
-            "restart": 0,
-            "feasible": false
-          },
-          {
-            "graph_k": 3,
-            "method": "COBYLA",
-            "maxiter": 80,
-            "message": "Did not converge to a solution satisfying the constraints. See `maxcv` for the magnitude of the violation.",
-            "nfev": 169,
-            "seconds": 0.61,
-            "area": 12.665774526889884,
-            "area_over_2pi": 2.015820624041937,
-            "min_triangle_slack": -0.508535914536718,
-            "median_face_fatness": 0.9505783879731868,
-            "max_violation_edge_graph": 0.8651050183667577,
-            "max_violation_steiner_k3": 0.9315667241501058,
-            "max_violation_intrinsic_k8": 0.9350801116683733,
-            "restart": 1,
-            "feasible": false
-          }
-        ],
-        "best": null,
-        "feasible_constraint": "max_violation_steiner_k3"
+      "powell": {
+        "method": "Powell",
+        "maxiter": 400,
+        "maxfev": 4000,
+        "message": "Maximum number of function evaluations has been exceeded.",
+        "nit": 1,
+        "nfev": 4000,
+        "seconds": 9.22,
+        "area": 22.77282238056792,
+        "area_over_2pi": 3.624407250021128,
+        "min_triangle_slack": 0.0012297922530484229,
+        "median_face_fatness": 0.012328724773934542,
+        "max_violation_edge_graph": 9.992007221626409e-16,
+        "max_violation_steiner_k3": 0.00013162869937755062,
+        "max_violation_intrinsic_k8": 0.15772641537540144
+      },
+      "certified": {
+        "mode": "blend_to_start",
+        "t": 0.40245590824633837,
+        "seconds": 0.36,
+        "area": 95.88286667213528,
+        "area_over_2pi": 15.260232188691479,
+        "min_triangle_slack": 0.299167180280022,
+        "median_face_fatness": 0.7456076519653806,
+        "max_violation_edge_graph": 2.220446049250313e-15,
+        "max_violation_steiner_k3": 2.6645352591003757e-15,
+        "max_violation_intrinsic_k8": 9.99997900890115e-05,
+        "max_violation_audit_k16": 0.0257987281110843,
+        "violation_lower_bound_corner_cut": 0.01866242504232618,
+        "min_boundary_angle_over_pi": 0.9017686431044061,
+        "k8_certified": true
       }
     }
   ],
-  "total_seconds": 7.87
+  "total_seconds": 20.89
 }

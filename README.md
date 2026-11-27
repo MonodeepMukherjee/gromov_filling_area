@@ -650,33 +650,50 @@ coherent orientation, manifold vertex links, and a single boundary cycle.
 
 The metric is given by **intrinsic edge lengths**, a piecewise-flat Riemannian
 metric with no embedding. Boundary edges are fixed at `2π/n_b`, so `∂M` has length
-exactly `2π`. COBYLA (`maxiter=80`, 2 random restarts per phase) minimizes the
-total Heron area subject to:
+exactly `2π`. The goal is to minimize total Heron area subject to:
 
 - strict triangle inequalities `ℓ_a + ℓ_b − ℓ_c ≥ 10⁻³` on every face, and
-- the isometric boundary condition `d(b_i, b_j) ≥ d_{S¹}(b_i, b_j)`, where
-  `d` is computed with `scipy.sparse.csgraph.shortest_path`.
+- the isometric boundary condition `d(b_i, b_j) ≥ d_{S¹}(b_i, b_j)`, where `d` is
+  a shortest path (`scipy.sparse.csgraph.shortest_path`) on a **Steiner graph**:
+  `k` points per edge, plus straight segments inside each face unfolded in the
+  plane.
 
-There are two choices of `d`:
+The solver is deterministic and has three stages:
 
-- **Phase 1, edge graph:** paths that run only along mesh edges.
-- **Phase 2, intrinsic:** a Steiner graph with 3 points per edge, plus straight
-  segments inside each face unfolded in the plane.
+1. **Feasible start.** Each vertex gets a polar angle that decreases with its
+   combinatorial depth, from `π/2` on the boundary toward the pole. An edge gets
+   the length of the matching small step on the unit sphere (`ℓ_init`). This
+   reproduces the boundary edges exactly and makes the two spokes of every
+   boundary face equal. The interior lengths `c · ℓ_init` are then scaled up
+   (`c = 3.05`) until the `k = 3` and `k = 8` violations are `0` up to roundoff
+   (`≤ 4·10⁻¹⁵`).
+2. **Powell** (`maxiter=400`, capped at 4000 evaluations per genus) minimizes
+   Heron area `+ 10⁴ Σ max(0, d_{S¹} − d_{k=3})²` plus an extended log barrier
+   on the triangle slacks. It uses no gradients.
+3. **Polish.** The interior lengths are rescaled radially by bisection until the
+   `k = 8` violation is `≤ 10⁻⁴`. When rescaling would break a triangle
+   inequality, the polish instead blends back toward the feasible start. This
+   happened for all three genera here.
 
-Every result is re-certified with a finer Steiner graph (8 points per edge). That
-graph gives an upper bound on the true geodesic distance, so any violation it
-reports is real.
+Every result is certified on the `k = 8` Steiner graph. It is also checked
+two independent ways: an audit on a finer `k = 16` graph, and an **exact
+corner-cut lower bound** (see below).
 
-Results (`benchmarks/genus_search.json`, total runtime ≈ 8 s on an M1):
+Results (`benchmarks/genus_search.json`, total runtime ≈ 21 s on an M1):
 
-| Filling | Area | `A / 2π` | Median fatness `2r/R` | Certified violation (k = 8) |
-| :--- | :---: | :---: | :---: | :---: |
-| g = 0, flat Tutte embedding in ℝ² | 2.98 | 0.47 | — | **1.09** |
-| g = 0, edge-graph constraint (best) | 7.98 | 1.27 | 0.003 | **1.84** |
-| g = 0, intrinsic constraint (best) | 26.72 | 4.25 | 0.68 | 0.026 |
-| g = 1, edge-graph constraint (best) | 42.56 | 6.77 | 0.44 | 0.258 |
-| g = 1, intrinsic constraint (best) | 41.72 | 6.64 | 0.44 | 0.031 |
-| g = 2, both phases | — | — | — | no feasible run (≥ 0.74) |
+| Filling | Area | `A / 2π` | Median fatness `2r/R` | `k = 8` violation | `k = 16` audit | Exact lower bound |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: |
+| g = 0, flat Tutte embedding in ℝ² | 2.98 | 0.47 | — | **1.09** | — | — |
+| g = 0, feasible start (`c · ℓ_init`) | 62.95 | 10.02 | 0.97 | 4·10⁻¹⁵ | 0.016 | 0.017 |
+| g = 0, Powell → polished | **34.93** | 5.56 | 0.54 | 1.0·10⁻⁴ | 0.029 | 0.025 |
+| g = 1, feasible start | 91.52 | 14.57 | 0.93 | 4·10⁻¹⁵ | 0.016 | 0.017 |
+| g = 1, Powell → polished | **77.60** | 12.35 | 0.91 | 1.0·10⁻⁴ | 0.028 | 0.028 |
+| g = 2, feasible start | 171.24 | 27.25 | 0.97 | 2·10⁻¹⁵ | 0.018 | 0.019 |
+| g = 2, Powell → polished | **95.88** | 15.26 | 0.75 | 1.0·10⁻⁴ | 0.026 | 0.019 |
+
+All three genera now meet the `k = 8` criterion (`≤ 10⁻⁴`), including genus 2,
+which the earlier COBYLA run never did. The last two columns show that this
+criterion is **not** strict feasibility.
 
 ### Why flat fillings fail
 
@@ -689,38 +706,54 @@ a straight chord of length `≈ 2.05`, but the boundary arc between them has len
 this with area exactly `2π ≈ 6.283`, and the conjecture says nothing smaller is
 possible.
 
-### Why the edge-graph constraint is not enough
+### Why coarse distance graphs are not enough
 
-Under the edge-graph constraint, the optimizer satisfies every constraint with
-**needle triangles**. The median fatness is `0.003`, every face sits on its
-triangle-inequality margin, and the area is `7.98`. The edge-graph distance never
-lets a path cut across a face, so it overestimates the true intrinsic distance.
-The certified check shows that real geodesics shortcut through the collapsed
-faces, with a violation of `1.84`. This relaxation cannot tell you anything about
-the true filling area.
+The solver keeps running into the same exploit: a coarse distance graph lets the
+optimizer satisfy the constraint with **needle triangles**. In the earlier
+COBYLA run (edge-graph constraint, paths only along mesh edges), the median
+fatness was `0.003` and the area `7.98`, but the `k = 8` check found a real
+violation of `1.84`. The same thing happens one level finer. Before polishing,
+the Powell optimum satisfies the `k = 3` constraint to `≈ 10⁻⁴` with median
+fatness `≈ 0.01` and area `12.7` (g = 0). The `k = 8` graph still finds shortcuts
+of `0.16–0.43` through the collapsed faces, and the polish has to give back most
+of that area.
+
+### Why `k = 8 ≤ 10⁻⁴` is not strict feasibility
+
+A Steiner graph only gives an *upper* bound on intrinsic distance. A violation
+it reports is real, but a reading of zero does not prove feasibility. On this
+mesh the gap can be computed exactly. Boundary vertices in the middle of a
+collar fan lie in only two faces, and their total angle is `< π` (`0.88–0.91 π`
+here). Unfold those two faces into the plane: the straight chord between the
+two boundary neighbours is a genuine path in the surface, and it is shorter than
+the boundary arc `2 · 2π/n_b`. That gives an exact lower bound of `0.017–0.028`
+on the true violation, in line with the `k = 16` audit. The `k = 8` graph
+misses it because its Steiner points are not close enough to the corner.
+
+Scaling up does not fix this. As `c → ∞` the boundary angles tend to `π` from
+below (`0.905 π` at `c = 3.05`, `0.988 π` at `c = 24`), so the violation shrinks
+but never reaches zero. A strictly feasible discrete filling needs every
+boundary vertex angle to be `≥ π`, as on the round hemisphere, where the
+boundary is a geodesic. That means a different collar (more faces at each
+boundary vertex) or an explicit angle constraint.
 
 ### What this run does and does not show
 
-- With the Steiner (intrinsic) constraint, the needle exploit goes away. Faces
-  stay well-shaped (fatness `0.44–0.68`), and the certified violations fall to
-  `≈ 0.03`. That is small but not zero, so those runs are close to feasible, not
-  exactly feasible.
-- **The areas have not converged.** The intrinsic optima found (`26.7` for g = 0,
-  `41.7` for g = 1) are far above `2π`. They are limited by the evaluation budget,
-  not by geometry. COBYLA needs `n + 1` evaluations just to build its starting
-  simplex, and with 59 / 95 / 167 free edges, `maxiter=80` leaves almost no
-  budget for real optimization steps. For g = 1 and g = 2, SciPy raised the
-  budget to the minimum of `n + 2` evaluations, so those runs are close to their
-  random starting points. No genus-2 run reached feasibility.
-- So this run does **not** show the areas converging toward `2π`. It is a
-  working, fast pipeline: valid meshes, an exact Heron objective, and a certified
-  intrinsic constraint. Getting closer to `2π` would take a larger budget,
-  gradient-based solvers, and finer meshes. Theory gives the lower bound for
-  genus 0 (Pu/Ivanov) and genus 1 (Bangert–Croke–Ivanov–Katz).
+- It shows a fast (`≈ 21 s`), deterministic pipeline that meets the `k = 8`
+  criterion for g = 0, 1, 2, with well-shaped faces after polishing (median
+  fatness `0.54–0.91`).
+- It does **not** produce strictly feasible fillings: the exact corner-cut
+  bound shows a true violation of about `0.02` in every case.
+- **The areas have not converged.** The polished areas (`34.9`, `77.6`,
+  `95.9`) are far above `2π`. Most of the Powell gain is lost when the polish
+  blends back toward the start to undo needle shortcuts. Getting closer to `2π`
+  would take a boundary-angle constraint, a penalty graph fine enough to resist
+  needles, and finer meshes. Theory gives the lower bound for genus 0
+  (Pu/Ivanov) and genus 1 (Bangert–Croke–Ivanov–Katz).
 
 ```bash
-.venv/bin/python3 scripts/explore_genus2.py            # ≈ 8 s, writes benchmarks/genus_search.json
-.venv/bin/python3 scripts/explore_genus2.py --maxiter 2000 --restarts 4 --n-boundary 12
+.venv/bin/python3 scripts/explore_genus2.py            # ≈ 21 s, writes benchmarks/genus_search.json
+.venv/bin/python3 scripts/explore_genus2.py --maxfev 20000 --n-boundary 12
 ```
 
 ---

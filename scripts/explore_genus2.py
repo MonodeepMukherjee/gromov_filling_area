@@ -13,22 +13,30 @@ length exactly 2*pi. The interior edge lengths are optimized to
     subject to l_a + l_b - l_c >= eps                  (strict triangle ineq.)
                d(b_i, b_j) >= d_{S^1}(b_i, b_j)         (isometric boundary)
 
-d is computed with scipy.sparse.csgraph.shortest_path, and the problem is
-solved with derivative-free COBYLA (the shortest-path constraint is not
-smooth), using 2 random restarts per genus and maxiter=80. The run fits in a
-~20-second budget, so the optima are budget-limited, not converged.
+d is computed with scipy.sparse.csgraph.shortest_path on a Steiner graph
+(k points per edge, straight segments inside each face unfolded in the
+plane), which converges to the true intrinsic distance as k grows.
 
-Two choices of d are compared:
+Solver (deterministic, ~30 s for g = 0, 1, 2):
 
-* Phase 1, the *edge graph* d_G. This is only an upper bound on the true
-  intrinsic distance (geodesics can cut across faces), so the constraint is a
-  relaxation that thin "needle" triangles can exploit.
-* Phase 2, a *Steiner graph* (k points per edge, straight segments inside each
-  face unfolded in the plane). It converges to the true intrinsic distance.
+1. Feasible start. Edge lengths ``ell_init`` come from a hemisphere-like
+   polar profile (polar angle decreasing with combinatorial depth); the
+   interior lengths ``c * ell_init`` are scaled up until the k = 3 and k = 8
+   Steiner violations vanish (to roundoff) with strict triangle inequalities.
+2. Powell (``maxiter=400``, capped by ``maxfev``) minimizes
+   Heron area + 1e4 * sum max(0, d_S1 - d_int)^2 (k = 3) + extended log
+   barrier on the triangle slacks. Powell needs no gradients.
+3. Polish. The interior lengths are rescaled radially (or, if that would
+   break a triangle inequality, blended back toward the start) by bisection
+   until the k = 8 violation is <= 1e-4.
 
-Every result is certified with a finer Steiner graph (k = 8). Because that
-graph also gives an upper bound, a violation it reports is a genuine
-violation of the isometric boundary condition.
+Every result is certified with the k = 8 Steiner graph and audited with a
+finer k = 16 graph and with an exact corner-cut lower bound. Both Steiner
+graphs give *upper* bounds on distance, so a violation they report is real,
+but a zero reading is not a proof of feasibility. On this collar mesh,
+boundary vertices lying in only two faces have total angle < pi, so a chord
+cuts the corner and the true violation is positive (~0.02) even when the
+k = 8 reading is <= 1e-4.
 
 Usage:  .venv/bin/python3 scripts/explore_genus2.py
 """
@@ -50,6 +58,8 @@ from scipy.sparse.csgraph import shortest_path
 TWO_PI = 2.0 * np.pi
 EPS_TRI = 1e-3  # strict triangle-inequality margin
 EPS_LEN = 1e-3  # lower bound on edge lengths
+PENALTY = 1e4  # weight of the squared hinge on d_S1 - d_int
+BARRIER = 1e-2  # weight of the log barrier on triangle slacks
 
 
 def circle_geodesic_dist(theta1: float, theta2: float) -> float:
@@ -294,6 +304,19 @@ def validate(mesh: Mesh, bset: set[int]) -> None:
 # ---------------------------------------------------------------------------
 
 
+def triangle_barrier(slack: np.ndarray, delta: float = 1e-3) -> float:
+    """Log barrier ``-BARRIER * log(slack)``, extended past ``slack = delta``.
+
+    Below ``delta`` the barrier continues linearly (C^1) and a stiff quadratic
+    penalty is added, so the objective stays finite and continuous, which
+    Powell's line searches need; the polish step restores strict validity.
+    """
+    inner = np.maximum(slack, delta)
+    out = np.maximum(delta - slack, 0.0)
+    val = -np.log(inner) + out / delta
+    return float(BARRIER * val.sum() + PENALTY * (out @ out))
+
+
 def heron_area_grad(lengths: np.ndarray, face_edges: np.ndarray):
     """Total Heron area and its gradient with respect to all edge lengths."""
     a, b, c = (lengths[face_edges[:, k]] for k in range(3))
@@ -390,7 +413,8 @@ class PathDistance:
 
 
 class FillingProblem:
-    def __init__(self, mesh: Mesh, steiner_k: int = 3, certify_k: int = 8):
+    def __init__(self, mesh: Mesh, steiner_k: int = 3, certify_k: int = 8,
+                 audit_k: int = 16):
         self.mesh = mesh
         n_b = len(mesh.boundary)
         self.fixed = mesh.bnd_edge_mask
@@ -399,6 +423,8 @@ class FillingProblem:
         self.steiner_k, self.certify_k = steiner_k, certify_k
         self.pd = {0: PathDistance(mesh, 0), steiner_k: PathDistance(mesh, steiner_k)}
         self.cert = PathDistance(mesh, certify_k)
+        self.audit_k = audit_k
+        self.audit_pd = PathDistance(mesh, audit_k)
         # strict triangle inequalities: rows (+1, +1, -1) over each face's edges
         fe = mesh.face_edges
         T = np.zeros((3 * len(fe), len(mesh.edges)))
@@ -409,6 +435,7 @@ class FillingProblem:
         self.T_full = T
         self.T = T[:, self.free]
         self.T_const = T[:, self.fixed] @ self.base[self.fixed] - EPS_TRI
+        self.nfev = 0
 
     def lengths(self, x: np.ndarray) -> np.ndarray:
         ell = self.base.copy()
@@ -440,31 +467,196 @@ class FillingProblem:
                 max(0.0, (tgt - self.cert(ell)).max())),
         }
 
-    def random_start(self, rng) -> np.ndarray:
-        # 0.3 * scale < 2*pi/n_b keeps every face (incl. boundary faces) non-degenerate
-        scale = rng.uniform(0.6, 2.0)
-        return scale * (1.0 + 0.15 * rng.uniform(-1, 1, size=self.free.sum()))
+    # -- feasible initialization ------------------------------------------------
 
-    def solve(self, x0, k: int = 0, maxiter: int = 250) -> tuple[np.ndarray, dict]:
-        """COBYLA on graph k: area subject to triangle and isometry constraints."""
-        pd = self.pd[k]
-        cons = [
-            {"type": "ineq", "fun": lambda x: self.T @ x + self.T_const},
-            {"type": "ineq", "fun": lambda x: pd(self.lengths(x)) - pd.target},
-            {"type": "ineq", "fun": lambda x: x - EPS_LEN},
-        ]
+    def hemisphere_profile(self) -> np.ndarray:
+        """Edge lengths ``ell_init`` from a hemisphere-like polar profile.
+
+        Each vertex gets a polar angle ``phi`` that decreases linearly with its
+        combinatorial depth (hop distance from the boundary): boundary vertices
+        sit on the equator ``phi = pi/2`` and the deepest vertices near the pole.
+        An edge ``uv`` gets the length of a small step on the unit sphere,
+        ``sqrt(dphi^2 + (h sin phi_mid)^2)`` with ``h = 2 pi / n_b``, so boundary
+        edges reproduce ``2 pi / n_b`` exactly and the two spokes of every
+        boundary face are equal (which keeps those faces valid under scaling).
+        """
+        mesh = self.mesh
+        n_b = len(mesh.boundary)
+        adj = defaultdict(list)
+        for u, v in mesh.edges.tolist():
+            adj[u].append(v)
+            adj[v].append(u)
+        depth = np.full(mesh.n_vertices, -1)
+        queue = deque(mesh.boundary)
+        depth[mesh.boundary] = 0
+        while queue:
+            u = queue.popleft()
+            for v in adj[u]:
+                if depth[v] < 0:
+                    depth[v] = depth[u] + 1
+                    queue.append(v)
+        phi = 0.5 * np.pi * (1.0 - depth / (depth.max() + 1.0))
+        pu, pv = phi[mesh.edges[:, 0]], phi[mesh.edges[:, 1]]
+        h = TWO_PI / n_b
+        return np.hypot(pu - pv, h * np.sin(0.5 * (pu + pv)))
+
+    def tri_slack(self, x: np.ndarray) -> float:
+        """Minimum of ``l_a + l_b - l_c`` over all faces and corners."""
+        return float((self.T @ x + self.T_const).min() + EPS_TRI)
+
+    def violation(self, x: np.ndarray, k: int | None = None) -> float:
+        """Max boundary-isometry violation ``max(0, d_S1 - d_int)`` on graph k."""
+        pd = self.cert if k is None else self.pd[k]
+        return float(max(0.0, (pd.target - pd(self.lengths(x))).max()))
+
+    def audit(self, x: np.ndarray) -> dict:
+        """Violation on a finer Steiner graph (k = audit_k): an independent check."""
+        pd = self.audit_pd
+        v = float(max(0.0, (pd.target - pd(self.lengths(x))).max()))
+        return {f"max_violation_audit_k{self.audit_k}": v}
+
+    def corner_cut(self, x: np.ndarray) -> dict:
+        """Exact lower bound on the true violation from boundary corner cuts.
+
+        Unfold the fan of faces around each boundary vertex ``v`` into the plane.
+        If its total angle is below ``pi`` and the straight chord between the two
+        boundary neighbours of ``v`` crosses every interior spoke within its
+        length, that chord is a genuine path in the surface, so
+        ``d_S1(u_0, u_m) - |chord|`` is a lower bound on the violation.
+        """
+        mesh = self.mesh
+        ell = self.lengths(x)
+        eid = {tuple(e): i for i, e in enumerate(mesh.edges.tolist())}
+
+        def length(u, v):
+            return ell[eid[(min(u, v), max(u, v))]]
+
+        n_b = len(mesh.boundary)
+        target = 2.0 * TWO_PI / n_b if n_b > 2 else 0.0
+        best, min_angle = 0.0, np.inf
+        for pos, v in enumerate(mesh.boundary):
+            nxt = {}
+            for f in mesh.faces.tolist():
+                if v in f:
+                    k = f.index(v)
+                    nxt[f[(k + 1) % 3]] = f[(k + 2) % 3]
+            u = next(a for a in nxt if a not in nxt.values())  # start of the link path
+            chain = [u]
+            while chain[-1] in nxt:
+                chain.append(nxt[chain[-1]])
+            theta = [0.0]
+            for a, b in zip(chain, chain[1:]):
+                la, lb, lab = length(v, a), length(v, b), length(a, b)
+                cos = (la * la + lb * lb - lab * lab) / (2 * la * lb)
+                theta.append(theta[-1] + float(np.arccos(np.clip(cos, -1.0, 1.0))))
+            total = theta[-1]
+            min_angle = min(min_angle, total)
+            if total >= np.pi:
+                continue
+            p0 = length(v, chain[0]) * np.array([1.0, 0.0])
+            p1 = length(v, chain[-1]) * np.array([np.cos(total), np.sin(total)])
+            ok = True
+            for w, th in zip(chain[1:-1], theta[1:-1]):
+                d = np.array([np.cos(th), np.sin(th)])  # ray from v
+                m = np.array([d, p0 - p1]).T
+                r = np.linalg.solve(m, p0)[0]  # ray parameter at the chord
+                ok &= bool(0.0 < r <= length(v, w))
+            if ok:
+                best = max(best, target - float(np.linalg.norm(p1 - p0)))
+        return {"violation_lower_bound_corner_cut": max(0.0, best),
+                "min_boundary_angle_over_pi": float(min_angle / np.pi)}
+
+    def ok(self, x: np.ndarray, tol: float) -> bool:
+        return (self.tri_slack(x) >= EPS_TRI - 1e-9 and self.violation(x) <= tol
+                and self.violation(x, self.steiner_k) <= tol)
+
+    def feasible_start(self, growth: float = 1.25, max_steps: int = 60):
+        """Scale ``c * ell_init`` up until the boundary constraints hold exactly.
+
+        For large ``c`` every path that leaves the boundary cycle is long, so the
+        shortest boundary-to-boundary paths run along the boundary edges, whose
+        lengths reproduce the circle arcs: the violation is zero (up to roundoff).
+        """
+        prof = self.hemisphere_profile()[self.free]
+        c = 1.0
+        for _ in range(max_steps):
+            x = c * prof
+            if self.ok(x, tol=1e-12):
+                return x, c
+            c *= growth
+        raise RuntimeError("no feasible scale found for the hemisphere profile")
+
+    # -- penalized objective ---------------------------------------------------
+
+    def objective(self, x: np.ndarray) -> float:
+        """Heron area + 1e4 * squared hinge on d_S1 - d_int + log barrier (triangles)."""
+        self.nfev += 1
+        ell = self.lengths(x)
+        area = heron_area_grad(ell, self.mesh.face_edges)[0]
+        pd = self.pd[self.steiner_k]
+        hinge = np.maximum(0.0, pd.target - pd(ell))
+        return (area + PENALTY * float(hinge @ hinge)
+                + triangle_barrier(self.T @ x + self.T_const))
+
+    def solve(self, x0: np.ndarray, maxiter: int = 400, maxfev: int = 4000):
+        """Derivative-free Powell on the penalized objective, from a feasible x0."""
+        self.nfev = 0
         t0 = time.time()
-        res = minimize(self.area, x0, method="COBYLA", constraints=cons,
-                       options={"maxiter": maxiter})
-        info = {"graph_k": k, "method": "COBYLA", "maxiter": maxiter,
-                "message": str(res.message), "nfev": int(res.nfev),
+        res = minimize(self.objective, x0, method="Powell",
+                       bounds=[(EPS_LEN, None)] * len(x0),
+                       options={"maxiter": maxiter, "maxfev": maxfev,
+                                "xtol": 1e-4, "ftol": 1e-7})
+        x = res.x if self.objective(res.x) <= self.objective(x0) else x0
+        info = {"method": "Powell", "maxiter": maxiter, "maxfev": maxfev,
+                "message": str(res.message), "nit": int(res.nit), "nfev": int(res.nfev),
                 "seconds": round(time.time() - t0, 2)}
-        info.update(self.metrics(res.x))
-        return res.x, info
+        info.update(self.metrics(x))
+        return x, info
 
+    # -- certification polish --------------------------------------------------
 
-def is_feasible(m: dict, key: str, tol: float = 1e-3) -> bool:
-    return m[key] <= tol and m["min_triangle_slack"] >= EPS_TRI - 1e-6
+    def polish(self, x: np.ndarray, x_safe: np.ndarray, tol: float = 1e-4,
+               iters: int = 30):
+        """Radially rescale the interior lengths until the k = 8 violation is <= tol.
+
+        Searches the smallest interior scale ``s`` (bisection after bracketing
+        upward from ``s = 1``, or downward when ``x`` is already feasible). If a
+        scale would break a triangle inequality, it instead bisects along the
+        segment from ``x`` to the feasible start ``x_safe`` (triangle
+        inequalities are linear, so the segment stays valid).
+        """
+        def bisect(path, lo, hi):  # path(lo) infeasible, path(hi) feasible
+            for _ in range(iters):
+                mid = 0.5 * (lo + hi)
+                lo, hi = (lo, mid) if self.ok(path(mid), tol) else (mid, hi)
+            return hi
+
+        def scale(s):
+            return s * x
+
+        if self.ok(x, tol):  # try shrinking toward smaller area
+            lo = 0.5
+            while lo < 1.0 and self.ok(scale(lo), tol):
+                lo = 0.5 * (1.0 + lo)
+            if lo >= 1.0:
+                return x, {"mode": "scale", "scale": 1.0}
+            s = bisect(scale, lo, 1.0)
+            return scale(s), {"mode": "scale", "scale": s}
+        s, step = 1.0, 0.01
+        while s < 4.0:
+            s_next = s + step
+            if self.tri_slack(scale(s_next)) < EPS_TRI - 1e-9:
+                break
+            if self.ok(scale(s_next), tol):
+                s = bisect(scale, s, s_next)
+                return scale(s), {"mode": "scale", "scale": s}
+            s, step = s_next, 2 * step
+
+        def blend(t):
+            return (1.0 - t) * x + t * x_safe
+
+        t = bisect(blend, 0.0, 1.0)
+        return blend(t), {"mode": "blend_to_start", "t": t}
 
 
 # ---------------------------------------------------------------------------
@@ -511,46 +703,57 @@ def flat_baseline(mesh: Mesh, prob: FillingProblem) -> dict:
 # ---------------------------------------------------------------------------
 
 
-def run_phase(prob: FillingProblem, k: int, starts: list, key: str, label: str,
-              maxiter: int) -> dict:
-    runs, best = [], None
-    for r, x0 in enumerate(starts):
-        _, info = prob.solve(x0, k=k, maxiter=maxiter)
-        info["restart"] = r
-        info["feasible"] = is_feasible(info, key)
-        runs.append(info)
-        print(f"  [{label:10s}] restart {r}: area={info['area']:.4f} "
-              f"feasible={info['feasible']} fat={info['median_face_fatness']:.3f} "
-              f"graph_viol={info['max_violation_edge_graph']:.1e} "
-              f"intrinsic_viol={info[f'max_violation_intrinsic_k{prob.certify_k}']:.3f} "
-              f"({info['seconds']} s)", flush=True)
-        if info["feasible"] and (best is None or info["area"] < best["area"]):
-            best = info
-    return {"runs": runs, "best": best, "feasible_constraint": key}
-
-
 def explore_genus(genus: int, args):
     mesh = build_mesh(genus, n_b=args.n_boundary)
-    prob = FillingProblem(mesh, steiner_k=args.steiner_k, certify_k=args.certify_k)
-    rng = np.random.default_rng(args.seed + genus)
+    prob = FillingProblem(mesh, steiner_k=args.steiner_k, certify_k=args.certify_k,
+                          audit_k=args.audit_k)
+    ck = f"max_violation_intrinsic_k{prob.certify_k}"
     print(f"\n=== genus {genus}: {mesh.info} (free edges: {int(prob.free.sum())})", flush=True)
-    starts = [prob.random_start(rng) for _ in range(args.restarts)]
-    p1 = run_phase(prob, 0, starts, "max_violation_edge_graph", "edge-graph", args.maxiter)
-    p2 = run_phase(prob, args.steiner_k, starts, f"max_violation_steiner_k{args.steiner_k}",
-                   "intrinsic", args.maxiter)
+
+    t0 = time.time()
+    x0, c0 = prob.feasible_start()
+    start = {"hemisphere_scale_c": c0, "seconds": round(time.time() - t0, 2)}
+    start.update(prob.metrics(x0))
+    start.update(prob.audit(x0))
+    start.update(prob.corner_cut(x0))
+    print(f"  [start     ] c={c0:.3f} area={start['area']:.4f} "
+          f"cert_viol={start[ck]:.1e} "
+          f"corner_lb={start['violation_lower_bound_corner_cut']:.1e} "
+          f"min_bnd_angle={start['min_boundary_angle_over_pi']:.3f}pi "
+          f"({start['seconds']} s)", flush=True)
+
+    x1, opt = prob.solve(x0, maxiter=args.maxiter, maxfev=args.maxfev)
+    print(f"  [powell    ] area={opt['area']:.4f} cert_viol={opt[ck]:.1e} "
+          f"nfev={opt['nfev']} ({opt['seconds']} s)", flush=True)
+
+    t0 = time.time()
+    x2, how = prob.polish(x1, x0, tol=args.tol)
+    final = {**how, "seconds": round(time.time() - t0, 2)}
+    final.update(prob.metrics(x2))
+    final.update(prob.audit(x2))
+    final.update(prob.corner_cut(x2))
+    final["k8_certified"] = bool(final[ck] <= args.tol
+                              and final["min_triangle_slack"] >= EPS_TRI - 1e-9)
+    print(f"  [polished  ] {how} area={final['area']:.4f} "
+          f"A/2pi={final['area_over_2pi']:.4f} cert_viol={final[ck]:.1e} "
+          f"audit_viol={final[f'max_violation_audit_k{prob.audit_k}']:.1e} "
+          f"corner_lb={final['violation_lower_bound_corner_cut']:.1e} "
+          f"k8_certified={final['k8_certified']} ({final['seconds']} s)", flush=True)
     result = {"genus": genus, "mesh": mesh.info, "free_edges": int(prob.free.sum()),
-              "phase1_edge_graph": p1, "phase2_intrinsic": p2}
+              "feasible_start": start, "powell": opt, "certified": final}
     return result, mesh, prob
 
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    ap.add_argument("--restarts", type=int, default=2, help="random restarts per phase")
-    ap.add_argument("--maxiter", type=int, default=80, help="COBYLA maxiter")
+    ap.add_argument("--maxiter", type=int, default=400, help="Powell maxiter")
+    ap.add_argument("--maxfev", type=int, default=4000,
+                    help="Powell objective-evaluation budget per genus")
+    ap.add_argument("--tol", type=float, default=1e-4, help="certified violation target")
     ap.add_argument("--n-boundary", type=int, default=8)
     ap.add_argument("--steiner-k", type=int, default=3)
     ap.add_argument("--certify-k", type=int, default=8)
-    ap.add_argument("--seed", type=int, default=42)
+    ap.add_argument("--audit-k", type=int, default=16)
     ap.add_argument("--genera", type=int, nargs="+", default=[0, 1, 2])
     ap.add_argument("--out", default="benchmarks/genus_search.json")
     args = ap.parse_args()
@@ -563,13 +766,16 @@ def main():
         if g == 0:
             flat = flat_baseline(mesh, prob)
             print(f"  [flat      ] Tutte embedding: area={flat['area']:.4f} "
-                  f"(pi={np.pi:.4f}) graph_viol={flat['max_violation_edge_graph']:.3f} "
+                  f"(pi={np.pi:.4f}) "
                   f"intrinsic_viol={flat[f'max_violation_intrinsic_k{args.certify_k}']:.3f}")
     out = {
         "description": "Discrete piecewise-flat fillings of S^1 (length 2*pi): minimize "
                        "Heron area over intrinsic edge lengths subject to strict triangle "
-                       "inequalities and d(b_i, b_j) >= d_S1(b_i, b_j).",
-        "config": {**vars(args), "eps_triangle": EPS_TRI, "eps_length": EPS_LEN},
+                       "inequalities and d(b_i, b_j) >= d_S1(b_i, b_j). Feasible "
+                       "hemisphere-profile start, Powell on a penalized objective, radial "
+                       "polish to a certified (k = 8) violation <= tol.",
+        "config": {**vars(args), "eps_triangle": EPS_TRI, "eps_length": EPS_LEN,
+                   "penalty": PENALTY, "barrier": BARRIER},
         "reference": {"pi": np.pi, "two_pi": TWO_PI},
         "flat_baseline_genus0": flat,
         "results": results,
