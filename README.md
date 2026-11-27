@@ -10,37 +10,43 @@ A machine-checked Lean 4 + Mathlib formalization effort for **Gromov's Filling A
 Conjecture**. An LLM agent writes the proofs, and the Lean kernel checks every step
 before anything is accepted.
 
-## Main Result: an end-to-end `π` filling area bound
+## Main Result: an end-to-end `π²/2` filling area bound
 
 ```lean
-theorem gromov_universal_pi_bound (F : IsometricFilling M) :
-    ENNReal.ofReal Real.pi ≤
+theorem gromov_universal_pi_sq_div_two_bound (F : IsometricFilling M) :
+    ENNReal.ofReal (Real.pi ^ 2 / 2) ≤
       MeasureTheory.Measure.hausdorffMeasure 2 (univ : Set M)
 ```
 
 Every isometric filling of the circle of length `2π` has 2-dimensional Hausdorff measure at
-least `π`. `IsometricFilling` includes the field `no_boundary_retraction`, which says the
-boundary is not a retract of the filling. This is fully kernel-checked.
-`#print axioms gromov_universal_pi_bound` reports only Lean's standard
-`propext`, `Classical.choice` and `Quot.sound`: no `sorry` and no custom axioms. It
-supersedes the earlier `gromov_universal_four_div_pi_bound` (`4/π ≈ 1.27`), which is kept.
-The proof chains the whole library:
+least `π²/2 ≈ 4.9348`, which is `0.785 · 2π`. `IsometricFilling` includes the field
+`no_boundary_retraction`, which says the boundary is not a retract of the filling. This is
+fully kernel-checked. `#print axioms gromov_universal_pi_sq_div_two_bound` reports only
+Lean's standard `propext`, `Classical.choice` and `Quot.sound`: no `sorry` and no custom
+axioms. It supersedes `gromov_universal_pi_bound` (`π ≈ 3.14`, `SharpFirstMode`) and
+`gromov_universal_four_div_pi_bound` (`4/π ≈ 1.27`, `UniversalAreaBound`), which are kept.
+The proof uses only two boundary points, `0` and `π/2`:
 
-1. **Kuratowski embedding.** `x ↦ dist x (ι ·)` is a 1-Lipschitz map `M → (S¹ →ᵇ ℝ)`.
-2. **Fundamental Fourier mode, sharp constant.** `g ↦ ĝ(1)` is `(2/π)`-Lipschitz into `ℂ`
-   (`fourierProj_one_sharp_lipschitz`). Write `‖ĝ(1) − ĥ(1)‖` as
-   `Re(e^{−i arg w} w)`. That equals `(2π)⁻¹ ∫₀^{2π} cos(x − φ)(g − h)(x) dx`, which is at
-   most `(2π)⁻¹ ‖g − h‖ ∫₀^{2π} |cos(x − φ)| dx = (2/π) ‖g − h‖`. So `P_1 ∘ K` multiplies
-   `μH[2]` by at most `(2/π)² = 4/π²`.
-3. **Boundary circle.** `∂M` maps homeomorphically onto the circle of radius `2/π`. The exact
-   radius comes from the Fourier coefficient of the tent-function boundary profile.
-4. **Disk covering.** If an interior point of the disk were missed, radial projection would
-   give a retraction of `M` onto `∂M`.
-5. **Area.** The disk of radius `2/π` has area `4/π ≤ μH[2](range) ≤ (4/π²) μH[2](M)`,
-   so `μH[2](M) ≥ π`.
+1. **Quarter-circle pair map.** `q(x) = (d(x, ι 0), d(x, ι (π/2)))` is 1-Lipschitz into the
+   **sup-norm** plane `Fin 2 → ℝ` (`quarterPairMap_lipschitzWith`). There Mathlib's `μH[2]`
+   is exactly Lebesgue area (`hausdorffMeasure_pi_real`), so `μH[2](q(M)) ≤ μH[2](M)`.
+2. **Boundary diamond.** `q ∘ ι` maps the circle injectively onto the boundary of the `L¹`
+   diamond `|u − π/2| + |v − π/2| ≤ π/2` (`quarterCircle_boundary_diamond`,
+   `quarterPairMap_boundary_injective`). Surjectivity uses an explicit angle in each
+   quadrant (`exists_boundary_angle`).
+3. **Diamond covering.** The radial gauge map `diamondToComplex` sends the diamond to the
+   disk of radius `π/2` and its boundary to the circle. It is continuous and injective,
+   with an explicit left inverse. So `q ∘ ι` becomes a homeomorphism onto the circle, and
+   `disk_covered_of_no_retraction` shows `q(M)` contains the whole diamond
+   (`quarterDiamond_subset_range`).
+4. **Area.** The diamond is the preimage of a square under a shear of determinant `−2`, so
+   `μH[2](diamond) = π²/2` (`hausdorffMeasure_two_quarterDiamond`). Chaining:
+   `π²/2 = μH[2](diamond) ≤ μH[2](q(M)) ≤ μH[2](M)`.
 
-The sharp constant was found numerically by `scripts/conjecture_discovery.py` (see
-Neuro-Symbolic Invariant Discovery) and then formalized.
+This pair was found numerically by `scripts/conjecture_discovery.py` (see Neuro-Symbolic
+Invariant Discovery), which ranked it as the best single boundary-pair calibration. It was
+then formalized in four modules: `QuarterCircleSquare`, `DiamondGeometry`,
+`DiamondAreaBound` and, for the earlier `π` bound, `SharpFirstMode`.
 
 **What it does and does not claim:**
 
@@ -52,11 +58,12 @@ Neuro-Symbolic Invariant Discovery) and then formalized.
   surface topology. The field also rules out degenerate "fillings" such as `M = Circle2Pi`
   with `ι = id`, which retracts onto itself. Every analytic and metric step, including the
   former `h_fill` covering hypothesis, is discharged.
-- **Not the conjecture.** `π ≈ 3.14` is half the conjectured sharp bound `2π ≈ 6.28`.
+- **Not the conjecture.** `π²/2 ≈ 4.93` is below the conjectured sharp bound `2π ≈ 6.28`.
   `PuSymmetrization` proves the sharp `2π` bound only for rotationally symmetric radial
   profiles `φ ≥ sin`, not for general fillings.
 - **Normalization.** Mathlib's `μH[2]` is the unnormalized Hausdorff measure. On Euclidean
-  `ℂ` it dominates Lebesgue area, and the proof only uses that inequality.
+  `ℂ` it dominates Lebesgue area. On the sup-norm plane `Fin 2 → ℝ` it *equals* Lebesgue
+  area, which is why the `π²/2` proof maps into that plane rather than `ℂ`.
 
 ---
 
@@ -88,7 +95,7 @@ it is still open in general.
 | **Number theory** | `Re ζ(3) = ∑ 1/n³`, the even/odd split `∑_{odd} 1/n³ = (7/8)·ζ(3)`, and positivity of the target constant `14·ζ(3)/π`. |
 
 > **Scope.** The conjecture is *stated*, not proved. The strongest result is the
-> `π` bound above, using the no-retraction field of `IsometricFilling`. Every lemma listed
+> `π²/2` bound above, using the no-retraction field of `IsometricFilling`. Every lemma listed
 > below is fully kernel-checked. The surface/orientability condition in `IsometricFilling` is
 > currently an abstract `Prop` field. Replacing it with a genuine topological-surface
 > structure, from which `no_boundary_retraction` would be proved, is planned future work.
@@ -192,7 +199,7 @@ Generated by `python3 scripts/generate_report.py` from `benchmarks/results.jsonl
 | `GromovFillingArea.FourierBound` | 2 | **PASS (0 sorry)** | 40355.4 ms | 34459.6 ms |
 | `GromovFillingArea.ZetaBound` | 1 | **PASS (0 sorry)** | 52180.5 ms | 52180.5 ms |
 | `GromovFillingArea.FourierEnergy` | 1 | **PASS (0 sorry)** | 45623.9 ms | 45623.9 ms |
-| `GromovFillingArea` | 39 | **PASS (0 sorry)** | 51116.7 ms | 35848.5 ms |
+| `GromovFillingArea` | 40 | **PASS (0 sorry)** | 51944.3 ms | 35848.5 ms |
 | `GromovFillingArea.Witness` | 1 | **PASS (0 sorry)** | 53272.0 ms | 53272.0 ms |
 | `GromovFillingArea.AntipodalRadius` | 1 | **PASS (0 sorry)** | 57994.9 ms | 57994.9 ms |
 | `GromovFillingArea.L2Energy` | 1 | **PASS (0 sorry)** | 70202.1 ms | 70202.1 ms |
@@ -231,8 +238,9 @@ Generated by `python3 scripts/generate_report.py` from `benchmarks/results.jsonl
 | `GromovFillingArea.SharpFirstMode` | 3 | **PASS (0 sorry)** | 48416.0 ms | 55791.1 ms |
 | `GromovFillingArea.QuarterCircleSquare` | 2 | **PASS (0 sorry)** | 51260.6 ms | 45284.5 ms |
 | `GromovFillingArea.DiamondGeometry` | 2 | **PASS (0 sorry)** | 56146.4 ms | 53947.8 ms |
+| `GromovFillingArea.DiamondAreaBound` | 1 | **PASS (0 sorry)** | 53493.2 ms | 53493.2 ms |
 
-**Summary:** 43 build targets, 104 logged verification attempts, 43/43 passing. Both
+**Summary:** 44 build targets, 106 logged verification attempts, 44/44 passing. Both
 `SpectralBound` attempts passed: the first was rerun after wrapping a 101-character line
 to meet the style limit. The second `FourierProjection` run re-verified a `show` → `change`
 style-linter fix, and the second `TopologicalFilling` run re-verified its corrected docstrings.
@@ -299,7 +307,7 @@ directly after `no_boundary_retraction` was added.
 
 ## Verified Declarations Index
 
-All 144 theorems below are kernel-checked, with no `sorry`, no `admit`, and no
+All 163 theorems below are kernel-checked, with no `sorry`, no `admit`, and no
 custom `axiom`.
 
 ### `GromovFillingArea.Basic` — problem statement
@@ -691,7 +699,7 @@ two integrals. The boundary circumference condition is recorded but not yet used
 | `re_exp_mul_fourierProj_one` | theorem | `Re(e^{iφ} δ̂(1)) = (2π)⁻¹ ∫₀^{2π} cos (x − φ) δ(x) dx` (helper) |
 | `re_exp_mul_fourierProj_one_le` | theorem | `Re(e^{iφ} δ̂(1)) ≤ (2/π) ‖δ‖` (helper) |
 | `fourierProj_one_sharp_lipschitz` | theorem | `fourierProj 1` is `(2/π)`-Lipschitz |
-| `gromov_universal_pi_bound` | theorem | **main result:** every `F : IsometricFilling M` has `π ≤ μH[2] (univ : Set M)` |
+| `gromov_universal_pi_bound` | theorem | (superseded by `gromov_universal_pi_sq_div_two_bound`) every `F : IsometricFilling M` has `π ≤ μH[2] (univ : Set M)` |
 
 ### `GromovFillingArea.QuarterCircleSquare` — quarter-circle pair map & boundary diamond
 
@@ -737,10 +745,30 @@ On `(−π, −π/2]` the difference `π/2 − t` is shifted down by the period 
 `addHaar_preimage_linearMap` gives `volume (shear⁻¹ box) = |det|⁻¹ · volume box`. So the
 area is `½ · π · π = π²/2`, and `hausdorffMeasure_pi_real` turns `μH[2]` into `volume`.
 
-> **Still missing for `Area ≥ π²/2`:** the boundary map is surjective onto
-> `quarterDiamondBoundary` (with `quarterCircle_boundary_diamond` this gives a homeomorphism,
-> since `Circle2Pi` is compact), and a diamond analogue of `disk_covered_of_no_retraction`
-> (radial projection onto a convex body's boundary).
+### `GromovFillingArea.DiamondAreaBound` — diamond covering & universal `π²/2` bound
+
+| Declaration | Kind | Statement |
+| :--- | :--- | :--- |
+| `diamondToComplex` | `def` | radial gauge map `Fin 2 → ℝ → ℂ`, `‖diamondToComplex p‖ = \|p 0 − π/2\| + \|p 1 − π/2\|` |
+| `diamondVec`, `diamondGauge` | `def` | centred vector `(p 0 − π/2) + (p 1 − π/2) i` and `L¹` gauge |
+| `diamondFromComplex` | `def` | inverse gauge `w ↦ (π/2, π/2) + (‖w‖ / (\|re w\| + \|im w\|)) (re w, im w)` |
+| `diamondVec_re`, `diamondVec_im`, `diamondGauge_nonneg`, `diamondToComplex_eq`, `diamondVec_eq_zero_iff` | theorem | unfolding facts (helpers) |
+| `norm_diamondToComplex` | theorem | `‖diamondToComplex p‖ = diamondGauge p` |
+| `diamondFromComplex_diamondToComplex` | theorem | left inverse, hence `diamondToComplex_injective` |
+| `diamondVec_diamondFromComplex`, `abs_re_add_abs_im_pos`, `diamondGauge_diamondFromComplex` | theorem | the inverse lands on gauge `‖w‖` (helpers) |
+| `diamondToComplex_diamondFromComplex` | theorem | right inverse on `w ≠ 0` |
+| `continuous_diamondToComplex` | theorem | continuous: a product of continuous maps off the centre, squeezed by the gauge at the centre |
+| `quarterPairMap_boundary_apply` | theorem | `q(ι θ) = (d(θ, 0), d(θ, π/2))` |
+| `diamondToComplex_boundary_mem_sphere` | theorem | the boundary lands on `sphere 0 (π/2)` |
+| `exists_boundary_angle` | theorem | every diamond-boundary point is `q(ι θ)`, with `θ` explicit in each quadrant |
+| `diamondToComplex_boundary_surjective` | theorem | the boundary map hits every point of `sphere 0 (π/2)` |
+| `quarterDiamond_subset_range` | theorem | `quarterDiamond ⊆ range (quarterPairMap F)` |
+| `gromov_universal_pi_sq_div_two_bound` | theorem | **main result:** every `F : IsometricFilling M` has `π²/2 ≤ μH[2] (univ : Set M)` |
+
+`diamondToComplex` is not shown to be a homeomorphism `Fin 2 → ℝ ≃ₜ ℂ`; continuity and
+injectivity are enough. The covering step then uses `Continuous.homeoOfEquivCompactToT2` on
+the boundary circle and `disk_covered_of_no_retraction` with `F.no_boundary_retraction`.
+This module compiled on its first build.
 
 ---
 
@@ -1083,21 +1111,20 @@ fillings. Only the `proof-sketch` rows carry an argument.
    `(d(·, b_0), d(·, b_4))` has 1-Lipschitz coordinates, so `|dx ∧ dy| ≤ 1`, and its
    boundary curve encloses a square of area `π²/2 ≈ 4.935`. The same map is 1-Lipschitz
    into the *sup-norm* plane, where `μH[2]` is Lebesgue area, so a covering argument
-   gives this bound without tangent planes. Four of its steps are formalized:
-   - in `QuarterCircleSquare`: the Lipschitz map and the boundary diamond;
-   - in `DiamondGeometry`: boundary injectivity and the area `π²/2`.
+   gives this bound without tangent planes. It is now the kernel-checked main theorem
+   `gromov_universal_pi_sq_div_two_bound`, formalized across `QuarterCircleSquare`,
+   `DiamondGeometry` and `DiamondAreaBound`.
 3. **The formal `4/π` argument has slack (now formalized).** For each pair `x, y`,
    `|f̂_x(1) − f̂_y(1)| ≤ (2/π) d(x, y)`, because `(1/2π) ∫ |cos| = 2/π`, not `1`. So
    `(π/2) · f̂(1)` is Euclidean 1-Lipschitz, and the same covering argument as
    `UniversalAreaBound` gives `π` instead of `4/π`. The discrete value is `3.1011` at
-   `n = 16` and converges to `π`. Unlike items 1–2, this needs no tangent planes, so it
+   `n = 16` and converges to `π`. Like item 2 and unlike item 1, this needs no tangent planes, so it
    fits the abstract metric-space `IsometricFilling` of `Basic.lean` directly. It is now
    the kernel-checked `gromov_universal_pi_bound` in `SharpFirstMode`.
 
 **What this does and does not show.**
 
-- Item 3 is proved. Item 2 is partly formalized; its remaining covering step works in
-  the abstract metric setting, as described above. Item 1 is a **proof sketch for
+- Items 2 and 3 are proved for the abstract `IsometricFilling`. Item 1 is a **proof sketch for
   Riemannian, orientable fillings**: a weighted sum of many pairs needs a.e.
   differentiability (2-dimensional tangent planes, `|∇ d(·, b)| ≤ 1`) and Stokes on an
   oriented surface, neither of which is part of the abstract `IsometricFilling`. Whether
@@ -1169,9 +1196,10 @@ GromovFillingArea/
   HemisphereCalibration.lean # mean λ ≥ 2/(1+r²) on [0, 1] ⇒ conformal area ≥ 2π
   WeightedRadialBound.lean # 2π + 4π · (calibration moment) ≤ area; moment ≥ 0 ⇒ area ≥ 2π
   ConformalBoundaryLength.lean # 2π ≤ L ↔ 1 ≤ mean λ(1); ∫ r h² ≤ ∫ r h · mean λ ⇒ area ≥ 2π
-  SharpFirstMode.lean  # f̂(1) is (2/π)-Lipschitz ⇒ main theorem Area(M) ≥ π
+  SharpFirstMode.lean  # f̂(1) is (2/π)-Lipschitz ⇒ Area(M) ≥ π (superseded)
   QuarterCircleSquare.lean # 1-Lipschitz (f_x(0), f_x(π/2)); ∂M ↦ L¹ diamond of area π²/2
   DiamondGeometry.lean # μH[2] diamond = π²/2 (shear, det −2); boundary map injective
+  DiamondAreaBound.lean # diamond covering ⇒ main theorem Area(M) ≥ π²/2
 GromovFillingArea.lean # root module re-exporting all verified modules
 CLAUDE.md              # agent protocol (compiler-in-the-loop rules)
 scripts/
@@ -1193,9 +1221,6 @@ benchmarks/conjecture_discovery.json
 - Fourier-coefficient decay for 1-Lipschitz periodic functions, and the Wirtinger
   energy inequality.
 - Combine these into a formal (non-sharp) universal area lower bound.
-- Finish `Area ≥ π²/2`: prove surjectivity of the boundary map onto the diamond boundary
-  (giving a homeomorphism), and a diamond covering lemma (analogue of
-  `disk_covered_of_no_retraction`).
 - Formalize the optimal pair calibration (`14ζ(3)/π` in the limit) from Neuro-Symbolic
   Invariant Discovery. This needs a.e. differentiability and Stokes, which the abstract
   `IsometricFilling` does not provide.

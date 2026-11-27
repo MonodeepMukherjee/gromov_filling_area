@@ -42,3 +42,4 @@ public import GromovFillingArea.ConformalBoundaryLength
 public import GromovFillingArea.SharpFirstMode
 public import GromovFillingArea.QuarterCircleSquare
 public import GromovFillingArea.DiamondGeometry
+public import GromovFillingArea.DiamondAreaBound
