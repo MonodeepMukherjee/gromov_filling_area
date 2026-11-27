@@ -41,7 +41,7 @@ theorem fourierProj_lipschitzWith (n : ℤ) :
   rw [NNReal.coe_one, one_mul, dist_eq_norm, dist_eq_norm, fourierProj, fourierProj,
     ← fourierCoeff_sub_of_continuous _ _ (bcf_complex_continuous g) (bcf_complex_continuous h)]
   refine fourierCoeff_norm_le_of_norm_le _ _ (fun θ => ?_) n
-  show ‖(g θ : ℂ) - (h θ : ℂ)‖ ≤ ‖g - h‖
+  change ‖(g θ : ℂ) - (h θ : ℂ)‖ ≤ ‖g - h‖
   rw [← Complex.ofReal_sub, Complex.norm_real]
   exact (g - h).norm_coe_le_norm θ
 

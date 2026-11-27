@@ -24,3 +24,4 @@ public import GromovFillingArea.KuratowskiEmbedding
 public import GromovFillingArea.AreaContraction
 public import GromovFillingArea.FourierProjection
 public import GromovFillingArea.BoundaryCircleImage
+public import GromovFillingArea.BoundaryRadius
