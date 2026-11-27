@@ -22,3 +22,4 @@ public import GromovFillingArea.WeightedZetaBound
 public import GromovFillingArea.BoundaryProfile
 public import GromovFillingArea.KuratowskiEmbedding
 public import GromovFillingArea.AreaContraction
+public import GromovFillingArea.FourierProjection
