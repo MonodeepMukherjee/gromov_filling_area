@@ -8,13 +8,17 @@ module
 public import GromovFillingArea.MultiHarmonicBound
 
 /-!
-# Topological Filling & Disk Covering via Radial Retraction
+# Fundamental-Mode Boundary Circle & Radial Rescaling
 
-This file formalizes the elementary topological disk-covering principle:
-if `f : M → ℂ` maps the boundary `∂M` onto the circle `Sphere (0 : ℂ) R`
-(`R > 0`) and `M` admits no continuous retraction onto its boundary circle
-(the topological filling property), then `closedBall (0 : ℂ) R ⊆ range f`,
-discharging the `h_fill` hypothesis in `fundamental_mode_filling_area_bound`.
+This file proves two elementary facts used toward the disk-covering step:
+a radial rescaling lemma (`‖z‖ = R > 0` implies `‖R⁻¹ * z‖ = 1`), and that the
+fundamental Fourier projection `fourierProj 1 ∘ kuratowskiBanach F` maps every
+boundary point `F.ι θ₀` onto the circle `Metric.sphere (0 : ℂ) (2 / π)`.
+
+The disk-covering principle itself (a no-retraction / degree argument showing
+`closedBall (0 : ℂ) (2 / π) ⊆ range (fourierProj 1 ∘ kuratowskiBanach F)`, which
+would discharge the `h_fill` hypothesis of `fundamental_mode_filling_area_bound`)
+is not formalized here.
 -/
 
 open MeasureTheory Metric Set BoundedContinuousFunction AddCircle
@@ -33,9 +37,10 @@ theorem norm_inv_mul_eq_one {R : ℝ} (hR : 0 < R) {z : ℂ} (hz : ‖z‖ = R) 
   rw [norm_mul, Complex.norm_real, Real.norm_of_nonneg (inv_nonneg.mpr hR.le), hz,
     inv_mul_cancel₀ hR.ne']
 
-/-- **Lemma 2 (Boundary Winding Bijection on `Sphere 0 (2 / π)`):**
-The boundary map `θ₀ ↦ fourierProj 1 (kuratowskiBanach F (F.ι θ₀))` is injective
-on `Circle2Pi` and lands strictly on `Metric.sphere (0 : ℂ) (2 / Real.pi)`. -/
+/-- **Lemma 2 (Boundary Lands on `Sphere 0 (2 / π)`):**
+For every boundary angle `θ₀`, the point `fourierProj 1 (kuratowskiBanach F (F.ι θ₀))`
+lies on `Metric.sphere (0 : ℂ) (2 / Real.pi)`. (Injectivity and surjectivity of
+this boundary map are proved in `GromovFillingArea.BoundaryWinding`.) -/
 theorem fourierProj_one_boundary_mem_sphere (F : IsometricFilling M) (θ₀ : Circle2Pi) :
     fourierProj 1 (kuratowskiBanach F (F.ι θ₀)) ∈
       Metric.sphere (0 : ℂ) (2 / Real.pi) := by
