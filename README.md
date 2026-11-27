@@ -892,6 +892,133 @@ these meshes and this optimizer, not a property of true minimizers.
 - As above, a Steiner graph only upper-bounds intrinsic distance, so the certification
   is numerical evidence, not a proof.
 
+## Neuro-Symbolic Invariant Discovery (Genus 0–2)
+
+`scripts/conjecture_discovery.py` runs a closed-loop search for lower-bound functionals
+`Φ(M) ≤ Area(M)`. It evaluates them on the 12 certified extremal metrics above plus
+**200 strictly feasible random perturbations**. Each perturbation multiplies the free edge
+lengths by log-normal noise of random size `σ ∈ [0.01, 0.15]` and is restored by
+bisection. Of 258 attempts, 200 passed full re-certification: `k = 16` violation
+`≤ 10⁻¹⁰`, corner-cut bound `0`, triangle slacks, and boundary angles `≥ π`. That gives
+212 meshes, with areas `6.36–6.71` (g = 0, 72 meshes), `6.66–6.89` (g = 1, 72) and
+`7.01–7.68` (g = 2, 68).
+
+```bash
+.venv/bin/python3 scripts/conjecture_discovery.py --n-perturb 200   # ≈ 8 min on 8 cores
+```
+
+Results are in `benchmarks/conjecture_discovery.json`, which holds every functional's
+statistics, the per-mesh features, and the calibration weights.
+
+**Features.** For each mesh the script computes:
+
+- the Kuratowski matrix `D[v, j] = d_int(v, b_j)`, by `k = 16` Steiner Dijkstra;
+- discrete Fourier coefficients `f̂[v, m]`;
+- per-face PL gradients of every coordinate on coherently oriented face charts, which
+  give Jacobians `det J_f` and the calibration 2-forms `∫_f dx_i ∧ dx_j`;
+- antipodal excess `D[v, j] + D[v, j + n/2] − π`, and depth `min_j D[v, j]`.
+
+**Pipeline checks:**
+
+- **Stokes.** The face-by-face integrals `∫_M dx_i ∧ dx_j` match the boundary integrals
+  `∮ x_i dx_j` of the exact tent profiles to `3.9·10⁻¹¹` on every mesh.
+- **Boundary rows.** The boundary rows of `D` match `d_{S¹}` to `10⁻¹⁰`.
+- **Antipodal excess.** It is never below `−10⁻¹⁰`, as the `AntipodalRadius` theorem
+  requires.
+
+**Library (59 functionals, four families).**
+
+| Family | Count | Examples | Why `Φ ≤ Area` might hold |
+| :--- | :---: | :--- | :--- |
+| `proof-sketch` | 30 | `\|∫ dx_0 ∧ dx_s\|` for each separation `s`; Fourier-mode calibrations `\|∫ det D f̂_m\|` at Lipschitz constant 1 and at the sharp constant; `√2`-Parseval Kähler sums `2 Σ w_m \|I_m\|`; optimal weighted pair calibration `\|Σ w_ij ∫ dx_i ∧ dx_j\| / comass(w)` | Every coordinate map is 1-Lipschitz and every form has comass `≤ 1`, so `\|F*ω\| ≤ dA` pointwise on a Riemannian filling. By Stokes these values depend only on the boundary and are identical on every mesh. |
+| `mesh-sound-if-1-Lipschitz` | 15 | unsigned calibrations `∫ \|dx_i ∧ dx_{i+s}\|`, coarea `∫ \|∇δ\|`, Kuratowski Dirichlet energy `∫ mean_j \|∇x_j\|²`, spectral Hilbert–Schmidt energies | Only if the PL gradients have norm `≤ 1` |
+| `heuristic` | 8 | `c · inradius²`, antipodal-excess integrals, `1.1 ×` Dirichlet energy | No argument |
+| `control` | 6 | constants `4/π`, `π`, `7ζ(3)/π`, `π²/2`, `14ζ(3)/π`, `2π` | Calibrates the filter itself |
+
+**Soundness filter.** 52 functionals never exceed `Area(M)` on any of the 212 meshes. The
+7 violated ones are:
+
+| Functional | Family | Violations / 212 | `Φ / Area` range |
+| :--- | :--- | :---: | :---: |
+| `kuratowski_dirichlet_1.1` | heuristic | 212 | 1.093–1.420 |
+| `max_gradient` (`∫ max_j \|∇x_j\|`) | mesh-sound-if-1-Lip | 212 | 1.126–1.450 |
+| `inradius_sq_4` | heuristic | 212 | 1.101–1.437 |
+| `kuratowski_dirichlet_1.0` | mesh-sound-if-1-Lip | 174 | 0.993–1.291 |
+| `coarea_depth` | mesh-sound-if-1-Lip | 140 | 0.981–1.109 |
+| `inradius_sq_pi` | heuristic | 74 | 0.864–1.129 |
+| `kuratowski_dirichlet_0.9` | mesh-sound-if-1-Lip | 51 | 0.894–1.162 |
+
+The mesh-dependent failures come from discretization, not counterexamples. PL
+interpolation of the distance functions on these coarse meshes is not 1-Lipschitz:
+
+- the median PL gradient norm is `0.9996`, but the maximum is `14.3` on sliver faces;
+- 20 % of face-coordinate gradients exceed `1.05`.
+
+**Ranking.** The sound functionals ranked by worst-case tightness `min_M Φ / Area`:
+
+| Rank | Functional | Family | `min Φ` | Tightness `min Φ/A` | `min Φ / (4/π)` | `min Φ / (14ζ(3)/π)` |
+| :---: | :--- | :--- | :---: | :---: | :---: | :---: |
+| 1 | `constant_2pi` | control | 6.2832 | 0.818 | 4.935 | 1.173 |
+| 2 | `unsigned_pair_s4` | mesh-dependent | 4.9457 | 0.749 | 3.884 | 0.923 |
+| 3 | `unsigned_pair_s5` | mesh-dependent | 4.6575 | 0.710 | 3.658 | 0.869 |
+| 4 | `inradius_sq_8/pi` | heuristic | 4.7117 | 0.701 | 3.701 | 0.880 |
+| 5 | `constant_14zeta(3)/pi` | control | 5.3568 | 0.697 | 4.207 | 1.000 |
+| 6 | **`calibration_lp_n2048`** | proof-sketch | **5.3568** | 0.697 | **4.207** | **1.000** |
+| 8 | **`calibration_lp`** (`n = 16`) | proof-sketch | **5.3246** | 0.693 | 4.182 | 0.994 |
+| 9 | `calibration_sign` | proof-sketch | 5.1034 | 0.664 | 4.008 | 0.953 |
+| 12 | `pair_calibration_s4` | proof-sketch | 4.9348 `= π²/2` | 0.643 | 3.876 | 0.921 |
+| 24 | `fourier_mode1_sharp_lip` | proof-sketch | 3.1011 (`→ π`) | 0.404 | 2.436 | 0.579 |
+| 27 | `kahler_flat_upto7` | proof-sketch | 2.6623 (`→ 7ζ(3)/π`) | 0.347 | 2.091 | 0.497 |
+| 41 | `fourier_mode1_lip1` | proof-sketch | 1.2731 (`= 4/π`) | 0.166 | 1.000 | 0.238 |
+
+The top of this ranking shows the limit of the method. **`constant_2pi`, which *is* the
+conjecture, passes the empirical filter and ranks first.** Every mesh here has area
+`≥ 6.36`, so empirical soundness says nothing about whether a bound holds for all
+fillings. Only the `proof-sketch` rows carry an argument.
+
+**What the search found.**
+
+1. **The optimal Kuratowski calibration has value `14ζ(3)/π`.** The best constant-
+   coefficient 2-form `Σ_{i<j} w_ij dx_i ∧ dx_j` can be found exactly:
+   - The boundary invariant `I_ij = ∮ x_i dx_j` is rotation invariant, and comass is a
+     rotation-invariant norm, so averaging over rotations shows the optimum is a
+     circulant `w_ij = a_{j−i}`.
+   - For a circulant form, the top eigenvector of `−iW` is a Fourier phase vector of unit
+     modulus. So the spectral upper bound on the comass is attained, and the comass is
+     exact. Multi-start ascent reproduces it: `16.000000` vs `16`.
+   - The search is then a 7-variable LP for `n = 16`.
+
+   Its optimum is `5.3246`. Repeating the same LP with `n = 32, …, 2048` boundary points
+   gives `5.3486, 5.3547, 5.3563, 5.35664, 5.35674, 5.356764, 5.356770`.
+   Richardson extrapolation gives `5.3567723`, which equals the repo's target constant
+   `14ζ(3)/π = 5.3567723` to all 7 digits shown. The optimal weights converge to
+   `a_s = 4/(πs)` for odd `s` and `0` for even `s`, the square-wave Fourier coefficients
+   that pair with the `Σ_{odd} 1/k³ = (7/8) ζ(3)` series of `ZetaBound`. The
+   identification of the limit is numerical, not proved.
+2. **One antipodal-quarter pair already gives `π²/2`.** The map
+   `(d(·, b_0), d(·, b_4))` has 1-Lipschitz coordinates, so `|dx ∧ dy| ≤ 1`, and its
+   boundary curve encloses a square of area `π²/2 ≈ 4.935`.
+3. **The formal `4/π` argument has slack.** For each pair `x, y`,
+   `|f̂_x(1) − f̂_y(1)| ≤ (2/π) d(x, y)`, because `(1/2π) ∫ |cos| = 2/π`, not `1`. So
+   `(π/2) · f̂(1)` is Euclidean 1-Lipschitz, and the same covering argument as
+   `UniversalAreaBound` gives `π` instead of `4/π`. The discrete value is `3.1011` at
+   `n = 16` and converges to `π`. Unlike items 1–2, this needs no tangent planes, so it
+   fits the abstract metric-space `IsometricFilling` of `Basic.lean` directly.
+
+**What this does and does not show.**
+
+- Items 1–2 are **proof sketches for Riemannian, orientable fillings**. They need a.e.
+  differentiability (2-dimensional tangent planes, `|∇ d(·, b)| ≤ 1`) and Stokes on an
+  oriented surface. Neither is part of the abstract `IsometricFilling`, and none of the
+  sketches is formalized in Lean. Whether these bounds are already in the literature
+  was not checked.
+- Every proof-sketch bound is `≤ 2π`, as it must be (the hemisphere has area `2π`). The
+  best, `14ζ(3)/π ≈ 0.853 · 2π`, is the ceiling of constant-coefficient pair
+  calibrations, so closing the gap to `2π` needs different forms or maps.
+- Empirical soundness on 212 near-extremal meshes is weak evidence. Every mesh-dependent
+  functional is confounded by PL gradient overshoot, and the genus has no visible effect
+  on any proof-sketch functional, because those depend only on the boundary.
+
 ---
 
 ## Reproducing
@@ -959,9 +1086,11 @@ scripts/
   generate_report.py   # benchmark table generator
   explore_genus2.py    # genus 0–2 discrete filling-area search (numerical)
   discover_extremal_metrics.py # L-BFGS-B with exact (sub)gradients, genus 0–2
+  conjecture_discovery.py # lower-bound functional search; optimal calibration → 14ζ(3)/π
 benchmarks/results.jsonl
 benchmarks/genus_search.json
 benchmarks/extremal_discovery.json
+benchmarks/conjecture_discovery.json
 .github/workflows/lean_action_ci.yml
 ```
 
@@ -971,6 +1100,8 @@ benchmarks/extremal_discovery.json
 - Fourier-coefficient decay for 1-Lipschitz periodic functions, and the Wirtinger
   energy inequality.
 - Combine these into a formal (non-sharp) universal area lower bound.
+- Sharpen `fourierProj_lipschitzWith 1` to Lipschitz constant `2/π`, which lifts the
+  formal `4/π` bound to `π` (see Neuro-Symbolic Invariant Discovery).
 - Extend the telemetry with token counts and attempt-level diffs, so that
   different prover models can be compared on the same harness.
 

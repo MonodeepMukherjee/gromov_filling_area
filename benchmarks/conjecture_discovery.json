@@ -1,0 +1,6473 @@
+{
+  "description": "Closed-loop invariant & inequality discovery over certified discrete fillings (12 extremal metrics + strictly feasible perturbations, genus 0-2).",
+  "config": {
+    "input": "benchmarks/extremal_discovery.json",
+    "n_perturb": 200,
+    "strict_tol": 1e-10,
+    "refine": [
+      16,
+      32,
+      64,
+      128,
+      256,
+      512,
+      1024,
+      2048
+    ],
+    "workers": 8,
+    "seed": 2026,
+    "out": "benchmarks/conjecture_discovery.json"
+  },
+  "reference": {
+    "four_over_pi": 1.2732395447351628,
+    "pi": 3.141592653589793,
+    "seven_zeta3_over_pi": 2.6783861722181923,
+    "pi_sq_over_2": 4.934802200544679,
+    "fourteen_zeta3_over_pi": 5.356772344436385,
+    "two_pi": 6.283185307179586
+  },
+  "meshes": {
+    "extremal": 12,
+    "perturbed": 200,
+    "perturbations_attempted": 258,
+    "by_genus": {
+      "0": {
+        "meshes": 72,
+        "min_area": 6.357256099075918,
+        "max_area": 6.70784903126244
+      },
+      "1": {
+        "meshes": 72,
+        "min_area": 6.655874554844339,
+        "max_area": 6.894984821096449
+      },
+      "2": {
+        "meshes": 68,
+        "min_area": 7.007177006175305,
+        "max_area": 7.680454791018718
+      }
+    }
+  },
+  "checks": {
+    "stokes_max_abs_error": 3.929123693069414e-11,
+    "boundary_row_max_error": 9.999956418482725e-11,
+    "max_pl_gradient_norm": 14.250098226413984,
+    "max_area_fraction_with_pl_gradient_gt_1": 1.0,
+    "mean_area_fraction_with_pl_gradient_gt_1_05": 0.7687383194118785,
+    "mean_fraction_of_face_coordinate_gradients_gt_1_05": 0.20010407439531505,
+    "median_pl_gradient_norm": 0.9996209084996719,
+    "min_antipodal_excess": -1.000000082740371e-10
+  },
+  "continuum_pair_invariants_row0": [
+    7.134525402833945e-18,
+    2.1589759627382974,
+    3.7011016504085092,
+    4.626377063010636,
+    4.934802200544678,
+    4.626377063010635,
+    3.7011016504085092,
+    2.1589759627382965,
+    -7.134525402833945e-18,
+    -2.158975962738298,
+    -3.7011016504085092,
+    -4.626377063010635,
+    -4.934802200544678,
+    -4.626377063010636,
+    -3.7011016504085092,
+    -2.1589759627382987
+  ],
+  "sharp_fourier_lipschitz": {
+    "1": 0.6407288619353766,
+    "3": 0.6407288619353768,
+    "5": 0.640728861935377,
+    "7": 0.6407288619353773
+  },
+  "calibration_search": {
+    "lp": {
+      "value": 5.324615259279352,
+      "sound_value_spectral": 5.324615259279352,
+      "comass_estimate": 15.999999999402144,
+      "comass_spectral_bound": 16.00000000000002,
+      "lp_value": 5.324615259279358,
+      "a": [
+        -0.04972809184491507,
+        -0.0,
+        -0.16704465947982547,
+        -0.0,
+        -0.3741514406663726,
+        -0.0,
+        -1.2568348730314622
+      ],
+      "w": [
+        -0.04972809184491507,
+        -0.0,
+        -0.16704465947982547,
+        -0.0,
+        -0.3741514406663726,
+        -0.0,
+        -1.2568348730314622,
+        0.0,
+        1.2568348730314622,
+        0.0,
+        0.3741514406663726,
+        0.0,
+        0.16704465947982547,
+        0.0,
+        0.04972809184491507,
+        -0.04972809184491507,
+        -0.0,
+        -0.16704465947982547,
+        -0.0,
+        -0.3741514406663726,
+        -0.0,
+        -1.2568348730314622,
+        0.0,
+        1.2568348730314622,
+        0.0,
+        0.3741514406663726,
+        0.0,
+        0.16704465947982547,
+        0.0,
+        -0.04972809184491507,
+        -0.0,
+        -0.16704465947982547,
+        -0.0,
+        -0.3741514406663726,
+        -0.0,
+        -1.2568348730314622,
+        0.0,
+        1.2568348730314622,
+        0.0,
+        0.3741514406663726,
+        0.0,
+        0.16704465947982547,
+        -0.04972809184491507,
+        -0.0,
+        -0.16704465947982547,
+        -0.0,
+        -0.3741514406663726,
+        -0.0,
+        -1.2568348730314622,
+        0.0,
+        1.2568348730314622,
+        0.0,
+        0.3741514406663726,
+        0.0,
+        -0.04972809184491507,
+        -0.0,
+        -0.16704465947982547,
+        -0.0,
+        -0.3741514406663726,
+        -0.0,
+        -1.2568348730314622,
+        0.0,
+        1.2568348730314622,
+        0.0,
+        0.3741514406663726,
+        -0.04972809184491507,
+        -0.0,
+        -0.16704465947982547,
+        -0.0,
+        -0.3741514406663726,
+        -0.0,
+        -1.2568348730314622,
+        0.0,
+        1.2568348730314622,
+        0.0,
+        -0.04972809184491507,
+        -0.0,
+        -0.16704465947982547,
+        -0.0,
+        -0.3741514406663726,
+        -0.0,
+        -1.2568348730314622,
+        0.0,
+        1.2568348730314622,
+        -0.04972809184491507,
+        -0.0,
+        -0.16704465947982547,
+        -0.0,
+        -0.3741514406663726,
+        -0.0,
+        -1.2568348730314622,
+        0.0,
+        -0.04972809184491507,
+        -0.0,
+        -0.16704465947982547,
+        -0.0,
+        -0.3741514406663726,
+        -0.0,
+        -1.2568348730314622,
+        -0.04972809184491507,
+        -0.0,
+        -0.16704465947982547,
+        -0.0,
+        -0.3741514406663726,
+        -0.0,
+        -0.04972809184491507,
+        -0.0,
+        -0.16704465947982547,
+        -0.0,
+        -0.3741514406663726,
+        -0.04972809184491507,
+        -0.0,
+        -0.16704465947982547,
+        -0.0,
+        -0.04972809184491507,
+        -0.0,
+        -0.16704465947982547,
+        -0.04972809184491507,
+        -0.0,
+        -0.04972809184491507
+      ]
+    },
+    "sign": {
+      "value": 5.1033737372275185,
+      "sound_value_spectral": 5.103373737227513,
+      "comass_estimate": 81.22536310087078
+    },
+    "self": {
+      "value": 5.0995944345351365,
+      "sound_value_spectral": 5.09959443453506,
+      "comass_estimate": 325.9166267246844
+    },
+    "refine": [
+      {
+        "n": 16,
+        "value": 5.3246152592793505
+      },
+      {
+        "n": 32,
+        "value": 5.348627568546371,
+        "richardson": 5.356631671635379
+      },
+      {
+        "n": 64,
+        "value": 5.354729331169424,
+        "richardson": 5.356763252043775
+      },
+      {
+        "n": 128,
+        "value": 5.3562611611644835,
+        "richardson": 5.356771771162837
+      },
+      {
+        "n": 256,
+        "value": 5.356644521686634,
+        "richardson": 5.356772308527351
+      },
+      {
+        "n": 512,
+        "value": 5.356740387064758,
+        "richardson": 5.3567723421908
+      },
+      {
+        "n": 1024,
+        "value": 5.356764354988202,
+        "richardson": 5.356772344296016
+      },
+      {
+        "n": 2048,
+        "value": 5.3567703470677515,
+        "richardson": 5.356772344427601
+      }
+    ]
+  },
+  "ranking_empirically_sound": [
+    "constant_2pi",
+    "unsigned_pair_s4",
+    "unsigned_pair_s5",
+    "inradius_sq_8/pi",
+    "constant_14zeta(3)/pi",
+    "calibration_lp_n2048",
+    "unsigned_pair_s3",
+    "calibration_lp",
+    "calibration_sign",
+    "calibration_self",
+    "constant_pi^2/2",
+    "pair_calibration_s4",
+    "pair_calibration_s5",
+    "pair_calibration_s3",
+    "unsigned_pair_s6",
+    "unsigned_pair_s2",
+    "inradius_sq_2",
+    "fourier1_hs_energy",
+    "fourier_hs_energy",
+    "pair_calibration_s6",
+    "pair_calibration_s2",
+    "unsigned_fourier1_sharp",
+    "constant_pi",
+    "fourier_mode1_sharp_lip",
+    "unsigned_pair_s7",
+    "constant_7zeta(3)/pi",
+    "kahler_flat_upto7",
+    "kahler_flat_upto5",
+    "kahler_flat_upto3",
+    "kahler_inv_m_upto7",
+    "kahler_inv_m_upto5",
+    "kahler_inv_m_upto3",
+    "kahler_inv_m2_upto7",
+    "kahler_inv_m2_upto5",
+    "kahler_inv_m2_upto3",
+    "kahler_flat_upto1",
+    "unsigned_pair_s1",
+    "pair_calibration_s7",
+    "pair_calibration_s1",
+    "constant_4/pi",
+    "fourier_mode1_lip1",
+    "antipodal_excess_4",
+    "unsigned_pair_s8",
+    "antipodal_excess_2",
+    "antipodal_excess_1",
+    "fourier_mode3_sharp_lip",
+    "fourier_mode3_lip1",
+    "fourier_mode5_sharp_lip",
+    "fourier_mode5_lip1",
+    "fourier_mode7_sharp_lip",
+    "fourier_mode7_lip1",
+    "pair_calibration_s8"
+  ],
+  "ranking_proof_sketch_by_bound": [
+    "calibration_lp_n2048",
+    "calibration_lp",
+    "calibration_sign",
+    "calibration_self",
+    "pair_calibration_s4",
+    "pair_calibration_s5",
+    "pair_calibration_s3",
+    "pair_calibration_s6",
+    "pair_calibration_s2",
+    "fourier_mode1_sharp_lip",
+    "kahler_flat_upto7",
+    "kahler_flat_upto5",
+    "kahler_flat_upto3",
+    "kahler_inv_m_upto7",
+    "kahler_inv_m_upto5",
+    "kahler_inv_m_upto3",
+    "kahler_inv_m2_upto7",
+    "kahler_inv_m2_upto5",
+    "kahler_inv_m2_upto3",
+    "kahler_flat_upto1",
+    "pair_calibration_s1",
+    "pair_calibration_s7",
+    "fourier_mode1_lip1",
+    "fourier_mode3_sharp_lip",
+    "fourier_mode3_lip1",
+    "fourier_mode5_sharp_lip",
+    "fourier_mode5_lip1",
+    "fourier_mode7_sharp_lip",
+    "fourier_mode7_lip1",
+    "pair_calibration_s8"
+  ],
+  "functionals": [
+    {
+      "name": "pair_calibration_s1",
+      "family": "boundary-pair calibration",
+      "status": "proof-sketch",
+      "formula": "|int_M dx_0 ^ dx_1|, x_j = d(., b_j); comass 1 for 1-Lipschitz x_j",
+      "violations": 0,
+      "sound_empirically": true,
+      "min_ratio": 0.2811000157520523,
+      "max_ratio": 0.3396081468311643,
+      "worst_mesh": "perturb 46 of g2 r2 (sigma 0.137)",
+      "min_value": 2.1589759626990213,
+      "max_value": 2.1589759627382903,
+      "min_value_over_4_over_pi": 1.695655755923049,
+      "min_value_over_14zeta3_over_pi": 0.4030367213460849,
+      "constant_across_meshes": true,
+      "rank_tightness": 39
+    },
+    {
+      "name": "pair_calibration_s2",
+      "family": "boundary-pair calibration",
+      "status": "proof-sketch",
+      "formula": "|int_M dx_0 ^ dx_2|, x_j = d(., b_j); comass 1 for 1-Lipschitz x_j",
+      "violations": 0,
+      "sound_empirically": true,
+      "min_ratio": 0.4818857412892327,
+      "max_ratio": 0.5821853945677101,
+      "worst_mesh": "perturb 46 of g2 r2 (sigma 0.137)",
+      "min_value": 3.7011016503692256,
+      "max_value": 3.701101650408497,
+      "min_value_over_4_over_pi": 2.9068384387472546,
+      "min_value_over_14zeta3_over_pi": 0.6909200937413813,
+      "constant_across_meshes": true,
+      "rank_tightness": 21
+    },
+    {
+      "name": "pair_calibration_s3",
+      "family": "boundary-pair calibration",
+      "status": "proof-sketch",
+      "formula": "|int_M dx_0 ^ dx_3|, x_j = d(., b_j); comass 1 for 1-Lipschitz x_j",
+      "violations": 0,
+      "sound_empirically": true,
+      "min_ratio": 0.6023571766115409,
+      "max_ratio": 0.7277317432096374,
+      "worst_mesh": "perturb 46 of g2 r2 (sigma 0.137)",
+      "min_value": 4.626377062971349,
+      "max_value": 4.6263770630106205,
+      "min_value_over_4_over_pi": 3.6335480484417784,
+      "min_value_over_14zeta3_over_pi": 0.8636501171785592,
+      "constant_across_meshes": true,
+      "rank_tightness": 14
+    },
+    {
+      "name": "pair_calibration_s4",
+      "family": "boundary-pair calibration",
+      "status": "proof-sketch",
+      "formula": "|int_M dx_0 ^ dx_4|, x_j = d(., b_j); comass 1 for 1-Lipschitz x_j",
+      "violations": 0,
+      "sound_empirically": true,
+      "min_ratio": 0.6425143217189768,
+      "max_ratio": 0.7762471927507816,
+      "worst_mesh": "perturb 46 of g2 r2 (sigma 0.137)",
+      "min_value": 4.9348022005053895,
+      "max_value": 4.934802200544661,
+      "min_value_over_4_over_pi": 3.875784585006619,
+      "min_value_over_14zeta3_over_pi": 0.9212267916576184,
+      "constant_across_meshes": true,
+      "rank_tightness": 12
+    },
+    {
+      "name": "pair_calibration_s5",
+      "family": "boundary-pair calibration",
+      "status": "proof-sketch",
+      "formula": "|int_M dx_0 ^ dx_5|, x_j = d(., b_j); comass 1 for 1-Lipschitz x_j",
+      "violations": 0,
+      "sound_empirically": true,
+      "min_ratio": 0.6023571766115411,
+      "max_ratio": 0.7277317432096374,
+      "worst_mesh": "perturb 46 of g2 r2 (sigma 0.137)",
+      "min_value": 4.626377062971349,
+      "max_value": 4.6263770630106205,
+      "min_value_over_4_over_pi": 3.6335480484417784,
+      "min_value_over_14zeta3_over_pi": 0.8636501171785592,
+      "constant_across_meshes": true,
+      "rank_tightness": 13
+    },
+    {
+      "name": "pair_calibration_s6",
+      "family": "boundary-pair calibration",
+      "status": "proof-sketch",
+      "formula": "|int_M dx_0 ^ dx_6|, x_j = d(., b_j); comass 1 for 1-Lipschitz x_j",
+      "violations": 0,
+      "sound_empirically": true,
+      "min_ratio": 0.4818857412892327,
+      "max_ratio": 0.58218539456771,
+      "worst_mesh": "perturb 46 of g2 r2 (sigma 0.137)",
+      "min_value": 3.7011016503692264,
+      "max_value": 3.7011016504084964,
+      "min_value_over_4_over_pi": 2.906838438747255,
+      "min_value_over_14zeta3_over_pi": 0.6909200937413814,
+      "constant_across_meshes": true,
+      "rank_tightness": 20
+    },
+    {
+      "name": "pair_calibration_s7",
+      "family": "boundary-pair calibration",
+      "status": "proof-sketch",
+      "formula": "|int_M dx_0 ^ dx_7|, x_j = d(., b_j); comass 1 for 1-Lipschitz x_j",
+      "violations": 0,
+      "sound_empirically": true,
+      "min_ratio": 0.2811000157520525,
+      "max_ratio": 0.3396081468311642,
+      "worst_mesh": "perturb 46 of g2 r2 (sigma 0.137)",
+      "min_value": 2.158975962699021,
+      "max_value": 2.1589759627382903,
+      "min_value_over_4_over_pi": 1.6956557559230487,
+      "min_value_over_14zeta3_over_pi": 0.40303672134608487,
+      "constant_across_meshes": true,
+      "rank_tightness": 38
+    },
+    {
+      "name": "pair_calibration_s8",
+      "family": "boundary-pair calibration",
+      "status": "proof-sketch",
+      "formula": "|int_M dx_0 ^ dx_8|, x_j = d(., b_j); comass 1 for 1-Lipschitz x_j",
+      "violations": 0,
+      "sound_empirically": true,
+      "min_ratio": 0.0,
+      "max_ratio": 6.234381850018057e-17,
+      "worst_mesh": "perturb 26 of g0 r2 (sigma 0.065)",
+      "min_value": 0.0,
+      "max_value": 4.718447854656915e-16,
+      "min_value_over_4_over_pi": 0.0,
+      "min_value_over_14zeta3_over_pi": 0.0,
+      "constant_across_meshes": true,
+      "rank_tightness": 52
+    },
+    {
+      "name": "fourier_mode1_lip1",
+      "family": "Fourier-mode calibration",
+      "status": "proof-sketch",
+      "formula": "|int_M det D f_hat_1| (Lipschitz 1, as in UniversalAreaBound)",
+      "violations": 0,
+      "sound_empirically": true,
+      "min_ratio": 0.16575995273509717,
+      "max_ratio": 0.20026121384747922,
+      "worst_mesh": "perturb 46 of g2 r2 (sigma 0.137)",
+      "min_value": 1.2731118231402272,
+      "max_value": 1.2731118231433134,
+      "min_value_over_4_over_pi": 0.9998996876939115,
+      "min_value_over_14zeta3_over_pi": 0.23766397772391767,
+      "constant_across_meshes": true,
+      "rank_tightness": 41
+    },
+    {
+      "name": "fourier_mode1_sharp_lip",
+      "family": "Fourier-mode calibration",
+      "status": "proof-sketch",
+      "formula": "|int_M det D f_hat_1| / L^2, L = max_phi mean|cos(m theta - phi)| = 0.6407",
+      "violations": 0,
+      "sound_empirically": true,
+      "min_ratio": 0.4037672029792834,
+      "max_ratio": 0.4878072709736732,
+      "worst_mesh": "perturb 46 of g2 r2 (sigma 0.137)",
+      "min_value": 3.101115748570947,
+      "max_value": 3.1011157485784646,
+      "min_value_over_4_over_pi": 2.4356106134105246,
+      "min_value_over_14zeta3_over_pi": 0.5789149788662957,
+      "constant_across_meshes": true,
+      "rank_tightness": 24
+    },
+    {
+      "name": "fourier_mode3_lip1",
+      "family": "Fourier-mode calibration",
+      "status": "proof-sketch",
+      "formula": "|int_M det D f_hat_3| (Lipschitz 1, as in UniversalAreaBound)",
+      "violations": 0,
+      "sound_empirically": true,
+      "min_ratio": 0.006084744231213367,
+      "max_ratio": 0.007351222328234165,
+      "worst_mesh": "perturb 46 of g2 r2 (sigma 0.137)",
+      "min_value": 0.04673360298182793,
+      "max_value": 0.04673360298274623,
+      "min_value_over_4_over_pi": 0.03670448595087317,
+      "min_value_over_14zeta3_over_pi": 0.00872420927694754,
+      "constant_across_meshes": true,
+      "rank_tightness": 47
+    },
+    {
+      "name": "fourier_mode3_sharp_lip",
+      "family": "Fourier-mode calibration",
+      "status": "proof-sketch",
+      "formula": "|int_M det D f_hat_3| / L^2, L = max_phi mean|cos(m theta - phi)| = 0.6407",
+      "violations": 0,
+      "sound_empirically": true,
+      "min_ratio": 0.014821554413734788,
+      "max_ratio": 0.017906511367636838,
+      "worst_mesh": "perturb 46 of g2 r2 (sigma 0.137)",
+      "min_value": 0.1138362786050772,
+      "max_value": 0.11383627860731403,
+      "min_value_over_4_over_pi": 0.08940680414442786,
+      "min_value_over_14zeta3_over_pi": 0.021250908436179685,
+      "constant_across_meshes": true,
+      "rank_tightness": 46
+    },
+    {
+      "name": "fourier_mode5_lip1",
+      "family": "Fourier-mode calibration",
+      "status": "proof-sketch",
+      "formula": "|int_M det D f_hat_5| (Lipschitz 1, as in UniversalAreaBound)",
+      "violations": 0,
+      "sound_empirically": true,
+      "min_ratio": 0.00121286559040478,
+      "max_ratio": 0.0014653113212838831,
+      "worst_mesh": "perturb 46 of g2 r2 (sigma 0.137)",
+      "min_value": 0.009315359334276175,
+      "max_value": 0.009315359334686144,
+      "min_value_over_4_over_pi": 0.007316266112527784,
+      "min_value_over_14zeta3_over_pi": 0.001738987348221216,
+      "constant_across_meshes": true,
+      "rank_tightness": 49
+    },
+    {
+      "name": "fourier_mode5_sharp_lip",
+      "family": "Fourier-mode calibration",
+      "status": "proof-sketch",
+      "formula": "|int_M det D f_hat_5| / L^2, L = max_phi mean|cos(m theta - phi)| = 0.6407",
+      "violations": 0,
+      "sound_empirically": true,
+      "min_ratio": 0.002954364663762749,
+      "max_ratio": 0.003569285849364259,
+      "worst_mesh": "perturb 46 of g2 r2 (sigma 0.137)",
+      "min_value": 0.022690864235214398,
+      "max_value": 0.022690864236213023,
+      "min_value_over_4_over_pi": 0.017821363096238232,
+      "min_value_over_14zeta3_over_pi": 0.004235920956913809,
+      "constant_across_meshes": true,
+      "rank_tightness": 48
+    },
+    {
+      "name": "fourier_mode7_lip1",
+      "family": "Fourier-mode calibration",
+      "status": "proof-sketch",
+      "formula": "|int_M det D f_hat_7| (Lipschitz 1, as in UniversalAreaBound)",
+      "violations": 0,
+      "sound_empirically": true,
+      "min_ratio": 0.0002594936645442519,
+      "max_ratio": 0.0003135046516775997,
+      "worst_mesh": "perturb 46 of g2 r2 (sigma 0.137)",
+      "min_value": 0.001993029358965859,
+      "max_value": 0.0019930293590879034,
+      "min_value_over_4_over_pi": 0.0015653215981289794,
+      "min_value_over_14zeta3_over_pi": 0.00037205787941237524,
+      "constant_across_meshes": true,
+      "rank_tightness": 51
+    },
+    {
+      "name": "fourier_mode7_sharp_lip",
+      "family": "Fourier-mode calibration",
+      "status": "proof-sketch",
+      "formula": "|int_M det D f_hat_7| / L^2, L = max_phi mean|cos(m theta - phi)| = 0.6407",
+      "violations": 0,
+      "sound_empirically": true,
+      "min_ratio": 0.0006320889297749678,
+      "max_ratio": 0.0007636518606587215,
+      "worst_mesh": "perturb 46 of g2 r2 (sigma 0.137)",
+      "min_value": 0.004854730448742763,
+      "max_value": 0.004854730449040045,
+      "min_value_over_4_over_pi": 0.003812896378232236,
+      "min_value_over_14zeta3_over_pi": 0.0009062790308393358,
+      "constant_across_meshes": true,
+      "rank_tightness": 50
+    },
+    {
+      "name": "kahler_flat_upto3",
+      "family": "Parseval Kahler sum",
+      "status": "proof-sketch",
+      "formula": "2 sum_{m odd <= 3} w_m |I_m| / max w, w_m = flat; sqrt2 (f_hat_m)_m is 1-Lipschitz into l2",
+      "violations": 0,
+      "sound_empirically": true,
+      "min_ratio": 0.3436893939326211,
+      "max_ratio": 0.41522487235142674,
+      "worst_mesh": "perturb 46 of g2 r2 (sigma 0.137)",
+      "min_value": 2.6396908522441103,
+      "max_value": 2.6396908522521194,
+      "min_value_over_4_over_pi": 2.0732083472895693,
+      "min_value_over_14zeta3_over_pi": 0.49277637400173047,
+      "constant_across_meshes": true,
+      "rank_tightness": 29
+    },
+    {
+      "name": "kahler_flat_upto5",
+      "family": "Parseval Kahler sum",
+      "status": "proof-sketch",
+      "formula": "2 sum_{m odd <= 5} w_m |I_m| / max w, w_m = flat; sqrt2 (f_hat_m)_m is 1-Lipschitz into l2",
+      "violations": 0,
+      "sound_empirically": true,
+      "min_ratio": 0.3461151251134307,
+      "max_ratio": 0.4181554949939945,
+      "worst_mesh": "perturb 46 of g2 r2 (sigma 0.137)",
+      "min_value": 2.6583215709126624,
+      "max_value": 2.658321570921492,
+      "min_value_over_4_over_pi": 2.0878408795146246,
+      "min_value_over_14zeta3_over_pi": 0.4962543486981728,
+      "constant_across_meshes": true,
+      "rank_tightness": 28
+    },
+    {
+      "name": "kahler_flat_upto7",
+      "family": "Parseval Kahler sum",
+      "status": "proof-sketch",
+      "formula": "2 sum_{m odd <= 7} w_m |I_m| / max w, w_m = flat; sqrt2 (f_hat_m)_m is 1-Lipschitz into l2",
+      "violations": 0,
+      "sound_empirically": true,
+      "min_ratio": 0.3466341124425192,
+      "max_ratio": 0.4187825042973497,
+      "worst_mesh": "perturb 46 of g2 r2 (sigma 0.137)",
+      "min_value": 2.662307629630594,
+      "max_value": 2.6623076296396677,
+      "min_value_over_4_over_pi": 2.0909715227108827,
+      "min_value_over_14zeta3_over_pi": 0.4969984644569976,
+      "constant_across_meshes": true,
+      "rank_tightness": 27
+    },
+    {
+      "name": "kahler_inv_m_upto3",
+      "family": "Parseval Kahler sum",
+      "status": "proof-sketch",
+      "formula": "2 sum_{m odd <= 3} w_m |I_m| / max w, w_m = inv_m; sqrt2 (f_hat_m)_m is 1-Lipschitz into l2",
+      "violations": 0,
+      "sound_empirically": true,
+      "min_ratio": 0.3355764016243366,
+      "max_ratio": 0.4054232425804479,
+      "worst_mesh": "perturb 46 of g2 r2 (sigma 0.137)",
+      "min_value": 2.577379381601673,
+      "max_value": 2.577379381608458,
+      "min_value_over_4_over_pi": 2.0242690326884047,
+      "min_value_over_14zeta3_over_pi": 0.4811440949658004,
+      "constant_across_meshes": true,
+      "rank_tightness": 32
+    },
+    {
+      "name": "kahler_inv_m_upto5",
+      "family": "Parseval Kahler sum",
+      "status": "proof-sketch",
+      "formula": "2 sum_{m odd <= 5} w_m |I_m| / max w, w_m = inv_m; sqrt2 (f_hat_m)_m is 1-Lipschitz into l2",
+      "violations": 0,
+      "sound_empirically": true,
+      "min_ratio": 0.3360615478604985,
+      "max_ratio": 0.4060093671089614,
+      "worst_mesh": "perturb 46 of g2 r2 (sigma 0.137)",
+      "min_value": 2.5811055253353836,
+      "max_value": 2.5811055253423323,
+      "min_value_over_4_over_pi": 2.027195539133416,
+      "min_value_over_14zeta3_over_pi": 0.4818396899050889,
+      "constant_across_meshes": true,
+      "rank_tightness": 31
+    },
+    {
+      "name": "kahler_inv_m_upto7",
+      "family": "Parseval Kahler sum",
+      "status": "proof-sketch",
+      "formula": "2 sum_{m odd <= 7} w_m |I_m| / max w, w_m = inv_m; sqrt2 (f_hat_m)_m is 1-Lipschitz into l2",
+      "violations": 0,
+      "sound_empirically": true,
+      "min_ratio": 0.3361356889075112,
+      "max_ratio": 0.4060989398665836,
+      "worst_mesh": "perturb 46 of g2 r2 (sigma 0.137)",
+      "min_value": 2.581674962295088,
+      "max_value": 2.581674962302072,
+      "min_value_over_4_over_pi": 2.0276427738757388,
+      "min_value_over_14zeta3_over_pi": 0.4819459921563496,
+      "constant_across_meshes": true,
+      "rank_tightness": 30
+    },
+    {
+      "name": "kahler_inv_m2_upto3",
+      "family": "Parseval Kahler sum",
+      "status": "proof-sketch",
+      "formula": "2 sum_{m odd <= 3} w_m |I_m| / max w, w_m = inv_m2; sqrt2 (f_hat_m)_m is 1-Lipschitz into l2",
+      "violations": 0,
+      "sound_empirically": true,
+      "min_ratio": 0.33287207085490844,
+      "max_ratio": 0.40215603265678823,
+      "worst_mesh": "perturb 46 of g2 r2 (sigma 0.137)",
+      "min_value": 2.556608891387527,
+      "max_value": 2.556608891393904,
+      "min_value_over_4_over_pi": 2.00795592782135,
+      "min_value_over_14zeta3_over_pi": 0.47726666862049033,
+      "constant_across_meshes": true,
+      "rank_tightness": 35
+    },
+    {
+      "name": "kahler_inv_m2_upto5",
+      "family": "Parseval Kahler sum",
+      "status": "proof-sketch",
+      "formula": "2 sum_{m odd <= 5} w_m |I_m| / max w, w_m = inv_m2; sqrt2 (f_hat_m)_m is 1-Lipschitz into l2",
+      "violations": 0,
+      "sound_empirically": true,
+      "min_ratio": 0.33296910010214087,
+      "max_ratio": 0.40227325756249094,
+      "worst_mesh": "perturb 46 of g2 r2 (sigma 0.137)",
+      "min_value": 2.5573541201342693,
+      "max_value": 2.557354120140679,
+      "min_value_over_4_over_pi": 2.0085412291103526,
+      "min_value_over_14zeta3_over_pi": 0.47740578760834806,
+      "constant_across_meshes": true,
+      "rank_tightness": 34
+    },
+    {
+      "name": "kahler_inv_m2_upto7",
+      "family": "Parseval Kahler sum",
+      "status": "proof-sketch",
+      "formula": "2 sum_{m odd <= 7} w_m |I_m| / max w, w_m = inv_m2; sqrt2 (f_hat_m)_m is 1-Lipschitz into l2",
+      "violations": 0,
+      "sound_empirically": true,
+      "min_ratio": 0.3329796916802855,
+      "max_ratio": 0.4022860536707227,
+      "worst_mesh": "perturb 46 of g2 r2 (sigma 0.137)",
+      "min_value": 2.55743546827137,
+      "max_value": 2.5574354682777845,
+      "min_value_over_4_over_pi": 2.008605119787827,
+      "min_value_over_14zeta3_over_pi": 0.47742097364424246,
+      "constant_across_meshes": true,
+      "rank_tightness": 33
+    },
+    {
+      "name": "calibration_lp_n2048",
+      "family": "weighted pair calibration",
+      "status": "proof-sketch",
+      "formula": "exact LP optimum with 2048 boundary points (boundary-only; same value for every filling, not evaluated face by face)",
+      "violations": 0,
+      "sound_empirically": true,
+      "min_ratio": 0.697454837353094,
+      "max_ratio": 0.8426230221944975,
+      "worst_mesh": "perturb 46 of g2 r2 (sigma 0.137)",
+      "min_value": 5.3567703470677515,
+      "max_value": 5.3567703470677515,
+      "min_value_over_4_over_pi": 4.2071975923289235,
+      "min_value_over_14zeta3_over_pi": 0.9999996271320667,
+      "constant_across_meshes": true,
+      "rank_tightness": 6
+    },
+    {
+      "name": "kahler_flat_upto1",
+      "family": "Parseval Kahler sum",
+      "status": "proof-sketch",
+      "formula": "2 |I_1|",
+      "violations": 0,
+      "sound_empirically": true,
+      "min_ratio": 0.33151990547019433,
+      "max_ratio": 0.40052242769495844,
+      "worst_mesh": "perturb 46 of g2 r2 (sigma 0.137)",
+      "min_value": 2.5462236462804544,
+      "max_value": 2.546223646286627,
+      "min_value_over_4_over_pi": 1.999799375387823,
+      "min_value_over_14zeta3_over_pi": 0.47532795544783535,
+      "constant_across_meshes": true,
+      "rank_tightness": 36
+    },
+    {
+      "name": "calibration_lp",
+      "family": "weighted pair calibration",
+      "status": "proof-sketch",
+      "formula": "|sum w_ij int dx_i ^ dx_j| / comass(w), exact optimum over all w_ij (circulant LP)",
+      "violations": 0,
+      "sound_empirically": true,
+      "min_ratio": 0.6932682248850378,
+      "max_ratio": 0.8375650085946993,
+      "worst_mesh": "perturb 46 of g2 r2 (sigma 0.137)",
+      "min_value": 5.32461525926119,
+      "max_value": 5.324615259279331,
+      "min_value_over_4_over_pi": 4.181943045421766,
+      "min_value_over_14zeta3_over_pi": 0.9939969289139955,
+      "constant_across_meshes": true,
+      "rank_tightness": 8
+    },
+    {
+      "name": "calibration_sign",
+      "family": "weighted pair calibration",
+      "status": "proof-sketch",
+      "formula": "|sum w_ij int dx_i ^ dx_j| / comass(w), w_ij = sign(I_ij)",
+      "violations": 0,
+      "sound_empirically": true,
+      "min_ratio": 0.6644624408433759,
+      "max_ratio": 0.8027635913475256,
+      "worst_mesh": "perturb 46 of g2 r2 (sigma 0.137)",
+      "min_value": 5.10337373721011,
+      "max_value": 5.103373737227498,
+      "min_value_over_4_over_pi": 4.008180360335593,
+      "min_value_over_14zeta3_over_pi": 0.9526956549703932,
+      "constant_across_meshes": true,
+      "rank_tightness": 9
+    },
+    {
+      "name": "calibration_self",
+      "family": "weighted pair calibration",
+      "status": "proof-sketch",
+      "formula": "|sum w_ij int dx_i ^ dx_j| / comass(w), w_ij = I_ij",
+      "violations": 0,
+      "sound_empirically": true,
+      "min_ratio": 0.6639703732776894,
+      "max_ratio": 0.8021691048845815,
+      "worst_mesh": "perturb 46 of g2 r2 (sigma 0.137)",
+      "min_value": 5.0995944345177415,
+      "max_value": 5.099594434535116,
+      "min_value_over_4_over_pi": 4.005212102942083,
+      "min_value_over_14zeta3_over_pi": 0.9519901363391424,
+      "constant_across_meshes": true,
+      "rank_tightness": 10
+    },
+    {
+      "name": "unsigned_pair_s1",
+      "family": "unsigned calibration",
+      "status": "mesh-sound-if-1-Lipschitz",
+      "formula": "mean_i int_M |dx_i ^ dx_(i+1)|",
+      "violations": 0,
+      "sound_empirically": true,
+      "min_ratio": 0.32433552806263516,
+      "max_ratio": 0.3563481903997368,
+      "worst_mesh": "perturb 146 of g0 r2 (sigma 0.019)",
+      "min_value": 2.158975962728473,
+      "max_value": 2.68962416603113,
+      "min_value_over_4_over_pi": 1.6956557559461802,
+      "min_value_over_14zeta3_over_pi": 0.4030367213515829,
+      "constant_across_meshes": false,
+      "rank_tightness": 37
+    },
+    {
+      "name": "unsigned_pair_s2",
+      "family": "unsigned calibration",
+      "status": "mesh-sound-if-1-Lipschitz",
+      "formula": "mean_i int_M |dx_i ^ dx_(i+2)|",
+      "violations": 0,
+      "sound_empirically": true,
+      "min_ratio": 0.5554689094184427,
+      "max_ratio": 0.610044174716346,
+      "worst_mesh": "perturb 146 of g0 r2 (sigma 0.019)",
+      "min_value": 3.7011016503986784,
+      "max_value": 4.597238824914454,
+      "min_value_over_4_over_pi": 2.9068384387703867,
+      "min_value_over_14zeta3_over_pi": 0.6909200937468796,
+      "constant_across_meshes": false,
+      "rank_tightness": 16
+    },
+    {
+      "name": "unsigned_pair_s3",
+      "family": "unsigned calibration",
+      "status": "mesh-sound-if-1-Lipschitz",
+      "formula": "mean_i int_M |dx_i ^ dx_(i+3)|",
+      "violations": 0,
+      "sound_empirically": true,
+      "min_ratio": 0.6973736792955869,
+      "max_ratio": 0.7654756429274691,
+      "worst_mesh": "perturb 146 of g0 r2 (sigma 0.019)",
+      "min_value": 4.626968536945661,
+      "max_value": 5.75906791935626,
+      "min_value_over_4_over_pi": 3.6340125910149004,
+      "min_value_over_14zeta3_over_pi": 0.8637605332904044,
+      "constant_across_meshes": false,
+      "rank_tightness": 7
+    },
+    {
+      "name": "unsigned_pair_s4",
+      "family": "unsigned calibration",
+      "status": "mesh-sound-if-1-Lipschitz",
+      "formula": "mean_i int_M |dx_i ^ dx_(i+4)|",
+      "violations": 0,
+      "sound_empirically": true,
+      "min_ratio": 0.7488080429413633,
+      "max_ratio": 0.8216872412400092,
+      "worst_mesh": "perturb 146 of g0 r2 (sigma 0.019)",
+      "min_value": 4.945654692400219,
+      "max_value": 6.187379454664825,
+      "min_value_over_4_over_pi": 3.884308112209104,
+      "min_value_over_14zeta3_over_pi": 0.9232527302633725,
+      "constant_across_meshes": false,
+      "rank_tightness": 2
+    },
+    {
+      "name": "unsigned_pair_s5",
+      "family": "unsigned calibration",
+      "status": "mesh-sound-if-1-Lipschitz",
+      "formula": "mean_i int_M |dx_i ^ dx_(i+5)|",
+      "violations": 0,
+      "sound_empirically": true,
+      "min_ratio": 0.7101247567412003,
+      "max_ratio": 0.7824538928328179,
+      "worst_mesh": "perturb 146 of g0 r2 (sigma 0.019)",
+      "min_value": 4.657519252321293,
+      "max_value": 5.901332747650106,
+      "min_value_over_4_over_pi": 3.6580070667614004,
+      "min_value_over_14zeta3_over_pi": 0.869463727940325,
+      "constant_across_meshes": false,
+      "rank_tightness": 3
+    },
+    {
+      "name": "unsigned_pair_s6",
+      "family": "unsigned calibration",
+      "status": "mesh-sound-if-1-Lipschitz",
+      "formula": "mean_i int_M |dx_i ^ dx_(i+6)|",
+      "violations": 0,
+      "sound_empirically": true,
+      "min_ratio": 0.5826221772337018,
+      "max_ratio": 0.6524745402171283,
+      "worst_mesh": "perturb 194 of g0 r2 (sigma 0.016)",
+      "min_value": 3.759262137506744,
+      "max_value": 4.9366861349319775,
+      "min_value_over_4_over_pi": 2.9525175785273623,
+      "min_value_over_14zeta3_over_pi": 0.7017774689288716,
+      "constant_across_meshes": false,
+      "rank_tightness": 15
+    },
+    {
+      "name": "unsigned_pair_s7",
+      "family": "unsigned calibration",
+      "status": "mesh-sound-if-1-Lipschitz",
+      "formula": "mean_i int_M |dx_i ^ dx_(i+7)|",
+      "violations": 0,
+      "sound_empirically": true,
+      "min_ratio": 0.3511912306870673,
+      "max_ratio": 0.4538572856122306,
+      "worst_mesh": "perturb 195 of g0 r3 (sigma 0.069)",
+      "min_value": 2.2492338089123054,
+      "max_value": 3.434986799230525,
+      "min_value_over_4_over_pi": 1.7665441025711717,
+      "min_value_over_14zeta3_over_pi": 0.4198860179765507,
+      "constant_across_meshes": false,
+      "rank_tightness": 25
+    },
+    {
+      "name": "unsigned_pair_s8",
+      "family": "unsigned calibration",
+      "status": "mesh-sound-if-1-Lipschitz",
+      "formula": "mean_i int_M |dx_i ^ dx_(i+8)|",
+      "violations": 0,
+      "sound_empirically": true,
+      "min_ratio": 0.05931164461321448,
+      "max_ratio": 0.2831611820931156,
+      "worst_mesh": "perturb 0 of g0 r0 (sigma 0.146)",
+      "min_value": 0.3772924056311838,
+      "max_value": 2.1494513585122204,
+      "min_value_over_4_over_pi": 0.2963247624465368,
+      "min_value_over_14zeta3_over_pi": 0.0704327870164288,
+      "constant_across_meshes": false,
+      "rank_tightness": 43
+    },
+    {
+      "name": "unsigned_fourier1_sharp",
+      "family": "unsigned calibration",
+      "status": "mesh-sound-if-1-Lipschitz",
+      "formula": "int_M |det D f_hat_1| / L_1^2",
+      "violations": 0,
+      "sound_empirically": true,
+      "min_ratio": 0.4530333038736043,
+      "max_ratio": 0.4896579210919381,
+      "worst_mesh": "perturb 10 of g2 r2 (sigma 0.087)",
+      "min_value": 3.101115748570947,
+      "max_value": 3.6718617347891076,
+      "min_value_over_4_over_pi": 2.4356106134105246,
+      "min_value_over_14zeta3_over_pi": 0.5789149788662957,
+      "constant_across_meshes": false,
+      "rank_tightness": 22
+    },
+    {
+      "name": "coarea_depth",
+      "family": "coarea",
+      "status": "mesh-sound-if-1-Lipschitz",
+      "formula": "int_M |grad delta|, delta = min_j d(., b_j)",
+      "violations": 140,
+      "sound_empirically": false,
+      "min_ratio": 0.980631853574078,
+      "max_ratio": 1.1092915711040285,
+      "worst_mesh": "perturb 0 of g0 r0 (sigma 0.146)",
+      "min_value": 6.236282100981176,
+      "max_value": 7.851434661140683,
+      "min_value_over_4_over_pi": 4.897964508538996,
+      "min_value_over_14zeta3_over_pi": 1.164186510083495,
+      "constant_across_meshes": false
+    },
+    {
+      "name": "max_gradient",
+      "family": "coarea",
+      "status": "mesh-sound-if-1-Lipschitz",
+      "formula": "int_M max_j |grad x_j|",
+      "violations": 212,
+      "sound_empirically": false,
+      "min_ratio": 1.1258797681187664,
+      "max_ratio": 1.4501139529088616,
+      "worst_mesh": "perturb 0 of g0 r0 (sigma 0.146)",
+      "min_value": 7.1593230039811075,
+      "max_value": 10.975084995942396,
+      "min_value_over_4_over_pi": 5.622919138495864,
+      "min_value_over_14zeta3_over_pi": 1.3364993962113914,
+      "constant_across_meshes": false
+    },
+    {
+      "name": "kuratowski_dirichlet_0.9",
+      "family": "Kuratowski Dirichlet energy",
+      "status": "mesh-sound-if-1-Lipschitz",
+      "formula": "0.9 * int_M mean_j |grad x_j|^2",
+      "violations": 51,
+      "sound_empirically": false,
+      "min_ratio": 0.8940972164251304,
+      "max_ratio": 1.1617280518593727,
+      "worst_mesh": "perturb 72 of g0 r0 (sigma 0.066)",
+      "min_value": 5.686308410554301,
+      "max_value": 8.762757125217801,
+      "min_value_over_4_over_pi": 4.4660161821608115,
+      "min_value_over_14zeta3_over_pi": 1.0615176537155209,
+      "constant_across_meshes": false
+    },
+    {
+      "name": "kuratowski_dirichlet_1.0",
+      "family": "Kuratowski Dirichlet energy",
+      "status": "mesh-sound-if-1-Lipschitz",
+      "formula": "1.0 * int_M mean_j |grad x_j|^2",
+      "violations": 174,
+      "sound_empirically": false,
+      "min_ratio": 0.9934413515834782,
+      "max_ratio": 1.2908089465104138,
+      "worst_mesh": "perturb 72 of g0 r0 (sigma 0.066)",
+      "min_value": 6.318120456171446,
+      "max_value": 9.736396805797556,
+      "min_value_over_4_over_pi": 4.962240202400902,
+      "min_value_over_14zeta3_over_pi": 1.179464059683912,
+      "constant_across_meshes": false
+    },
+    {
+      "name": "kuratowski_dirichlet_1.1",
+      "family": "Kuratowski Dirichlet energy",
+      "status": "heuristic",
+      "formula": "1.1 * int_M mean_j |grad x_j|^2",
+      "violations": 212,
+      "sound_empirically": false,
+      "min_ratio": 1.092785486741826,
+      "max_ratio": 1.4198898411614553,
+      "worst_mesh": "perturb 72 of g0 r0 (sigma 0.066)",
+      "min_value": 6.949932501788591,
+      "max_value": 10.710036486377312,
+      "min_value_over_4_over_pi": 5.458464222640992,
+      "min_value_over_14zeta3_over_pi": 1.2974104656523033,
+      "constant_across_meshes": false
+    },
+    {
+      "name": "fourier_hs_energy",
+      "family": "spectral Dirichlet energy",
+      "status": "mesh-sound-if-1-Lipschitz",
+      "formula": "int_M |D (sqrt2 f_hat_m)_{m=1..7}|_HS^2 / 2",
+      "violations": 0,
+      "sound_empirically": true,
+      "min_ratio": 0.4873187098878786,
+      "max_ratio": 0.626058962259723,
+      "worst_mesh": "perturb 146 of g0 r2 (sigma 0.019)",
+      "min_value": 3.1455808777900356,
+      "max_value": 4.722277837371127,
+      "min_value_over_4_over_pi": 2.470533444234427,
+      "min_value_over_14zeta3_over_pi": 0.587215710418808,
+      "constant_across_meshes": false,
+      "rank_tightness": 19
+    },
+    {
+      "name": "fourier1_hs_energy",
+      "family": "spectral Dirichlet energy",
+      "status": "mesh-sound-if-1-Lipschitz",
+      "formula": "int_M |D f_hat_1|_HS^2 / (2 L_1^2)",
+      "violations": 0,
+      "sound_empirically": true,
+      "min_ratio": 0.5490403746029069,
+      "max_ratio": 0.6920331222920753,
+      "worst_mesh": "perturb 146 of g0 r2 (sigma 0.019)",
+      "min_value": 3.5888344358909463,
+      "max_value": 5.2199119781482795,
+      "min_value_over_4_over_pi": 2.8186639746862663,
+      "min_value_over_14zeta3_over_pi": 0.6699620975340417,
+      "constant_across_meshes": false,
+      "rank_tightness": 18
+    },
+    {
+      "name": "inradius_sq_2",
+      "family": "inradius",
+      "status": "heuristic",
+      "formula": "2 * (max_v min_j d(v, b_j))^2",
+      "violations": 0,
+      "sound_empirically": true,
+      "min_ratio": 0.5502835711659158,
+      "max_ratio": 0.7187170598034435,
+      "worst_mesh": "perturb 81 of g2 r1 (sigma 0.144)",
+      "min_value": 3.700590803946689,
+      "max_value": 4.892257037634711,
+      "min_value_over_4_over_pi": 2.906437220905216,
+      "min_value_over_14zeta3_over_pi": 0.6908247291468662,
+      "constant_across_meshes": false,
+      "rank_tightness": 17
+    },
+    {
+      "name": "inradius_sq_pi",
+      "family": "inradius",
+      "status": "heuristic",
+      "formula": "pi * (max_v min_j d(v, b_j))^2",
+      "violations": 74,
+      "sound_empirically": false,
+      "min_ratio": 0.8643834122829985,
+      "max_ratio": 1.128958117544077,
+      "worst_mesh": "perturb 81 of g2 r1 (sigma 0.144)",
+      "min_value": 5.812874441810432,
+      "max_value": 7.684739384453087,
+      "min_value_over_4_over_pi": 4.56542091065788,
+      "min_value_over_14zeta3_over_pi": 1.0851449470029766,
+      "constant_across_meshes": false
+    },
+    {
+      "name": "inradius_sq_8/pi",
+      "family": "inradius",
+      "status": "heuristic",
+      "formula": "8/pi * (max_v min_j d(v, b_j))^2",
+      "violations": 0,
+      "sound_empirically": true,
+      "min_ratio": 0.7006428036265301,
+      "max_ratio": 0.9150989820175311,
+      "worst_mesh": "perturb 81 of g2 r1 (sigma 0.144)",
+      "min_value": 4.711738550468212,
+      "max_value": 6.229015123325416,
+      "min_value_over_4_over_pi": 3.700590803946689,
+      "min_value_over_14zeta3_over_pi": 0.879585363630748,
+      "constant_across_meshes": false,
+      "rank_tightness": 4
+    },
+    {
+      "name": "inradius_sq_4",
+      "family": "inradius",
+      "status": "heuristic",
+      "formula": "4 * (max_v min_j d(v, b_j))^2",
+      "violations": 212,
+      "sound_empirically": false,
+      "min_ratio": 1.1005671423318315,
+      "max_ratio": 1.437434119606887,
+      "worst_mesh": "perturb 81 of g2 r1 (sigma 0.144)",
+      "min_value": 7.401181607893378,
+      "max_value": 9.784514075269422,
+      "min_value_over_4_over_pi": 5.812874441810432,
+      "min_value_over_14zeta3_over_pi": 1.3816494582937324,
+      "constant_across_meshes": false
+    },
+    {
+      "name": "antipodal_excess_1",
+      "family": "antipodal excess",
+      "status": "heuristic",
+      "formula": "1 * int_M mean_j (d(., b_j) + d(., b_j+n/2) - pi)",
+      "violations": 0,
+      "sound_empirically": true,
+      "min_ratio": 0.016032666377783365,
+      "max_ratio": 0.11305380860831066,
+      "worst_mesh": "perturb 168 of g0 r0 (sigma 0.060)",
+      "min_value": 0.1019237661146127,
+      "max_value": 0.8683046659686128,
+      "min_value_over_4_over_pi": 0.08005073871296788,
+      "min_value_over_14zeta3_over_pi": 0.019027085633099954,
+      "constant_across_meshes": false,
+      "rank_tightness": 45
+    },
+    {
+      "name": "antipodal_excess_2",
+      "family": "antipodal excess",
+      "status": "heuristic",
+      "formula": "2 * int_M mean_j (d(., b_j) + d(., b_j+n/2) - pi)",
+      "violations": 0,
+      "sound_empirically": true,
+      "min_ratio": 0.03206533275556673,
+      "max_ratio": 0.22610761721662131,
+      "worst_mesh": "perturb 168 of g0 r0 (sigma 0.060)",
+      "min_value": 0.2038475322292254,
+      "max_value": 1.7366093319372256,
+      "min_value_over_4_over_pi": 0.16010147742593575,
+      "min_value_over_14zeta3_over_pi": 0.03805417126619991,
+      "constant_across_meshes": false,
+      "rank_tightness": 44
+    },
+    {
+      "name": "antipodal_excess_4",
+      "family": "antipodal excess",
+      "status": "heuristic",
+      "formula": "4 * int_M mean_j (d(., b_j) + d(., b_j+n/2) - pi)",
+      "violations": 0,
+      "sound_empirically": true,
+      "min_ratio": 0.06413066551113346,
+      "max_ratio": 0.45221523443324263,
+      "worst_mesh": "perturb 168 of g0 r0 (sigma 0.060)",
+      "min_value": 0.4076950644584508,
+      "max_value": 3.473218663874451,
+      "min_value_over_4_over_pi": 0.3202029548518715,
+      "min_value_over_14zeta3_over_pi": 0.07610834253239981,
+      "constant_across_meshes": false,
+      "rank_tightness": 42
+    },
+    {
+      "name": "constant_4/pi",
+      "family": "constant",
+      "status": "control",
+      "formula": "Phi = 4/pi",
+      "violations": 0,
+      "sound_empirically": true,
+      "min_ratio": 0.1657765821659479,
+      "max_ratio": 0.2002813045270017,
+      "worst_mesh": "perturb 46 of g2 r2 (sigma 0.137)",
+      "min_value": 1.2732395447351628,
+      "max_value": 1.2732395447351628,
+      "min_value_over_4_over_pi": 1.0,
+      "min_value_over_14zeta3_over_pi": 0.237687820737345,
+      "constant_across_meshes": true,
+      "rank_tightness": 40
+    },
+    {
+      "name": "constant_pi",
+      "family": "constant",
+      "status": "control",
+      "formula": "Phi = pi",
+      "violations": 0,
+      "sound_empirically": true,
+      "min_ratio": 0.40903732123564773,
+      "max_ratio": 0.4941743111539035,
+      "worst_mesh": "perturb 46 of g2 r2 (sigma 0.137)",
+      "min_value": 3.141592653589793,
+      "max_value": 3.141592653589793,
+      "min_value_over_4_over_pi": 2.4674011002723395,
+      "min_value_over_14zeta3_over_pi": 0.5864711904086597,
+      "constant_across_meshes": true,
+      "rank_tightness": 23
+    },
+    {
+      "name": "constant_7zeta(3)/pi",
+      "family": "constant",
+      "status": "control",
+      "formula": "Phi = 7 zeta(3)/pi",
+      "violations": 0,
+      "sound_empirically": true,
+      "min_ratio": 0.34872754870586736,
+      "max_ratio": 0.42131166819085974,
+      "worst_mesh": "perturb 46 of g2 r2 (sigma 0.137)",
+      "min_value": 2.6783861722181923,
+      "max_value": 2.6783861722181923,
+      "min_value_over_4_over_pi": 2.10359958052929,
+      "min_value_over_14zeta3_over_pi": 0.5,
+      "constant_across_meshes": true,
+      "rank_tightness": 26
+    },
+    {
+      "name": "constant_pi^2/2",
+      "family": "constant",
+      "status": "control",
+      "formula": "Phi = pi^2/2",
+      "violations": 0,
+      "sound_empirically": true,
+      "min_ratio": 0.6425143217189796,
+      "max_ratio": 0.7762471927569499,
+      "worst_mesh": "perturb 46 of g2 r2 (sigma 0.137)",
+      "min_value": 4.934802200544679,
+      "max_value": 4.934802200544679,
+      "min_value_over_4_over_pi": 3.875784585037477,
+      "min_value_over_14zeta3_over_pi": 0.921226791664953,
+      "constant_across_meshes": true,
+      "rank_tightness": 11
+    },
+    {
+      "name": "constant_14zeta(3)/pi",
+      "family": "constant",
+      "status": "control",
+      "formula": "Phi = 14 zeta(3)/pi",
+      "violations": 0,
+      "sound_empirically": true,
+      "min_ratio": 0.6974550974117347,
+      "max_ratio": 0.8426233363817195,
+      "worst_mesh": "perturb 46 of g2 r2 (sigma 0.137)",
+      "min_value": 5.356772344436385,
+      "max_value": 5.356772344436385,
+      "min_value_over_4_over_pi": 4.20719916105858,
+      "min_value_over_14zeta3_over_pi": 1.0,
+      "constant_across_meshes": true,
+      "rank_tightness": 5
+    },
+    {
+      "name": "constant_2pi",
+      "family": "constant",
+      "status": "control",
+      "formula": "Phi = 2 pi",
+      "violations": 0,
+      "sound_empirically": true,
+      "min_ratio": 0.8180746424712955,
+      "max_ratio": 0.988348622307807,
+      "worst_mesh": "perturb 46 of g2 r2 (sigma 0.137)",
+      "min_value": 6.283185307179586,
+      "max_value": 6.283185307179586,
+      "min_value_over_4_over_pi": 4.934802200544679,
+      "min_value_over_14zeta3_over_pi": 1.1729423808173194,
+      "constant_across_meshes": true,
+      "rank_tightness": 1
+    }
+  ],
+  "per_mesh": [
+    {
+      "label": "extremal g0 r0",
+      "genus": 0,
+      "area": 6.360828507004484,
+      "inradius": 1.3609466660651415,
+      "coarea": 6.238202874304353,
+      "dirichlet": 6.320501379133253,
+      "max_pl_grad": 1.3360460917590946
+    },
+    {
+      "label": "extremal g0 r1",
+      "genus": 0,
+      "area": 6.444682359131155,
+      "inradius": 1.4258256456884293,
+      "coarea": 6.330716532743296,
+      "dirichlet": 6.416506510192187,
+      "max_pl_grad": 1.6302150783924338
+    },
+    {
+      "label": "extremal g0 r2",
+      "genus": 0,
+      "area": 6.59539276733463,
+      "inradius": 1.422768829266336,
+      "coarea": 6.497019245749055,
+      "dirichlet": 6.6055816048030085,
+      "max_pl_grad": 2.4584824336622466
+    },
+    {
+      "label": "extremal g0 r3",
+      "genus": 0,
+      "area": 6.3929630242545725,
+      "inradius": 1.4175640304550274,
+      "coarea": 6.301910768524682,
+      "dirichlet": 6.467354157665427,
+      "max_pl_grad": 2.2761405138383983
+    },
+    {
+      "label": "extremal g1 r0",
+      "genus": 1,
+      "area": 6.657838401633578,
+      "inradius": 1.5348371544182555,
+      "coarea": 7.212975711599148,
+      "dirichlet": 6.6687300480734,
+      "max_pl_grad": 2.162005424328882
+    },
+    {
+      "label": "extremal g1 r1",
+      "genus": 1,
+      "area": 6.824169466054279,
+      "inradius": 1.4712770585227084,
+      "coarea": 7.283768348621737,
+      "dirichlet": 6.986019065201954,
+      "max_pl_grad": 3.2746815126010427
+    },
+    {
+      "label": "extremal g1 r2",
+      "genus": 1,
+      "area": 6.827388098000852,
+      "inradius": 1.5330174732625483,
+      "coarea": 7.559781678397133,
+      "dirichlet": 7.057320161305565,
+      "max_pl_grad": 3.833406885775534
+    },
+    {
+      "label": "extremal g1 r3",
+      "genus": 1,
+      "area": 6.7724480372367415,
+      "inradius": 1.5526904988321453,
+      "coarea": 7.379087473367829,
+      "dirichlet": 6.904571782044947,
+      "max_pl_grad": 2.855861292622188
+    },
+    {
+      "label": "extremal g2 r0",
+      "genus": 2,
+      "area": 7.009131437860905,
+      "inradius": 1.4876958967050928,
+      "coarea": 7.134981052655206,
+      "dirichlet": 7.298427658170501,
+      "max_pl_grad": 3.0577876433437794
+    },
+    {
+      "label": "extremal g2 r1",
+      "genus": 2,
+      "area": 7.5664532772967,
+      "inradius": 1.4515377798621463,
+      "coarea": 7.78989442997008,
+      "dirichlet": 9.138306491812008,
+      "max_pl_grad": 4.9288572389696315
+    },
+    {
+      "label": "extremal g2 r2",
+      "genus": 2,
+      "area": 7.616361703816,
+      "inradius": 1.548284666350772,
+      "coarea": 7.655079490668395,
+      "dirichlet": 8.664538842035354,
+      "max_pl_grad": 3.5438780539590646
+    },
+    {
+      "label": "extremal g2 r3",
+      "genus": 2,
+      "area": 7.329871967122025,
+      "inradius": 1.5610197105093504,
+      "coarea": 7.480079684041815,
+      "dirichlet": 8.260361280556323,
+      "max_pl_grad": 4.987117454286864
+    },
+    {
+      "label": "perturb 0 of g0 r0 (sigma 0.146)",
+      "genus": 0,
+      "area": 6.3611860384516135,
+      "inradius": 1.3602556384640883,
+      "coarea": 6.237981655816352,
+      "dirichlet": 6.320591283602683,
+      "max_pl_grad": 1.331771279657965
+    },
+    {
+      "label": "perturb 1 of g0 r1 (sigma 0.041)",
+      "genus": 0,
+      "area": 6.4458000767487,
+      "inradius": 1.4250416518988098,
+      "coarea": 6.3340408725007205,
+      "dirichlet": 6.416165657696891,
+      "max_pl_grad": 1.6332951261589939
+    },
+    {
+      "label": "perturb 2 of g0 r2 (sigma 0.145)",
+      "genus": 0,
+      "area": 6.592547182965212,
+      "inradius": 1.4212354534174112,
+      "coarea": 6.4933723338739116,
+      "dirichlet": 6.608385805920811,
+      "max_pl_grad": 2.6928523908535165
+    },
+    {
+      "label": "perturb 3 of g0 r3 (sigma 0.148)",
+      "genus": 0,
+      "area": 6.3929630242545725,
+      "inradius": 1.4175640304550274,
+      "coarea": 6.301910768524682,
+      "dirichlet": 6.467354157665427,
+      "max_pl_grad": 2.2761405138383983
+    },
+    {
+      "label": "perturb 4 of g1 r0 (sigma 0.086)",
+      "genus": 1,
+      "area": 6.656793986202308,
+      "inradius": 1.5333863803986258,
+      "coarea": 7.213451585634235,
+      "dirichlet": 6.668087528107962,
+      "max_pl_grad": 2.2112240448475955
+    },
+    {
+      "label": "perturb 5 of g1 r1 (sigma 0.127)",
+      "genus": 1,
+      "area": 6.824169466054279,
+      "inradius": 1.4712770585227084,
+      "coarea": 7.283768348621737,
+      "dirichlet": 6.986019065201954,
+      "max_pl_grad": 3.2746815126010427
+    },
+    {
+      "label": "perturb 6 of g1 r2 (sigma 0.035)",
+      "genus": 1,
+      "area": 6.837567590172858,
+      "inradius": 1.5133692409585724,
+      "coarea": 7.5297568260201855,
+      "dirichlet": 7.075736761071128,
+      "max_pl_grad": 3.322227479023942
+    },
+    {
+      "label": "perturb 7 of g1 r3 (sigma 0.068)",
+      "genus": 1,
+      "area": 6.772448037234051,
+      "inradius": 1.5526904988234784,
+      "coarea": 7.379087473352046,
+      "dirichlet": 6.904571782004229,
+      "max_pl_grad": 2.855861291345322
+    },
+    {
+      "label": "perturb 8 of g2 r0 (sigma 0.083)",
+      "genus": 2,
+      "area": 7.060612526125589,
+      "inradius": 1.4851220554935638,
+      "coarea": 7.167015381746394,
+      "dirichlet": 7.301064570509633,
+      "max_pl_grad": 2.959730177930876
+    },
+    {
+      "label": "perturb 9 of g2 r1 (sigma 0.092)",
+      "genus": 2,
+      "area": 7.5664532772967,
+      "inradius": 1.4515377798621463,
+      "coarea": 7.78989442997008,
+      "dirichlet": 9.138306491812008,
+      "max_pl_grad": 4.9288572389696315
+    },
+    {
+      "label": "perturb 10 of g2 r2 (sigma 0.087)",
+      "genus": 2,
+      "area": 7.611429640561062,
+      "inradius": 1.5385717083980093,
+      "coarea": 7.680662176409252,
+      "dirichlet": 8.68078302349119,
+      "max_pl_grad": 4.4540585605257785
+    },
+    {
+      "label": "perturb 11 of g2 r3 (sigma 0.111)",
+      "genus": 2,
+      "area": 7.329871967122025,
+      "inradius": 1.5610197105093504,
+      "coarea": 7.480079684041815,
+      "dirichlet": 8.260361280556323,
+      "max_pl_grad": 4.987117454286864
+    },
+    {
+      "label": "perturb 12 of g0 r0 (sigma 0.135)",
+      "genus": 0,
+      "area": 6.360828507004484,
+      "inradius": 1.3609466660651415,
+      "coarea": 6.238202874304353,
+      "dirichlet": 6.320501379133253,
+      "max_pl_grad": 1.3360460917590946
+    },
+    {
+      "label": "perturb 13 of g0 r1 (sigma 0.105)",
+      "genus": 0,
+      "area": 6.456372271736429,
+      "inradius": 1.4056841828716227,
+      "coarea": 6.333695904743067,
+      "dirichlet": 6.423234991772979,
+      "max_pl_grad": 1.6362813305343673
+    },
+    {
+      "label": "perturb 14 of g0 r2 (sigma 0.119)",
+      "genus": 0,
+      "area": 6.595392767330835,
+      "inradius": 1.42276882926617,
+      "coarea": 6.497019245745533,
+      "dirichlet": 6.605581604800619,
+      "max_pl_grad": 2.458482433705835
+    },
+    {
+      "label": "perturb 15 of g0 r3 (sigma 0.060)",
+      "genus": 0,
+      "area": 6.391181829741482,
+      "inradius": 1.4166741678827908,
+      "coarea": 6.300267894503571,
+      "dirichlet": 6.464761250345851,
+      "max_pl_grad": 2.2635737309730497
+    },
+    {
+      "label": "perturb 16 of g1 r0 (sigma 0.136)",
+      "genus": 1,
+      "area": 6.657838401631643,
+      "inradius": 1.5348371544185544,
+      "coarea": 7.212975711599681,
+      "dirichlet": 6.668730048071495,
+      "max_pl_grad": 2.1620054243202027
+    },
+    {
+      "label": "perturb 17 of g1 r1 (sigma 0.090)",
+      "genus": 1,
+      "area": 6.824169466054279,
+      "inradius": 1.4712770585227084,
+      "coarea": 7.283768348621737,
+      "dirichlet": 6.986019065201954,
+      "max_pl_grad": 3.2746815126010427
+    },
+    {
+      "label": "perturb 18 of g1 r2 (sigma 0.098)",
+      "genus": 1,
+      "area": 6.827388098000852,
+      "inradius": 1.5330174732625483,
+      "coarea": 7.559781678397133,
+      "dirichlet": 7.057320161305565,
+      "max_pl_grad": 3.833406885775534
+    },
+    {
+      "label": "perturb 19 of g1 r3 (sigma 0.024)",
+      "genus": 1,
+      "area": 6.772448037235652,
+      "inradius": 1.55269049883355,
+      "coarea": 7.379087473368749,
+      "dirichlet": 6.904571782043336,
+      "max_pl_grad": 2.855861292634973
+    },
+    {
+      "label": "perturb 20 of g2 r0 (sigma 0.069)",
+      "genus": 2,
+      "area": 7.026864455504657,
+      "inradius": 1.4789213330015951,
+      "coarea": 7.1448498487971035,
+      "dirichlet": 7.2995653920464445,
+      "max_pl_grad": 3.148801157243196
+    },
+    {
+      "label": "perturb 21 of g2 r1 (sigma 0.067)",
+      "genus": 2,
+      "area": 7.566453277296438,
+      "inradius": 1.4515377798623081,
+      "coarea": 7.789894429970123,
+      "dirichlet": 9.138306491822064,
+      "max_pl_grad": 4.928857238987639
+    },
+    {
+      "label": "perturb 22 of g2 r2 (sigma 0.071)",
+      "genus": 2,
+      "area": 7.6163617038137845,
+      "inradius": 1.548284666350564,
+      "coarea": 7.655079490666999,
+      "dirichlet": 8.664538842039134,
+      "max_pl_grad": 3.5438780539781476
+    },
+    {
+      "label": "perturb 23 of g2 r3 (sigma 0.089)",
+      "genus": 2,
+      "area": 7.329871967122025,
+      "inradius": 1.5610197105093504,
+      "coarea": 7.480079684041815,
+      "dirichlet": 8.260361280556323,
+      "max_pl_grad": 4.987117454286864
+    },
+    {
+      "label": "perturb 24 of g0 r0 (sigma 0.065)",
+      "genus": 0,
+      "area": 6.360828507004484,
+      "inradius": 1.3609466660651415,
+      "coarea": 6.238202874304353,
+      "dirichlet": 6.320501379133253,
+      "max_pl_grad": 1.3360460917590946
+    },
+    {
+      "label": "perturb 25 of g0 r1 (sigma 0.055)",
+      "genus": 0,
+      "area": 6.444682359132031,
+      "inradius": 1.425825645689099,
+      "coarea": 6.330716532744499,
+      "dirichlet": 6.416506510192799,
+      "max_pl_grad": 1.6302150783979064
+    },
+    {
+      "label": "perturb 26 of g0 r2 (sigma 0.065)",
+      "genus": 0,
+      "area": 6.595392767330455,
+      "inradius": 1.4227688292674587,
+      "coarea": 6.4970192457498515,
+      "dirichlet": 6.605581604800573,
+      "max_pl_grad": 2.4584824336569118
+    },
+    {
+      "label": "perturb 27 of g0 r3 (sigma 0.108)",
+      "genus": 0,
+      "area": 6.404385189332788,
+      "inradius": 1.417898411426933,
+      "coarea": 6.305977940914079,
+      "dirichlet": 6.468397238344511,
+      "max_pl_grad": 2.1642963295589674
+    },
+    {
+      "label": "perturb 28 of g1 r0 (sigma 0.138)",
+      "genus": 1,
+      "area": 6.6578384016372585,
+      "inradius": 1.5348371544185453,
+      "coarea": 7.212975711599258,
+      "dirichlet": 6.668730048076453,
+      "max_pl_grad": 2.162005424350247
+    },
+    {
+      "label": "perturb 29 of g1 r1 (sigma 0.093)",
+      "genus": 1,
+      "area": 6.795968500258594,
+      "inradius": 1.4646060339099352,
+      "coarea": 7.269230908165444,
+      "dirichlet": 6.973569348994388,
+      "max_pl_grad": 3.444945551031372
+    },
+    {
+      "label": "perturb 30 of g1 r2 (sigma 0.102)",
+      "genus": 1,
+      "area": 6.827388098000852,
+      "inradius": 1.5330174732625483,
+      "coarea": 7.559781678397133,
+      "dirichlet": 7.057320161305565,
+      "max_pl_grad": 3.833406885775534
+    },
+    {
+      "label": "perturb 31 of g1 r3 (sigma 0.068)",
+      "genus": 1,
+      "area": 6.8185022468033525,
+      "inradius": 1.5512302618382474,
+      "coarea": 7.43406072143441,
+      "dirichlet": 7.016132986756785,
+      "max_pl_grad": 5.254338967664188
+    },
+    {
+      "label": "perturb 32 of g2 r0 (sigma 0.064)",
+      "genus": 2,
+      "area": 7.009131437860905,
+      "inradius": 1.4876958967050928,
+      "coarea": 7.134981052655206,
+      "dirichlet": 7.298427658170501,
+      "max_pl_grad": 3.0577876433437794
+    },
+    {
+      "label": "perturb 33 of g2 r1 (sigma 0.134)",
+      "genus": 2,
+      "area": 7.542864365883914,
+      "inradius": 1.4548361276935964,
+      "coarea": 7.779339101296554,
+      "dirichlet": 9.736396805797556,
+      "max_pl_grad": 14.250098226413984
+    },
+    {
+      "label": "perturb 34 of g2 r2 (sigma 0.140)",
+      "genus": 2,
+      "area": 7.616361703813805,
+      "inradius": 1.5482846663506662,
+      "coarea": 7.655079490666587,
+      "dirichlet": 8.664538842038308,
+      "max_pl_grad": 3.5438780539916013
+    },
+    {
+      "label": "perturb 35 of g2 r3 (sigma 0.027)",
+      "genus": 2,
+      "area": 7.337236116178911,
+      "inradius": 1.5446626490529476,
+      "coarea": 7.490325209926104,
+      "dirichlet": 8.521959808921299,
+      "max_pl_grad": 9.596366513189619
+    },
+    {
+      "label": "perturb 36 of g0 r0 (sigma 0.025)",
+      "genus": 0,
+      "area": 6.360828507004484,
+      "inradius": 1.3609466660651415,
+      "coarea": 6.238202874304353,
+      "dirichlet": 6.320501379133253,
+      "max_pl_grad": 1.3360460917590946
+    },
+    {
+      "label": "perturb 37 of g0 r1 (sigma 0.143)",
+      "genus": 0,
+      "area": 6.44468235913084,
+      "inradius": 1.425825645689025,
+      "coarea": 6.3307165327433905,
+      "dirichlet": 6.416506510191784,
+      "max_pl_grad": 1.6302150783931417
+    },
+    {
+      "label": "perturb 38 of g0 r2 (sigma 0.033)",
+      "genus": 0,
+      "area": 6.595392767339364,
+      "inradius": 1.4227688292634544,
+      "coarea": 6.497019245750816,
+      "dirichlet": 6.605581604804224,
+      "max_pl_grad": 2.4584824335651514
+    },
+    {
+      "label": "perturb 39 of g0 r3 (sigma 0.143)",
+      "genus": 0,
+      "area": 6.410396260003366,
+      "inradius": 1.4182367346626106,
+      "coarea": 6.313039468632528,
+      "dirichlet": 6.47270776013083,
+      "max_pl_grad": 2.1179225482709163
+    },
+    {
+      "label": "perturb 40 of g1 r0 (sigma 0.126)",
+      "genus": 1,
+      "area": 6.659469500374435,
+      "inradius": 1.5432367387746504,
+      "coarea": 7.222731326747763,
+      "dirichlet": 6.675599370887971,
+      "max_pl_grad": 2.805900857517792
+    },
+    {
+      "label": "perturb 41 of g1 r1 (sigma 0.122)",
+      "genus": 1,
+      "area": 6.8685639778577166,
+      "inradius": 1.4909738653258957,
+      "coarea": 7.292849934406751,
+      "dirichlet": 6.977558363067918,
+      "max_pl_grad": 2.8393005165588825
+    },
+    {
+      "label": "perturb 42 of g1 r2 (sigma 0.013)",
+      "genus": 1,
+      "area": 6.836529218251253,
+      "inradius": 1.5414408310258942,
+      "coarea": 7.564572661997515,
+      "dirichlet": 7.120603356839113,
+      "max_pl_grad": 8.76656192557679
+    },
+    {
+      "label": "perturb 43 of g1 r3 (sigma 0.130)",
+      "genus": 1,
+      "area": 6.801103163939249,
+      "inradius": 1.5633407928865533,
+      "coarea": 7.388796790359553,
+      "dirichlet": 6.930510594320148,
+      "max_pl_grad": 2.485068828385505
+    },
+    {
+      "label": "perturb 44 of g2 r0 (sigma 0.068)",
+      "genus": 2,
+      "area": 7.009131437860905,
+      "inradius": 1.4876958967050928,
+      "coarea": 7.134981052655206,
+      "dirichlet": 7.298427658170501,
+      "max_pl_grad": 3.0577876433437794
+    },
+    {
+      "label": "perturb 45 of g2 r1 (sigma 0.098)",
+      "genus": 2,
+      "area": 7.61913396873012,
+      "inradius": 1.4488070295693973,
+      "coarea": 7.779299294631788,
+      "dirichlet": 8.967244505947598,
+      "max_pl_grad": 5.974572087610107
+    },
+    {
+      "label": "perturb 46 of g2 r2 (sigma 0.137)",
+      "genus": 2,
+      "area": 7.680454791018718,
+      "inradius": 1.5229389610205144,
+      "coarea": 7.746058551161927,
+      "dirichlet": 8.716492578006696,
+      "max_pl_grad": 7.264130899944462
+    },
+    {
+      "label": "perturb 47 of g2 r3 (sigma 0.106)",
+      "genus": 2,
+      "area": 7.290086856648673,
+      "inradius": 1.5640103960068026,
+      "coarea": 7.424993867305407,
+      "dirichlet": 8.476516479168033,
+      "max_pl_grad": 8.923469134790786
+    },
+    {
+      "label": "perturb 48 of g0 r0 (sigma 0.025)",
+      "genus": 0,
+      "area": 6.360828507004484,
+      "inradius": 1.3609466660651415,
+      "coarea": 6.238202874304353,
+      "dirichlet": 6.320501379133253,
+      "max_pl_grad": 1.3360460917590946
+    },
+    {
+      "label": "perturb 49 of g0 r1 (sigma 0.024)",
+      "genus": 0,
+      "area": 6.440439368803553,
+      "inradius": 1.4229328298120094,
+      "coarea": 6.32416120532328,
+      "dirichlet": 6.413371348719058,
+      "max_pl_grad": 1.621681536884311
+    },
+    {
+      "label": "perturb 50 of g0 r2 (sigma 0.104)",
+      "genus": 0,
+      "area": 6.595392767334491,
+      "inradius": 1.4227688292663032,
+      "coarea": 6.497019245748707,
+      "dirichlet": 6.605581604802441,
+      "max_pl_grad": 2.4584824336588564
+    },
+    {
+      "label": "perturb 51 of g0 r3 (sigma 0.114)",
+      "genus": 0,
+      "area": 6.392307599789133,
+      "inradius": 1.4173807947220858,
+      "coarea": 6.302375683183328,
+      "dirichlet": 6.467766003017038,
+      "max_pl_grad": 2.292768688626852
+    },
+    {
+      "label": "perturb 52 of g1 r0 (sigma 0.055)",
+      "genus": 1,
+      "area": 6.661115074269446,
+      "inradius": 1.5345567605365564,
+      "coarea": 7.2117317038934905,
+      "dirichlet": 6.672138361587358,
+      "max_pl_grad": 2.160367033566291
+    },
+    {
+      "label": "perturb 53 of g1 r1 (sigma 0.108)",
+      "genus": 1,
+      "area": 6.824169466054279,
+      "inradius": 1.4712770585227084,
+      "coarea": 7.283768348621737,
+      "dirichlet": 6.986019065201954,
+      "max_pl_grad": 3.2746815126010427
+    },
+    {
+      "label": "perturb 54 of g1 r2 (sigma 0.021)",
+      "genus": 1,
+      "area": 6.802906316969683,
+      "inradius": 1.525870957795329,
+      "coarea": 7.543676227003319,
+      "dirichlet": 7.084341141278024,
+      "max_pl_grad": 5.983415214327718
+    },
+    {
+      "label": "perturb 55 of g1 r3 (sigma 0.132)",
+      "genus": 1,
+      "area": 6.772448037236158,
+      "inradius": 1.5526904988329073,
+      "coarea": 7.379087473370002,
+      "dirichlet": 6.904571782045332,
+      "max_pl_grad": 2.855861292685594
+    },
+    {
+      "label": "perturb 56 of g2 r0 (sigma 0.120)",
+      "genus": 2,
+      "area": 7.009131437860905,
+      "inradius": 1.4876958967050928,
+      "coarea": 7.134981052655206,
+      "dirichlet": 7.298427658170501,
+      "max_pl_grad": 3.0577876433437794
+    },
+    {
+      "label": "perturb 57 of g2 r1 (sigma 0.090)",
+      "genus": 2,
+      "area": 7.566453277296741,
+      "inradius": 1.4515377798621834,
+      "coarea": 7.789894429970303,
+      "dirichlet": 9.138306491811791,
+      "max_pl_grad": 4.9288572389701795
+    },
+    {
+      "label": "perturb 58 of g2 r2 (sigma 0.107)",
+      "genus": 2,
+      "area": 7.616361703805277,
+      "inradius": 1.5482846663518104,
+      "coarea": 7.655079490663607,
+      "dirichlet": 8.664538842048428,
+      "max_pl_grad": 3.5438780537347263
+    },
+    {
+      "label": "perturb 59 of g2 r3 (sigma 0.074)",
+      "genus": 2,
+      "area": 7.329871967122025,
+      "inradius": 1.5610197105093504,
+      "coarea": 7.480079684041815,
+      "dirichlet": 8.260361280556323,
+      "max_pl_grad": 4.987117454286864
+    },
+    {
+      "label": "perturb 60 of g0 r0 (sigma 0.077)",
+      "genus": 0,
+      "area": 6.360828507004484,
+      "inradius": 1.3609466660651415,
+      "coarea": 6.238202874304353,
+      "dirichlet": 6.320501379133253,
+      "max_pl_grad": 1.3360460917590946
+    },
+    {
+      "label": "perturb 61 of g0 r1 (sigma 0.079)",
+      "genus": 0,
+      "area": 6.444682359129896,
+      "inradius": 1.4258256456835516,
+      "coarea": 6.330716532733938,
+      "dirichlet": 6.416506510190848,
+      "max_pl_grad": 1.6302150784150535
+    },
+    {
+      "label": "perturb 62 of g0 r2 (sigma 0.012)",
+      "genus": 0,
+      "area": 6.581357743216098,
+      "inradius": 1.424361448857444,
+      "coarea": 6.484985883626933,
+      "dirichlet": 6.600288472257018,
+      "max_pl_grad": 2.7704920924165934
+    },
+    {
+      "label": "perturb 63 of g0 r3 (sigma 0.096)",
+      "genus": 0,
+      "area": 6.3929630242545725,
+      "inradius": 1.4175640304550274,
+      "coarea": 6.301910768524682,
+      "dirichlet": 6.467354157665427,
+      "max_pl_grad": 2.2761405138383983
+    },
+    {
+      "label": "perturb 64 of g1 r0 (sigma 0.034)",
+      "genus": 1,
+      "area": 6.657838401634548,
+      "inradius": 1.5348371544183361,
+      "coarea": 7.212975711599568,
+      "dirichlet": 6.668730048074016,
+      "max_pl_grad": 2.162005424307255
+    },
+    {
+      "label": "perturb 65 of g1 r1 (sigma 0.144)",
+      "genus": 1,
+      "area": 6.824169466056691,
+      "inradius": 1.4712770585233463,
+      "coarea": 7.283768348621715,
+      "dirichlet": 6.986019065203068,
+      "max_pl_grad": 3.2746815125347783
+    },
+    {
+      "label": "perturb 66 of g1 r2 (sigma 0.114)",
+      "genus": 1,
+      "area": 6.82738809800689,
+      "inradius": 1.5330174732515014,
+      "coarea": 7.559781678379839,
+      "dirichlet": 7.057320161296158,
+      "max_pl_grad": 3.83340688358655
+    },
+    {
+      "label": "perturb 67 of g1 r3 (sigma 0.097)",
+      "genus": 1,
+      "area": 6.831611810424745,
+      "inradius": 1.5554990737100924,
+      "coarea": 7.40449943963924,
+      "dirichlet": 6.9469363911654245,
+      "max_pl_grad": 2.5328551712166067
+    },
+    {
+      "label": "perturb 68 of g2 r0 (sigma 0.101)",
+      "genus": 2,
+      "area": 7.009131437860905,
+      "inradius": 1.4876958967050928,
+      "coarea": 7.134981052655206,
+      "dirichlet": 7.298427658170501,
+      "max_pl_grad": 3.0577876433437794
+    },
+    {
+      "label": "perturb 69 of g2 r1 (sigma 0.057)",
+      "genus": 2,
+      "area": 7.568429345795124,
+      "inradius": 1.4455629383778084,
+      "coarea": 7.787379016211762,
+      "dirichlet": 9.177069971604537,
+      "max_pl_grad": 6.986344170051763
+    },
+    {
+      "label": "perturb 70 of g2 r2 (sigma 0.028)",
+      "genus": 2,
+      "area": 7.61173797172753,
+      "inradius": 1.5465197321131043,
+      "coarea": 7.645997770962161,
+      "dirichlet": 8.654125940345295,
+      "max_pl_grad": 3.440976789764114
+    },
+    {
+      "label": "perturb 71 of g2 r3 (sigma 0.109)",
+      "genus": 2,
+      "area": 7.357058117317296,
+      "inradius": 1.55945865191303,
+      "coarea": 7.488435906154376,
+      "dirichlet": 8.756721316314403,
+      "max_pl_grad": 13.969435661053307
+    },
+    {
+      "label": "perturb 72 of g0 r0 (sigma 0.066)",
+      "genus": 0,
+      "area": 6.364984577012447,
+      "inradius": 1.3621554091313537,
+      "coarea": 6.242399683093941,
+      "dirichlet": 6.323238880995239,
+      "max_pl_grad": 1.3307540842593755
+    },
+    {
+      "label": "perturb 73 of g0 r1 (sigma 0.062)",
+      "genus": 0,
+      "area": 6.43797624615983,
+      "inradius": 1.4256965511024173,
+      "coarea": 6.3265025851292105,
+      "dirichlet": 6.412451157024659,
+      "max_pl_grad": 1.605675195602258
+    },
+    {
+      "label": "perturb 74 of g0 r2 (sigma 0.050)",
+      "genus": 0,
+      "area": 6.573526776190446,
+      "inradius": 1.415941022945351,
+      "coarea": 6.4724666914521976,
+      "dirichlet": 6.599522148757609,
+      "max_pl_grad": 3.1712588467010874
+    },
+    {
+      "label": "perturb 75 of g0 r3 (sigma 0.059)",
+      "genus": 0,
+      "area": 6.391710577654855,
+      "inradius": 1.41722211005069,
+      "coarea": 6.300822945044659,
+      "dirichlet": 6.467062450148231,
+      "max_pl_grad": 2.2848884536923375
+    },
+    {
+      "label": "perturb 76 of g1 r0 (sigma 0.103)",
+      "genus": 1,
+      "area": 6.669165409340842,
+      "inradius": 1.5408035044101134,
+      "coarea": 7.224223365360614,
+      "dirichlet": 6.6799687798288705,
+      "max_pl_grad": 2.253005658988611
+    },
+    {
+      "label": "perturb 77 of g1 r1 (sigma 0.128)",
+      "genus": 1,
+      "area": 6.824169466054279,
+      "inradius": 1.4712770585227084,
+      "coarea": 7.283768348621737,
+      "dirichlet": 6.986019065201954,
+      "max_pl_grad": 3.2746815126010427
+    },
+    {
+      "label": "perturb 78 of g1 r2 (sigma 0.036)",
+      "genus": 1,
+      "area": 6.8274547513456385,
+      "inradius": 1.5448440791049824,
+      "coarea": 7.573638007761868,
+      "dirichlet": 7.123642096988416,
+      "max_pl_grad": 9.249756212356653
+    },
+    {
+      "label": "perturb 79 of g1 r3 (sigma 0.142)",
+      "genus": 1,
+      "area": 6.77244803673077,
+      "inradius": 1.5526904982241287,
+      "coarea": 7.379087472708573,
+      "dirichlet": 6.90457178205642,
+      "max_pl_grad": 2.8558613149354204
+    },
+    {
+      "label": "perturb 80 of g2 r0 (sigma 0.042)",
+      "genus": 2,
+      "area": 7.009131437860905,
+      "inradius": 1.4876958967050928,
+      "coarea": 7.134981052655206,
+      "dirichlet": 7.298427658170501,
+      "max_pl_grad": 3.0577876433437794
+    },
+    {
+      "label": "perturb 81 of g2 r1 (sigma 0.144)",
+      "genus": 2,
+      "area": 7.560410371819044,
+      "inradius": 1.4422845799086275,
+      "coarea": 7.82477465378682,
+      "dirichlet": 9.11616694752117,
+      "max_pl_grad": 7.725698433363493
+    },
+    {
+      "label": "perturb 82 of g2 r2 (sigma 0.089)",
+      "genus": 2,
+      "area": 7.616361703814112,
+      "inradius": 1.548284666350809,
+      "coarea": 7.655079490667807,
+      "dirichlet": 8.664538842038212,
+      "max_pl_grad": 3.543878053972604
+    },
+    {
+      "label": "perturb 83 of g2 r3 (sigma 0.026)",
+      "genus": 2,
+      "area": 7.340067081664129,
+      "inradius": 1.5512581452635366,
+      "coarea": 7.489283244646344,
+      "dirichlet": 8.303701315091033,
+      "max_pl_grad": 6.571659714512621
+    },
+    {
+      "label": "perturb 84 of g0 r0 (sigma 0.057)",
+      "genus": 0,
+      "area": 6.360828507004484,
+      "inradius": 1.3609466660651415,
+      "coarea": 6.238202874304353,
+      "dirichlet": 6.320501379133253,
+      "max_pl_grad": 1.3360460917590946
+    },
+    {
+      "label": "perturb 85 of g0 r1 (sigma 0.013)",
+      "genus": 0,
+      "area": 6.432053765413884,
+      "inradius": 1.4155102743956764,
+      "coarea": 6.318514035621016,
+      "dirichlet": 6.407871007326548,
+      "max_pl_grad": 1.6452583768427838
+    },
+    {
+      "label": "perturb 86 of g0 r2 (sigma 0.129)",
+      "genus": 0,
+      "area": 6.594620623136012,
+      "inradius": 1.4246571994525565,
+      "coarea": 6.486294795700925,
+      "dirichlet": 6.617915890942533,
+      "max_pl_grad": 2.9617372210413024
+    },
+    {
+      "label": "perturb 87 of g0 r3 (sigma 0.117)",
+      "genus": 0,
+      "area": 6.406579167136017,
+      "inradius": 1.4155849341273348,
+      "coarea": 6.30826889127062,
+      "dirichlet": 6.4734555660991555,
+      "max_pl_grad": 2.293350761596992
+    },
+    {
+      "label": "perturb 88 of g1 r0 (sigma 0.045)",
+      "genus": 1,
+      "area": 6.657838401641298,
+      "inradius": 1.534837154420375,
+      "coarea": 7.212975711606099,
+      "dirichlet": 6.668730048079103,
+      "max_pl_grad": 2.162005424320013
+    },
+    {
+      "label": "perturb 89 of g1 r1 (sigma 0.042)",
+      "genus": 1,
+      "area": 6.824169466054135,
+      "inradius": 1.4712770585226176,
+      "coarea": 7.283768348621567,
+      "dirichlet": 6.986019065201126,
+      "max_pl_grad": 3.2746815125814197
+    },
+    {
+      "label": "perturb 90 of g1 r2 (sigma 0.045)",
+      "genus": 1,
+      "area": 6.827388098000852,
+      "inradius": 1.5330174732625483,
+      "coarea": 7.559781678397133,
+      "dirichlet": 7.057320161305565,
+      "max_pl_grad": 3.833406885775534
+    },
+    {
+      "label": "perturb 91 of g1 r3 (sigma 0.061)",
+      "genus": 1,
+      "area": 6.820308291257142,
+      "inradius": 1.5450030127711567,
+      "coarea": 7.384556578012905,
+      "dirichlet": 6.923313898083231,
+      "max_pl_grad": 2.656659145433019
+    },
+    {
+      "label": "perturb 92 of g2 r0 (sigma 0.137)",
+      "genus": 2,
+      "area": 7.009131437860905,
+      "inradius": 1.4876958967050928,
+      "coarea": 7.134981052655206,
+      "dirichlet": 7.298427658170501,
+      "max_pl_grad": 3.0577876433437794
+    },
+    {
+      "label": "perturb 93 of g2 r1 (sigma 0.119)",
+      "genus": 2,
+      "area": 7.546534279461289,
+      "inradius": 1.453766196494758,
+      "coarea": 7.801336817199125,
+      "dirichlet": 9.096490932376653,
+      "max_pl_grad": 4.382970869660693
+    },
+    {
+      "label": "perturb 94 of g2 r2 (sigma 0.121)",
+      "genus": 2,
+      "area": 7.616361703810921,
+      "inradius": 1.5482846663517595,
+      "coarea": 7.655079490659495,
+      "dirichlet": 8.664538842073796,
+      "max_pl_grad": 3.5438780541874184
+    },
+    {
+      "label": "perturb 95 of g2 r3 (sigma 0.062)",
+      "genus": 2,
+      "area": 7.296227855521551,
+      "inradius": 1.5590059206144609,
+      "coarea": 7.430862548992383,
+      "dirichlet": 8.53539646879937,
+      "max_pl_grad": 9.558350075963292
+    },
+    {
+      "label": "perturb 96 of g0 r0 (sigma 0.137)",
+      "genus": 0,
+      "area": 6.360828507004484,
+      "inradius": 1.3609466660651415,
+      "coarea": 6.238202874304353,
+      "dirichlet": 6.320501379133253,
+      "max_pl_grad": 1.3360460917590946
+    },
+    {
+      "label": "perturb 97 of g0 r1 (sigma 0.094)",
+      "genus": 0,
+      "area": 6.444682359131764,
+      "inradius": 1.4258256456891483,
+      "coarea": 6.33071653274425,
+      "dirichlet": 6.4165065101925665,
+      "max_pl_grad": 1.6302150783945555
+    },
+    {
+      "label": "perturb 98 of g0 r2 (sigma 0.027)",
+      "genus": 0,
+      "area": 6.595392767333299,
+      "inradius": 1.4227688292666096,
+      "coarea": 6.4970192457476665,
+      "dirichlet": 6.605581604802316,
+      "max_pl_grad": 2.458482433671722
+    },
+    {
+      "label": "perturb 99 of g0 r3 (sigma 0.089)",
+      "genus": 0,
+      "area": 6.3929630242545725,
+      "inradius": 1.4175640304550274,
+      "coarea": 6.301910768524682,
+      "dirichlet": 6.467354157665427,
+      "max_pl_grad": 2.2761405138383983
+    },
+    {
+      "label": "perturb 100 of g1 r0 (sigma 0.027)",
+      "genus": 1,
+      "area": 6.657157196756463,
+      "inradius": 1.5351652864205383,
+      "coarea": 7.2125559313248875,
+      "dirichlet": 6.667812206454433,
+      "max_pl_grad": 2.2167347937664656
+    },
+    {
+      "label": "perturb 101 of g1 r1 (sigma 0.092)",
+      "genus": 1,
+      "area": 6.824169466054279,
+      "inradius": 1.4712770585227084,
+      "coarea": 7.283768348621737,
+      "dirichlet": 6.986019065201954,
+      "max_pl_grad": 3.2746815126010427
+    },
+    {
+      "label": "perturb 102 of g1 r2 (sigma 0.115)",
+      "genus": 1,
+      "area": 6.827388098000852,
+      "inradius": 1.5330174732625483,
+      "coarea": 7.559781678397133,
+      "dirichlet": 7.057320161305565,
+      "max_pl_grad": 3.833406885775534
+    },
+    {
+      "label": "perturb 103 of g1 r3 (sigma 0.060)",
+      "genus": 1,
+      "area": 6.747149539119624,
+      "inradius": 1.5497862412187549,
+      "coarea": 7.347075573772319,
+      "dirichlet": 6.93148118382115,
+      "max_pl_grad": 4.412638489234051
+    },
+    {
+      "label": "perturb 104 of g2 r0 (sigma 0.097)",
+      "genus": 2,
+      "area": 7.009131437860905,
+      "inradius": 1.4876958967050928,
+      "coarea": 7.134981052655206,
+      "dirichlet": 7.298427658170501,
+      "max_pl_grad": 3.0577876433437794
+    },
+    {
+      "label": "perturb 105 of g2 r1 (sigma 0.114)",
+      "genus": 2,
+      "area": 7.5664532772967,
+      "inradius": 1.4515377798621463,
+      "coarea": 7.78989442997008,
+      "dirichlet": 9.138306491812008,
+      "max_pl_grad": 4.9288572389696315
+    },
+    {
+      "label": "perturb 106 of g2 r2 (sigma 0.024)",
+      "genus": 2,
+      "area": 7.613303434930681,
+      "inradius": 1.5485047597859976,
+      "coarea": 7.656194017653333,
+      "dirichlet": 8.669375748014886,
+      "max_pl_grad": 3.491372521321613
+    },
+    {
+      "label": "perturb 107 of g2 r3 (sigma 0.070)",
+      "genus": 2,
+      "area": 7.288971880723279,
+      "inradius": 1.5502486378596874,
+      "coarea": 7.4354699519472955,
+      "dirichlet": 8.392345326392686,
+      "max_pl_grad": 5.735625802260614
+    },
+    {
+      "label": "perturb 108 of g0 r0 (sigma 0.048)",
+      "genus": 0,
+      "area": 6.361964282990497,
+      "inradius": 1.3606978794029567,
+      "coarea": 6.238790721769319,
+      "dirichlet": 6.321219811051897,
+      "max_pl_grad": 1.3368438215275027
+    },
+    {
+      "label": "perturb 109 of g0 r1 (sigma 0.055)",
+      "genus": 0,
+      "area": 6.443957574402864,
+      "inradius": 1.42740454410609,
+      "coarea": 6.327655982648501,
+      "dirichlet": 6.416685520305639,
+      "max_pl_grad": 1.64886821710126
+    },
+    {
+      "label": "perturb 110 of g0 r2 (sigma 0.098)",
+      "genus": 0,
+      "area": 6.5975309740848385,
+      "inradius": 1.4370363685710477,
+      "coarea": 6.514752181710885,
+      "dirichlet": 6.610269827517508,
+      "max_pl_grad": 2.451022394966399
+    },
+    {
+      "label": "perturb 111 of g0 r3 (sigma 0.022)",
+      "genus": 0,
+      "area": 6.3929630242545725,
+      "inradius": 1.4175640304550274,
+      "coarea": 6.301910768524682,
+      "dirichlet": 6.467354157665427,
+      "max_pl_grad": 2.2761405138383983
+    },
+    {
+      "label": "perturb 112 of g1 r0 (sigma 0.090)",
+      "genus": 1,
+      "area": 6.657838401633261,
+      "inradius": 1.5348371544188857,
+      "coarea": 7.212975711599661,
+      "dirichlet": 6.668730048073405,
+      "max_pl_grad": 2.162005424315683
+    },
+    {
+      "label": "perturb 113 of g1 r1 (sigma 0.053)",
+      "genus": 1,
+      "area": 6.847754993793112,
+      "inradius": 1.4696507769723668,
+      "coarea": 7.325410451394237,
+      "dirichlet": 7.019679584326248,
+      "max_pl_grad": 5.200109132243875
+    },
+    {
+      "label": "perturb 114 of g1 r2 (sigma 0.137)",
+      "genus": 1,
+      "area": 6.819629061684777,
+      "inradius": 1.5252664503819418,
+      "coarea": 7.528092006707981,
+      "dirichlet": 7.071340639679214,
+      "max_pl_grad": 3.2721482004775035
+    },
+    {
+      "label": "perturb 115 of g1 r3 (sigma 0.102)",
+      "genus": 1,
+      "area": 6.782701483266891,
+      "inradius": 1.5525835364638538,
+      "coarea": 7.3462739312757535,
+      "dirichlet": 6.903476234484238,
+      "max_pl_grad": 2.3183945706468316
+    },
+    {
+      "label": "perturb 116 of g2 r0 (sigma 0.069)",
+      "genus": 2,
+      "area": 7.007177006175305,
+      "inradius": 1.486883241383839,
+      "coarea": 7.131204990523597,
+      "dirichlet": 7.2982022041216394,
+      "max_pl_grad": 3.0547828443565272
+    },
+    {
+      "label": "perturb 117 of g2 r1 (sigma 0.020)",
+      "genus": 2,
+      "area": 7.558431614441815,
+      "inradius": 1.4526762316407635,
+      "coarea": 7.7857157759147,
+      "dirichlet": 9.364690596137539,
+      "max_pl_grad": 13.568728652411583
+    },
+    {
+      "label": "perturb 118 of g2 r2 (sigma 0.081)",
+      "genus": 2,
+      "area": 7.616361703815224,
+      "inradius": 1.5482846663506507,
+      "coarea": 7.655079490668046,
+      "dirichlet": 8.664538842040232,
+      "max_pl_grad": 3.543878053989273
+    },
+    {
+      "label": "perturb 119 of g2 r3 (sigma 0.143)",
+      "genus": 2,
+      "area": 7.316203330331092,
+      "inradius": 1.5096273019878605,
+      "coarea": 7.435791105730661,
+      "dirichlet": 8.954060008041399,
+      "max_pl_grad": 14.105635542774206
+    },
+    {
+      "label": "perturb 120 of g0 r0 (sigma 0.131)",
+      "genus": 0,
+      "area": 6.360828507004484,
+      "inradius": 1.3609466660651415,
+      "coarea": 6.238202874304353,
+      "dirichlet": 6.320501379133253,
+      "max_pl_grad": 1.3360460917590946
+    },
+    {
+      "label": "perturb 121 of g0 r1 (sigma 0.025)",
+      "genus": 0,
+      "area": 6.444682359128895,
+      "inradius": 1.4258256456894913,
+      "coarea": 6.330716532741234,
+      "dirichlet": 6.416506510191169,
+      "max_pl_grad": 1.630215078381438
+    },
+    {
+      "label": "perturb 122 of g0 r2 (sigma 0.064)",
+      "genus": 0,
+      "area": 6.5953927673356505,
+      "inradius": 1.4227688292674778,
+      "coarea": 6.497019245760099,
+      "dirichlet": 6.605581604808208,
+      "max_pl_grad": 2.4584824338240643
+    },
+    {
+      "label": "perturb 123 of g0 r3 (sigma 0.141)",
+      "genus": 0,
+      "area": 6.3929630242545725,
+      "inradius": 1.4175640304550274,
+      "coarea": 6.301910768524682,
+      "dirichlet": 6.467354157665427,
+      "max_pl_grad": 2.2761405138383983
+    },
+    {
+      "label": "perturb 124 of g1 r0 (sigma 0.038)",
+      "genus": 1,
+      "area": 6.657838401632885,
+      "inradius": 1.53483715441825,
+      "coarea": 7.212975711599102,
+      "dirichlet": 6.668730048072638,
+      "max_pl_grad": 2.162005424323567
+    },
+    {
+      "label": "perturb 125 of g1 r1 (sigma 0.081)",
+      "genus": 1,
+      "area": 6.824169466054444,
+      "inradius": 1.4712770585227628,
+      "coarea": 7.283768348621531,
+      "dirichlet": 6.986019065201808,
+      "max_pl_grad": 3.2746815125974345
+    },
+    {
+      "label": "perturb 126 of g1 r2 (sigma 0.137)",
+      "genus": 1,
+      "area": 6.834288872779519,
+      "inradius": 1.5132553091588588,
+      "coarea": 7.52345161667607,
+      "dirichlet": 7.107117904463518,
+      "max_pl_grad": 8.949902910411428
+    },
+    {
+      "label": "perturb 127 of g1 r3 (sigma 0.024)",
+      "genus": 1,
+      "area": 6.794836961090141,
+      "inradius": 1.552713049176581,
+      "coarea": 7.367238434828131,
+      "dirichlet": 6.917863508221929,
+      "max_pl_grad": 2.672972333021157
+    },
+    {
+      "label": "perturb 128 of g2 r0 (sigma 0.048)",
+      "genus": 2,
+      "area": 7.013430898605955,
+      "inradius": 1.4899060908541037,
+      "coarea": 7.134794000709807,
+      "dirichlet": 7.296687991540852,
+      "max_pl_grad": 3.0836138429664
+    },
+    {
+      "label": "perturb 129 of g2 r1 (sigma 0.087)",
+      "genus": 2,
+      "area": 7.535996746138894,
+      "inradius": 1.4494008145065553,
+      "coarea": 7.784917446190898,
+      "dirichlet": 9.304365695670402,
+      "max_pl_grad": 11.272777566845186
+    },
+    {
+      "label": "perturb 130 of g2 r2 (sigma 0.085)",
+      "genus": 2,
+      "area": 7.616361703805187,
+      "inradius": 1.5482846663489875,
+      "coarea": 7.6550794906702695,
+      "dirichlet": 8.664538841984662,
+      "max_pl_grad": 3.5438780537644714
+    },
+    {
+      "label": "perturb 131 of g2 r3 (sigma 0.140)",
+      "genus": 2,
+      "area": 7.329871967122025,
+      "inradius": 1.5610197105093504,
+      "coarea": 7.480079684041815,
+      "dirichlet": 8.260361280556323,
+      "max_pl_grad": 4.987117454286864
+    },
+    {
+      "label": "perturb 132 of g0 r0 (sigma 0.112)",
+      "genus": 0,
+      "area": 6.360828507004484,
+      "inradius": 1.3609466660651415,
+      "coarea": 6.238202874304353,
+      "dirichlet": 6.320501379133253,
+      "max_pl_grad": 1.3360460917590946
+    },
+    {
+      "label": "perturb 133 of g0 r1 (sigma 0.107)",
+      "genus": 0,
+      "area": 6.444682359131525,
+      "inradius": 1.4258256456889653,
+      "coarea": 6.330716532744374,
+      "dirichlet": 6.416506510192379,
+      "max_pl_grad": 1.6302150783932545
+    },
+    {
+      "label": "perturb 134 of g0 r2 (sigma 0.108)",
+      "genus": 0,
+      "area": 6.595302125905568,
+      "inradius": 1.422238651168568,
+      "coarea": 6.501088442590539,
+      "dirichlet": 6.602781771943499,
+      "max_pl_grad": 2.374038680045695
+    },
+    {
+      "label": "perturb 135 of g0 r3 (sigma 0.125)",
+      "genus": 0,
+      "area": 6.3929630242545725,
+      "inradius": 1.4175640304550274,
+      "coarea": 6.301910768524682,
+      "dirichlet": 6.467354157665427,
+      "max_pl_grad": 2.2761405138383983
+    },
+    {
+      "label": "perturb 136 of g1 r0 (sigma 0.100)",
+      "genus": 1,
+      "area": 6.657838401633592,
+      "inradius": 1.53483715441815,
+      "coarea": 7.2129757115989275,
+      "dirichlet": 6.6687300480731295,
+      "max_pl_grad": 2.162005424317356
+    },
+    {
+      "label": "perturb 137 of g1 r1 (sigma 0.100)",
+      "genus": 1,
+      "area": 6.837171287796624,
+      "inradius": 1.4889516108410477,
+      "coarea": 7.341148306996645,
+      "dirichlet": 7.054834590383408,
+      "max_pl_grad": 6.261724159956374
+    },
+    {
+      "label": "perturb 138 of g1 r2 (sigma 0.086)",
+      "genus": 1,
+      "area": 6.827388098000852,
+      "inradius": 1.5330174732625483,
+      "coarea": 7.559781678397133,
+      "dirichlet": 7.057320161305565,
+      "max_pl_grad": 3.833406885775534
+    },
+    {
+      "label": "perturb 139 of g1 r3 (sigma 0.107)",
+      "genus": 1,
+      "area": 6.79000440114751,
+      "inradius": 1.5485779326739828,
+      "coarea": 7.374394804027213,
+      "dirichlet": 6.9075712238160865,
+      "max_pl_grad": 2.509041073409727
+    },
+    {
+      "label": "perturb 140 of g2 r0 (sigma 0.106)",
+      "genus": 2,
+      "area": 7.010393888080309,
+      "inradius": 1.486641302883469,
+      "coarea": 7.133391479115481,
+      "dirichlet": 7.300337033301865,
+      "max_pl_grad": 3.0929356871039637
+    },
+    {
+      "label": "perturb 141 of g2 r1 (sigma 0.109)",
+      "genus": 2,
+      "area": 7.621289980184606,
+      "inradius": 1.4668730262611804,
+      "coarea": 7.851434661140683,
+      "dirichlet": 9.03678794200805,
+      "max_pl_grad": 5.063314442533664
+    },
+    {
+      "label": "perturb 142 of g2 r2 (sigma 0.088)",
+      "genus": 2,
+      "area": 7.616361703815492,
+      "inradius": 1.5482846663506493,
+      "coarea": 7.655079490667834,
+      "dirichlet": 8.664538842037622,
+      "max_pl_grad": 3.5438780539879158
+    },
+    {
+      "label": "perturb 143 of g2 r3 (sigma 0.052)",
+      "genus": 2,
+      "area": 7.347792262637453,
+      "inradius": 1.5408022831242878,
+      "coarea": 7.488594734780955,
+      "dirichlet": 8.442948496900556,
+      "max_pl_grad": 10.074742083277888
+    },
+    {
+      "label": "perturb 144 of g0 r0 (sigma 0.122)",
+      "genus": 0,
+      "area": 6.360828507004484,
+      "inradius": 1.3609466660651415,
+      "coarea": 6.238202874304353,
+      "dirichlet": 6.320501379133253,
+      "max_pl_grad": 1.3360460917590946
+    },
+    {
+      "label": "perturb 145 of g0 r1 (sigma 0.109)",
+      "genus": 0,
+      "area": 6.444682359129991,
+      "inradius": 1.4258256456884784,
+      "coarea": 6.330716532742524,
+      "dirichlet": 6.416506510191132,
+      "max_pl_grad": 1.6302150783912341
+    },
+    {
+      "label": "perturb 146 of g0 r2 (sigma 0.019)",
+      "genus": 0,
+      "area": 6.70784903126244,
+      "inradius": 1.423479629680551,
+      "coarea": 6.591786472828467,
+      "dirichlet": 6.677220090768285,
+      "max_pl_grad": 2.310202454603529
+    },
+    {
+      "label": "perturb 147 of g0 r3 (sigma 0.106)",
+      "genus": 0,
+      "area": 6.414713243404036,
+      "inradius": 1.4164717899196733,
+      "coarea": 6.317494682233682,
+      "dirichlet": 6.4821088540027825,
+      "max_pl_grad": 2.2353194509450405
+    },
+    {
+      "label": "perturb 148 of g1 r0 (sigma 0.138)",
+      "genus": 1,
+      "area": 6.673911218238366,
+      "inradius": 1.5297343565797217,
+      "coarea": 7.21689161949198,
+      "dirichlet": 6.682205922062891,
+      "max_pl_grad": 2.3687395139976504
+    },
+    {
+      "label": "perturb 149 of g1 r1 (sigma 0.106)",
+      "genus": 1,
+      "area": 6.853515182235145,
+      "inradius": 1.4914339301702184,
+      "coarea": 7.330814634878363,
+      "dirichlet": 7.065382363846396,
+      "max_pl_grad": 3.8209809759713678
+    },
+    {
+      "label": "perturb 150 of g1 r2 (sigma 0.056)",
+      "genus": 1,
+      "area": 6.853208605674365,
+      "inradius": 1.524738125808727,
+      "coarea": 7.573327353382527,
+      "dirichlet": 7.082746127575197,
+      "max_pl_grad": 4.544784127254288
+    },
+    {
+      "label": "perturb 151 of g1 r3 (sigma 0.123)",
+      "genus": 1,
+      "area": 6.7842089972466315,
+      "inradius": 1.5536137374270564,
+      "coarea": 7.375664615923347,
+      "dirichlet": 6.908447182027574,
+      "max_pl_grad": 2.619910268161075
+    },
+    {
+      "label": "perturb 152 of g2 r0 (sigma 0.088)",
+      "genus": 2,
+      "area": 7.009131437860905,
+      "inradius": 1.4876958967050928,
+      "coarea": 7.134981052655206,
+      "dirichlet": 7.298427658170501,
+      "max_pl_grad": 3.0577876433437794
+    },
+    {
+      "label": "perturb 153 of g2 r1 (sigma 0.093)",
+      "genus": 2,
+      "area": 7.554384168461625,
+      "inradius": 1.4539093963799963,
+      "coarea": 7.778876448932474,
+      "dirichlet": 9.208756438774387,
+      "max_pl_grad": 5.828912181633372
+    },
+    {
+      "label": "perturb 154 of g2 r2 (sigma 0.061)",
+      "genus": 2,
+      "area": 7.61146012627406,
+      "inradius": 1.5500789753728161,
+      "coarea": 7.665428382442954,
+      "dirichlet": 8.718260460992518,
+      "max_pl_grad": 4.279384476455357
+    },
+    {
+      "label": "perturb 155 of g2 r3 (sigma 0.081)",
+      "genus": 2,
+      "area": 7.335487973161593,
+      "inradius": 1.5603832574834686,
+      "coarea": 7.469735845491885,
+      "dirichlet": 8.485528561356814,
+      "max_pl_grad": 9.99007133278722
+    },
+    {
+      "label": "perturb 156 of g0 r0 (sigma 0.059)",
+      "genus": 0,
+      "area": 6.360828507004484,
+      "inradius": 1.3609466660651415,
+      "coarea": 6.238202874304353,
+      "dirichlet": 6.320501379133253,
+      "max_pl_grad": 1.3360460917590946
+    },
+    {
+      "label": "perturb 157 of g0 r1 (sigma 0.029)",
+      "genus": 0,
+      "area": 6.444682359131943,
+      "inradius": 1.4258256456838914,
+      "coarea": 6.330716532736853,
+      "dirichlet": 6.416506510193678,
+      "max_pl_grad": 1.630215078396884
+    },
+    {
+      "label": "perturb 158 of g0 r2 (sigma 0.036)",
+      "genus": 0,
+      "area": 6.585922462105269,
+      "inradius": 1.4278686739138655,
+      "coarea": 6.5143047398588685,
+      "dirichlet": 6.594041465163258,
+      "max_pl_grad": 2.2707313090697308
+    },
+    {
+      "label": "perturb 159 of g0 r3 (sigma 0.039)",
+      "genus": 0,
+      "area": 6.392963024254357,
+      "inradius": 1.4175640304549904,
+      "coarea": 6.30191076852439,
+      "dirichlet": 6.467354157665285,
+      "max_pl_grad": 2.2761405138378197
+    },
+    {
+      "label": "perturb 160 of g1 r0 (sigma 0.062)",
+      "genus": 1,
+      "area": 6.655874554844339,
+      "inradius": 1.5354647243722357,
+      "coarea": 7.214513355427143,
+      "dirichlet": 6.666299698946803,
+      "max_pl_grad": 2.172121072515939
+    },
+    {
+      "label": "perturb 161 of g1 r1 (sigma 0.134)",
+      "genus": 1,
+      "area": 6.865992968690397,
+      "inradius": 1.4773415689223854,
+      "coarea": 7.298866262884384,
+      "dirichlet": 7.058973657298429,
+      "max_pl_grad": 3.90316187948387
+    },
+    {
+      "label": "perturb 162 of g1 r2 (sigma 0.049)",
+      "genus": 1,
+      "area": 6.801008115421292,
+      "inradius": 1.5079630023292985,
+      "coarea": 7.484469561152173,
+      "dirichlet": 7.084127672501472,
+      "max_pl_grad": 3.943020565549227
+    },
+    {
+      "label": "perturb 163 of g1 r3 (sigma 0.122)",
+      "genus": 1,
+      "area": 6.742924362191899,
+      "inradius": 1.555110247675952,
+      "coarea": 7.3621736524543095,
+      "dirichlet": 6.897212410593692,
+      "max_pl_grad": 3.0439051078654367
+    },
+    {
+      "label": "perturb 164 of g2 r0 (sigma 0.020)",
+      "genus": 2,
+      "area": 7.009131437860905,
+      "inradius": 1.4876958967050928,
+      "coarea": 7.134981052655206,
+      "dirichlet": 7.298427658170501,
+      "max_pl_grad": 3.0577876433437794
+    },
+    {
+      "label": "perturb 165 of g2 r1 (sigma 0.018)",
+      "genus": 2,
+      "area": 7.566453277296821,
+      "inradius": 1.451537779862115,
+      "coarea": 7.789894429969627,
+      "dirichlet": 9.13830649181038,
+      "max_pl_grad": 4.9288572389911165
+    },
+    {
+      "label": "perturb 166 of g2 r2 (sigma 0.099)",
+      "genus": 2,
+      "area": 7.6163617038145475,
+      "inradius": 1.5482846663507632,
+      "coarea": 7.655079490667592,
+      "dirichlet": 8.664538842036446,
+      "max_pl_grad": 3.5438780540394954
+    },
+    {
+      "label": "perturb 167 of g2 r3 (sigma 0.142)",
+      "genus": 2,
+      "area": 7.329871967122025,
+      "inradius": 1.5610197105093504,
+      "coarea": 7.480079684041815,
+      "dirichlet": 8.260361280556323,
+      "max_pl_grad": 4.987117454286864
+    },
+    {
+      "label": "perturb 168 of g0 r0 (sigma 0.060)",
+      "genus": 0,
+      "area": 6.357256099075918,
+      "inradius": 1.3624496433302653,
+      "coarea": 6.236282100981176,
+      "dirichlet": 6.318120456171446,
+      "max_pl_grad": 1.34174212878462
+    },
+    {
+      "label": "perturb 169 of g0 r1 (sigma 0.071)",
+      "genus": 0,
+      "area": 6.444682359128656,
+      "inradius": 1.42582564568961,
+      "coarea": 6.330716532741968,
+      "dirichlet": 6.416506510190039,
+      "max_pl_grad": 1.630215078388631
+    },
+    {
+      "label": "perturb 170 of g0 r2 (sigma 0.022)",
+      "genus": 0,
+      "area": 6.595392767333708,
+      "inradius": 1.4227688292662068,
+      "coarea": 6.497019245748323,
+      "dirichlet": 6.605581604802219,
+      "max_pl_grad": 2.458482433674834
+    },
+    {
+      "label": "perturb 171 of g0 r3 (sigma 0.145)",
+      "genus": 0,
+      "area": 6.3929630242545725,
+      "inradius": 1.4175640304550274,
+      "coarea": 6.301910768524682,
+      "dirichlet": 6.467354157665427,
+      "max_pl_grad": 2.2761405138383983
+    },
+    {
+      "label": "perturb 172 of g1 r0 (sigma 0.143)",
+      "genus": 1,
+      "area": 6.697406091592835,
+      "inradius": 1.5386164000336893,
+      "coarea": 7.231483768928928,
+      "dirichlet": 6.711606653397669,
+      "max_pl_grad": 2.1688138235625902
+    },
+    {
+      "label": "perturb 173 of g1 r1 (sigma 0.108)",
+      "genus": 1,
+      "area": 6.824169466058397,
+      "inradius": 1.4712770585227988,
+      "coarea": 7.283768348622717,
+      "dirichlet": 6.986019065201625,
+      "max_pl_grad": 3.274681512460052
+    },
+    {
+      "label": "perturb 174 of g1 r2 (sigma 0.060)",
+      "genus": 1,
+      "area": 6.816297672767086,
+      "inradius": 1.5093217214720203,
+      "coarea": 7.497953729436407,
+      "dirichlet": 7.068143945027427,
+      "max_pl_grad": 3.536536644999011
+    },
+    {
+      "label": "perturb 175 of g1 r3 (sigma 0.028)",
+      "genus": 1,
+      "area": 6.739261735530746,
+      "inradius": 1.554686766949336,
+      "coarea": 7.379577113018366,
+      "dirichlet": 6.900672227578887,
+      "max_pl_grad": 3.4635616827513376
+    },
+    {
+      "label": "perturb 176 of g2 r0 (sigma 0.062)",
+      "genus": 2,
+      "area": 7.015302342429619,
+      "inradius": 1.4850594303851685,
+      "coarea": 7.133294424898646,
+      "dirichlet": 7.3060651591001395,
+      "max_pl_grad": 3.0936027171436065
+    },
+    {
+      "label": "perturb 177 of g2 r1 (sigma 0.126)",
+      "genus": 2,
+      "area": 7.5215761693553205,
+      "inradius": 1.450984784737909,
+      "coarea": 7.746340716334604,
+      "dirichlet": 9.153676764553484,
+      "max_pl_grad": 5.153845120579804
+    },
+    {
+      "label": "perturb 178 of g2 r2 (sigma 0.108)",
+      "genus": 2,
+      "area": 7.614636111863786,
+      "inradius": 1.5485714472145062,
+      "coarea": 7.656434506408226,
+      "dirichlet": 8.668225146154764,
+      "max_pl_grad": 3.4368948491216096
+    },
+    {
+      "label": "perturb 179 of g2 r3 (sigma 0.033)",
+      "genus": 2,
+      "area": 7.302881604424732,
+      "inradius": 1.5594706635816495,
+      "coarea": 7.44852408647148,
+      "dirichlet": 8.318796235351147,
+      "max_pl_grad": 5.048686513082531
+    },
+    {
+      "label": "perturb 180 of g0 r0 (sigma 0.105)",
+      "genus": 0,
+      "area": 6.360828507004484,
+      "inradius": 1.3609466660651415,
+      "coarea": 6.238202874304353,
+      "dirichlet": 6.320501379133253,
+      "max_pl_grad": 1.3360460917590946
+    },
+    {
+      "label": "perturb 181 of g0 r1 (sigma 0.022)",
+      "genus": 0,
+      "area": 6.441197295353995,
+      "inradius": 1.4244856736642708,
+      "coarea": 6.32713536131602,
+      "dirichlet": 6.413891676659976,
+      "max_pl_grad": 1.639987609032754
+    },
+    {
+      "label": "perturb 182 of g0 r2 (sigma 0.070)",
+      "genus": 0,
+      "area": 6.666789652989938,
+      "inradius": 1.4274402150056673,
+      "coarea": 6.555050035626096,
+      "dirichlet": 6.660099296529128,
+      "max_pl_grad": 2.4092024678817587
+    },
+    {
+      "label": "perturb 183 of g0 r3 (sigma 0.078)",
+      "genus": 0,
+      "area": 6.392261007912454,
+      "inradius": 1.4179926122936075,
+      "coarea": 6.301205142940258,
+      "dirichlet": 6.466821703466178,
+      "max_pl_grad": 2.2872556143927087
+    },
+    {
+      "label": "perturb 184 of g1 r0 (sigma 0.124)",
+      "genus": 1,
+      "area": 6.657087041933122,
+      "inradius": 1.5325537343211935,
+      "coarea": 7.20707544018501,
+      "dirichlet": 6.670016478318354,
+      "max_pl_grad": 2.068502128278367
+    },
+    {
+      "label": "perturb 185 of g1 r1 (sigma 0.131)",
+      "genus": 1,
+      "area": 6.840591504612094,
+      "inradius": 1.4728303944193293,
+      "coarea": 7.281582437187193,
+      "dirichlet": 6.9856653828694295,
+      "max_pl_grad": 3.3337174856078735
+    },
+    {
+      "label": "perturb 186 of g1 r2 (sigma 0.144)",
+      "genus": 1,
+      "area": 6.8261587385178615,
+      "inradius": 1.5336524757108645,
+      "coarea": 7.562120573963985,
+      "dirichlet": 7.060710995662948,
+      "max_pl_grad": 4.4194882525089145
+    },
+    {
+      "label": "perturb 187 of g1 r3 (sigma 0.037)",
+      "genus": 1,
+      "area": 6.772448037234522,
+      "inradius": 1.5526904988320562,
+      "coarea": 7.379087473367694,
+      "dirichlet": 6.904571782043675,
+      "max_pl_grad": 2.8558612926656433
+    },
+    {
+      "label": "perturb 188 of g2 r0 (sigma 0.068)",
+      "genus": 2,
+      "area": 7.009073474804816,
+      "inradius": 1.4917500605762781,
+      "coarea": 7.134822182795979,
+      "dirichlet": 7.300978174593541,
+      "max_pl_grad": 3.1807422978331243
+    },
+    {
+      "label": "perturb 189 of g2 r1 (sigma 0.141)",
+      "genus": 2,
+      "area": 7.54805525340462,
+      "inradius": 1.4557914764238375,
+      "coarea": 7.762726421208647,
+      "dirichlet": 9.181904699668227,
+      "max_pl_grad": 5.4115628870989205
+    },
+    {
+      "label": "perturb 190 of g2 r2 (sigma 0.086)",
+      "genus": 2,
+      "area": 7.61261142656189,
+      "inradius": 1.5627527683086484,
+      "coarea": 7.677853741637054,
+      "dirichlet": 8.832873307682842,
+      "max_pl_grad": 6.534969951345657
+    },
+    {
+      "label": "perturb 191 of g2 r3 (sigma 0.125)",
+      "genus": 2,
+      "area": 7.331314155227835,
+      "inradius": 1.5344232589087796,
+      "coarea": 7.466596563608483,
+      "dirichlet": 8.511040697453147,
+      "max_pl_grad": 7.326365806331551
+    },
+    {
+      "label": "perturb 192 of g0 r0 (sigma 0.094)",
+      "genus": 0,
+      "area": 6.360828507004484,
+      "inradius": 1.3609466660651415,
+      "coarea": 6.238202874304353,
+      "dirichlet": 6.320501379133253,
+      "max_pl_grad": 1.3360460917590946
+    },
+    {
+      "label": "perturb 193 of g0 r1 (sigma 0.121)",
+      "genus": 0,
+      "area": 6.45044138723145,
+      "inradius": 1.4251318929439472,
+      "coarea": 6.33327008045468,
+      "dirichlet": 6.419706028099324,
+      "max_pl_grad": 1.622507200144806
+    },
+    {
+      "label": "perturb 194 of g0 r2 (sigma 0.016)",
+      "genus": 0,
+      "area": 6.592058875759161,
+      "inradius": 1.4212407531257587,
+      "coarea": 6.486811656330642,
+      "dirichlet": 6.602177684699488,
+      "max_pl_grad": 2.361193724063721
+    },
+    {
+      "label": "perturb 195 of g0 r3 (sigma 0.069)",
+      "genus": 0,
+      "area": 6.435095015426281,
+      "inradius": 1.414209172673621,
+      "coarea": 6.338930039523202,
+      "dirichlet": 6.482811591071528,
+      "max_pl_grad": 2.235475275307754
+    },
+    {
+      "label": "perturb 196 of g1 r0 (sigma 0.056)",
+      "genus": 1,
+      "area": 6.657253256509,
+      "inradius": 1.534617216698114,
+      "coarea": 7.210306329689437,
+      "dirichlet": 6.6684173243791856,
+      "max_pl_grad": 2.160753135363033
+    },
+    {
+      "label": "perturb 197 of g1 r1 (sigma 0.052)",
+      "genus": 1,
+      "area": 6.894984821096449,
+      "inradius": 1.45575213218235,
+      "coarea": 7.285300048614137,
+      "dirichlet": 7.331245562813293,
+      "max_pl_grad": 10.228528435142792
+    },
+    {
+      "label": "perturb 198 of g1 r2 (sigma 0.061)",
+      "genus": 1,
+      "area": 6.849998401792417,
+      "inradius": 1.5190455568452483,
+      "coarea": 7.530911154025066,
+      "dirichlet": 7.073038602672435,
+      "max_pl_grad": 3.080784262431149
+    },
+    {
+      "label": "perturb 199 of g1 r3 (sigma 0.053)",
+      "genus": 1,
+      "area": 6.772448037231165,
+      "inradius": 1.5526904988332688,
+      "coarea": 7.3790874733709995,
+      "dirichlet": 6.904571782043821,
+      "max_pl_grad": 2.855861292664652
+    }
+  ],
+  "perturbations": [
+    {
+      "genus": 0,
+      "source_restart": 0,
+      "perturbation": 0,
+      "sigma": 0.1461585968476465,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9956157296355741
+      },
+      "certificate": {
+        "area": 6.3611860384516135,
+        "k16_violation": 9.995604344226194e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0066731955959098
+      }
+    },
+    {
+      "genus": 0,
+      "source_restart": 1,
+      "perturbation": 1,
+      "sigma": 0.04101244546791941,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.8697401667905069
+      },
+      "certificate": {
+        "area": 6.4458000767487,
+        "k16_violation": 5.773159728050814e-15,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0000000000001252
+      }
+    },
+    {
+      "genus": 0,
+      "source_restart": 2,
+      "perturbation": 2,
+      "sigma": 0.145254894934181,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9830163852029727
+      },
+      "certificate": {
+        "area": 6.5925471829652125,
+        "k16_violation": 9.996581340487865e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.016959805770579
+      }
+    },
+    {
+      "genus": 0,
+      "source_restart": 3,
+      "perturbation": 3,
+      "sigma": 0.14779558671319581,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 1.0
+      },
+      "certificate": {
+        "area": 6.392963024254572,
+        "k16_violation": 9.997291883223625e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0060800693602527
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 0,
+      "perturbation": 4,
+      "sigma": 0.08568510119689676,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9848850130038045
+      },
+      "certificate": {
+        "area": 6.656793986202308,
+        "k16_violation": 9.99964555603583e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.011694798154931
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 1,
+      "perturbation": 5,
+      "sigma": 0.12682482239607049,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 1.0
+      },
+      "certificate": {
+        "area": 6.824169466054279,
+        "k16_violation": 9.988987414999428e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0177431109909796
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 2,
+      "perturbation": 6,
+      "sigma": 0.0351681571551754,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.889064331330701
+      },
+      "certificate": {
+        "area": 6.837567590172858,
+        "k16_violation": 9.953504687132408e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0084455960939875
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 3,
+      "perturbation": 7,
+      "sigma": 0.06842724140182231,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9999999998808562
+      },
+      "certificate": {
+        "area": 6.772448037234051,
+        "k16_violation": 9.998890604379085e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0127659700567353
+      }
+    },
+    {
+      "genus": 2,
+      "source_restart": 0,
+      "perturbation": 8,
+      "sigma": 0.0830757971241389,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9006906104077643
+      },
+      "certificate": {
+        "area": 7.06061252612559,
+        "k16_violation": 5.773159728050814e-15,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0000000000001028
+      }
+    },
+    {
+      "genus": 2,
+      "source_restart": 1,
+      "perturbation": 9,
+      "sigma": 0.09223426815310812,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 1.0
+      },
+      "certificate": {
+        "area": 7.566453277296702,
+        "k16_violation": 9.958522895203714e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0277351006617554
+      }
+    },
+    {
+      "genus": 2,
+      "source_restart": 2,
+      "perturbation": 10,
+      "sigma": 0.08745413002527387,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9056569048516394
+      },
+      "certificate": {
+        "area": 7.611429640561065,
+        "k16_violation": 9.948086798772238e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0200807027048266
+      }
+    },
+    {
+      "genus": 2,
+      "source_restart": 3,
+      "perturbation": 11,
+      "sigma": 0.11056508562402455,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 1.0
+      },
+      "certificate": {
+        "area": 7.329871967122019,
+        "k16_violation": 9.99555993530521e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0212843852940838
+      }
+    },
+    {
+      "genus": 0,
+      "source_restart": 0,
+      "perturbation": 12,
+      "sigma": 0.13520476611164312,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 1.0
+      },
+      "certificate": {
+        "area": 6.360828507004484,
+        "k16_violation": 9.998446515169235e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0077156779517549
+      }
+    },
+    {
+      "genus": 0,
+      "source_restart": 1,
+      "perturbation": 13,
+      "sigma": 0.1045248556793677,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9466703049874923
+      },
+      "certificate": {
+        "area": 6.45637227173643,
+        "k16_violation": 9.983214255271378e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0047951483805955
+      }
+    },
+    {
+      "genus": 0,
+      "source_restart": 2,
+      "perturbation": 14,
+      "sigma": 0.11887468103857561,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9999999999890861
+      },
+      "certificate": {
+        "area": 6.595392767330833,
+        "k16_violation": 9.991163452127694e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0189790385598185
+      }
+    },
+    {
+      "genus": 0,
+      "source_restart": 3,
+      "perturbation": 15,
+      "sigma": 0.06038239750949496,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9925175118578409
+      },
+      "certificate": {
+        "area": 6.391181829741483,
+        "k16_violation": 9.983258664192363e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0057287560984773
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 0,
+      "perturbation": 16,
+      "sigma": 0.13573847904018055,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9999999999972715
+      },
+      "certificate": {
+        "area": 6.657838401631645,
+        "k16_violation": 9.999689964956815e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0125353755005744
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 1,
+      "perturbation": 17,
+      "sigma": 0.08991309117641463,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 1.0
+      },
+      "certificate": {
+        "area": 6.824169466054279,
+        "k16_violation": 9.988987414999428e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0177431109909796
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 2,
+      "perturbation": 18,
+      "sigma": 0.09761706100427138,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 1.0
+      },
+      "certificate": {
+        "area": 6.827388098000852,
+        "k16_violation": 9.991252269969664e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.014223022952617
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 3,
+      "perturbation": 19,
+      "sigma": 0.024122501726959757,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9999999999772626
+      },
+      "certificate": {
+        "area": 6.772448037235652,
+        "k16_violation": 9.997291883223625e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0127659700572367
+      }
+    },
+    {
+      "genus": 2,
+      "source_restart": 0,
+      "perturbation": 20,
+      "sigma": 0.0688667264864499,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.8949191694327965
+      },
+      "certificate": {
+        "area": 7.026864455504657,
+        "k16_violation": 9.992939808967094e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.005514714278056
+      }
+    },
+    {
+      "genus": 2,
+      "source_restart": 1,
+      "perturbation": 21,
+      "sigma": 0.06694980461335767,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.999999999996362
+      },
+      "certificate": {
+        "area": 7.5664532772964375,
+        "k16_violation": 9.994005623070734e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0277351006618134
+      }
+    },
+    {
+      "genus": 2,
+      "source_restart": 2,
+      "perturbation": 22,
+      "sigma": 0.0712788360113051,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.999999999996362
+      },
+      "certificate": {
+        "area": 7.6163617038137845,
+        "k16_violation": 9.982725757140543e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.029076160471648
+      }
+    },
+    {
+      "genus": 2,
+      "source_restart": 3,
+      "perturbation": 23,
+      "sigma": 0.08895396926017227,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 1.0
+      },
+      "certificate": {
+        "area": 7.329871967122019,
+        "k16_violation": 9.99555993530521e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0212843852940838
+      }
+    },
+    {
+      "genus": 0,
+      "source_restart": 0,
+      "perturbation": 24,
+      "sigma": 0.06484599442675969,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 1.0
+      },
+      "certificate": {
+        "area": 6.360828507004484,
+        "k16_violation": 9.998446515169235e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0077156779517549
+      }
+    },
+    {
+      "genus": 0,
+      "source_restart": 1,
+      "perturbation": 25,
+      "sigma": 0.05512785520017279,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.999999999990905
+      },
+      "certificate": {
+        "area": 6.444682359132032,
+        "k16_violation": 9.996847794013775e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0080033705233649
+      }
+    },
+    {
+      "genus": 0,
+      "source_restart": 2,
+      "perturbation": 26,
+      "sigma": 0.0645007397941267,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9999999999763531
+      },
+      "certificate": {
+        "area": 6.595392767330454,
+        "k16_violation": 9.99689220293476e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.018979038563282
+      }
+    },
+    {
+      "genus": 0,
+      "source_restart": 3,
+      "perturbation": 27,
+      "sigma": 0.10766349431812443,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9775245043210816
+      },
+      "certificate": {
+        "area": 6.404385189332788,
+        "k16_violation": 9.999689964956815e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0010102713037967
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 0,
+      "perturbation": 28,
+      "sigma": 0.13781214362757446,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9999999999936335
+      },
+      "certificate": {
+        "area": 6.6578384016372585,
+        "k16_violation": 9.999157057904995e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0125353755016226
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 1,
+      "perturbation": 29,
+      "sigma": 0.0934642495601938,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9532076672303447
+      },
+      "certificate": {
+        "area": 6.795968500258593,
+        "k16_violation": 9.978284865042042e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0157808261759043
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 2,
+      "perturbation": 30,
+      "sigma": 0.10179374402686237,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 1.0
+      },
+      "certificate": {
+        "area": 6.827388098000852,
+        "k16_violation": 9.991252269969664e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.014223022952617
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 3,
+      "perturbation": 31,
+      "sigma": 0.06778282233965448,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.8321219907165869
+      },
+      "certificate": {
+        "area": 6.8185022468033525,
+        "k16_violation": 9.99600402451506e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0115168581431377
+      }
+    },
+    {
+      "genus": 2,
+      "source_restart": 0,
+      "perturbation": 32,
+      "sigma": 0.06372845684977915,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 1.0
+      },
+      "certificate": {
+        "area": 7.009131437860904,
+        "k16_violation": 9.99911264898401e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.014889039132482
+      }
+    },
+    {
+      "genus": 2,
+      "source_restart": 1,
+      "perturbation": 33,
+      "sigma": 0.1340286858639949,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9833308857751035
+      },
+      "certificate": {
+        "area": 7.542864365883918,
+        "k16_violation": 5.773159728050814e-15,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0296152831823233
+      }
+    },
+    {
+      "genus": 2,
+      "source_restart": 2,
+      "perturbation": 34,
+      "sigma": 0.13978973789276664,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9999999999990905
+      },
+      "certificate": {
+        "area": 7.616361703813804,
+        "k16_violation": 9.941070189256607e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.029076160471862
+      }
+    },
+    {
+      "genus": 2,
+      "source_restart": 3,
+      "perturbation": 35,
+      "sigma": 0.027381441639232205,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.8406516048853518
+      },
+      "certificate": {
+        "area": 7.33723611617891,
+        "k16_violation": 5.773159728050814e-15,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0107413179370062
+      }
+    },
+    {
+      "genus": 0,
+      "source_restart": 0,
+      "perturbation": 36,
+      "sigma": 0.025109395239062027,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 1.0
+      },
+      "certificate": {
+        "area": 6.360828507004484,
+        "k16_violation": 9.998446515169235e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0077156779517549
+      }
+    },
+    {
+      "genus": 0,
+      "source_restart": 1,
+      "perturbation": 37,
+      "sigma": 0.14266901422461498,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.999999999998181
+      },
+      "certificate": {
+        "area": 6.444682359130839,
+        "k16_violation": 9.976641734965597e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.008003370522744
+      }
+    },
+    {
+      "genus": 0,
+      "source_restart": 2,
+      "perturbation": 38,
+      "sigma": 0.033341143866425234,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9999999999126885
+      },
+      "certificate": {
+        "area": 6.595392767339362,
+        "k16_violation": 9.99893501330007e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0189790385609185
+      }
+    },
+    {
+      "genus": 0,
+      "source_restart": 3,
+      "perturbation": 39,
+      "sigma": 0.14329544189617158,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9876487154951974
+      },
+      "certificate": {
+        "area": 6.410396260003365,
+        "k16_violation": 5.773159728050814e-15,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0000000000002502
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 0,
+      "perturbation": 40,
+      "sigma": 0.12639125227803263,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9708831058396754
+      },
+      "certificate": {
+        "area": 6.659469500374435,
+        "k16_violation": 9.936318434711211e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0090626612003242
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 1,
+      "perturbation": 41,
+      "sigma": 0.12174942029080385,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9168158410402611
+      },
+      "certificate": {
+        "area": 6.8685639778577166,
+        "k16_violation": 9.951905965976948e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0057347122680538
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 2,
+      "perturbation": 42,
+      "sigma": 0.013434235703876944,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.6588949335036887
+      },
+      "certificate": {
+        "area": 6.836529218251253,
+        "k16_violation": 5.773159728050814e-15,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.011537247773442
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 3,
+      "perturbation": 43,
+      "sigma": 0.12953479275950014,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9300465749038267
+      },
+      "certificate": {
+        "area": 6.801103163939247,
+        "k16_violation": 9.986500515424268e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0061987304690148
+      }
+    },
+    {
+      "genus": 2,
+      "source_restart": 0,
+      "perturbation": 44,
+      "sigma": 0.06798446092928738,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 1.0
+      },
+      "certificate": {
+        "area": 7.009131437860904,
+        "k16_violation": 9.99911264898401e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.014889039132482
+      }
+    },
+    {
+      "genus": 2,
+      "source_restart": 1,
+      "perturbation": 45,
+      "sigma": 0.09830122312429113,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9044075761530621
+      },
+      "certificate": {
+        "area": 7.619133968730119,
+        "k16_violation": 9.953371460369453e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0215286226463114
+      }
+    },
+    {
+      "genus": 2,
+      "source_restart": 2,
+      "perturbation": 46,
+      "sigma": 0.13708633798951922,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.8762800869817511
+      },
+      "certificate": {
+        "area": 7.680454791018716,
+        "k16_violation": 5.773159728050814e-15,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.026139234150055
+      }
+    },
+    {
+      "genus": 2,
+      "source_restart": 3,
+      "perturbation": 47,
+      "sigma": 0.10646997912083196,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9733293017434335
+      },
+      "certificate": {
+        "area": 7.290086856648673,
+        "k16_violation": 9.992628946520199e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0213691255649384
+      }
+    },
+    {
+      "genus": 0,
+      "source_restart": 0,
+      "perturbation": 48,
+      "sigma": 0.024979093765092587,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 1.0
+      },
+      "certificate": {
+        "area": 6.360828507004484,
+        "k16_violation": 9.998446515169235e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0077156779517549
+      }
+    },
+    {
+      "genus": 0,
+      "source_restart": 1,
+      "perturbation": 49,
+      "sigma": 0.02436507789087254,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9369141124343514
+      },
+      "certificate": {
+        "area": 6.440439368803552,
+        "k16_violation": 9.995515526384224e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0073757951791518
+      }
+    },
+    {
+      "genus": 0,
+      "source_restart": 2,
+      "perturbation": 50,
+      "sigma": 0.10354288584573183,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9999999999972715
+      },
+      "certificate": {
+        "area": 6.5953927673344905,
+        "k16_violation": 9.993295080334974e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0189790385615887
+      }
+    },
+    {
+      "genus": 0,
+      "source_restart": 3,
+      "perturbation": 51,
+      "sigma": 0.11424762117493413,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9966550628460027
+      },
+      "certificate": {
+        "area": 6.392307599789132,
+        "k16_violation": 9.983747162323198e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0059389620534227
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 0,
+      "perturbation": 52,
+      "sigma": 0.054971420504329106,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9904323682594622
+      },
+      "certificate": {
+        "area": 6.661115074269446,
+        "k16_violation": 9.996581340487865e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.012424339479826
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 1,
+      "perturbation": 53,
+      "sigma": 0.10796780726913391,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 1.0
+      },
+      "certificate": {
+        "area": 6.824169466054279,
+        "k16_violation": 9.988987414999428e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0177431109909796
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 2,
+      "perturbation": 54,
+      "sigma": 0.020842438415266503,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.8229999667191805
+      },
+      "certificate": {
+        "area": 6.802906316969682,
+        "k16_violation": 5.773159728050814e-15,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0000000000001033
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 3,
+      "perturbation": 55,
+      "sigma": 0.13221075642945643,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.999999999996362
+      },
+      "certificate": {
+        "area": 6.772448037236158,
+        "k16_violation": 9.96691618126988e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0127659700585858
+      }
+    },
+    {
+      "genus": 2,
+      "source_restart": 0,
+      "perturbation": 56,
+      "sigma": 0.12002740036498101,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 1.0
+      },
+      "certificate": {
+        "area": 7.009131437860904,
+        "k16_violation": 9.99911264898401e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.014889039132482
+      }
+    },
+    {
+      "genus": 2,
+      "source_restart": 1,
+      "perturbation": 57,
+      "sigma": 0.08987947433581309,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9999999999990905
+      },
+      "certificate": {
+        "area": 7.566453277296739,
+        "k16_violation": 9.992140448389364e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0277351006616866
+      }
+    },
+    {
+      "genus": 2,
+      "source_restart": 2,
+      "perturbation": 58,
+      "sigma": 0.10686789603310425,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9999999999827196
+      },
+      "certificate": {
+        "area": 7.616361703805275,
+        "k16_violation": 9.991518723495574e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0290761604723604
+      }
+    },
+    {
+      "genus": 2,
+      "source_restart": 3,
+      "perturbation": 59,
+      "sigma": 0.07431029271417677,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 1.0
+      },
+      "certificate": {
+        "area": 7.329871967122019,
+        "k16_violation": 9.99555993530521e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0212843852940838
+      }
+    },
+    {
+      "genus": 0,
+      "source_restart": 0,
+      "perturbation": 60,
+      "sigma": 0.0771187044502606,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 1.0
+      },
+      "certificate": {
+        "area": 6.360828507004484,
+        "k16_violation": 9.998446515169235e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0077156779517549
+      }
+    },
+    {
+      "genus": 0,
+      "source_restart": 1,
+      "perturbation": 61,
+      "sigma": 0.07880257086630028,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9999999999145075
+      },
+      "certificate": {
+        "area": 6.444682359129896,
+        "k16_violation": 9.999601147114845e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0080033705066376
+      }
+    },
+    {
+      "genus": 0,
+      "source_restart": 2,
+      "perturbation": 62,
+      "sigma": 0.011513309441087442,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.705434487183993
+      },
+      "certificate": {
+        "area": 6.5813577432161,
+        "k16_violation": 9.999956418482725e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0179849663188074
+      }
+    },
+    {
+      "genus": 0,
+      "source_restart": 3,
+      "perturbation": 63,
+      "sigma": 0.0959825229076808,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 1.0
+      },
+      "certificate": {
+        "area": 6.392963024254572,
+        "k16_violation": 9.997291883223625e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0060800693602527
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 0,
+      "perturbation": 64,
+      "sigma": 0.033530360827575975,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.999999999992724
+      },
+      "certificate": {
+        "area": 6.657838401634548,
+        "k16_violation": 9.99653693156688e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0125353755011466
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 1,
+      "perturbation": 65,
+      "sigma": 0.1443532017463858,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9999999999954525
+      },
+      "certificate": {
+        "area": 6.824169466056692,
+        "k16_violation": 9.998890604379085e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0177431109922785
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 2,
+      "perturbation": 66,
+      "sigma": 0.11388537086239714,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9999999999627107
+      },
+      "certificate": {
+        "area": 6.827388098006889,
+        "k16_violation": 9.99982319171977e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.014223022956439
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 3,
+      "perturbation": 67,
+      "sigma": 0.09691384473391555,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.8681045325720333
+      },
+      "certificate": {
+        "area": 6.831611810424746,
+        "k16_violation": 9.99769156351249e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0001986836863859
+      }
+    },
+    {
+      "genus": 2,
+      "source_restart": 0,
+      "perturbation": 68,
+      "sigma": 0.10074217779891123,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 1.0
+      },
+      "certificate": {
+        "area": 7.009131437860904,
+        "k16_violation": 9.99911264898401e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.014889039132482
+      }
+    },
+    {
+      "genus": 2,
+      "source_restart": 1,
+      "perturbation": 69,
+      "sigma": 0.056747271290060616,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.8660548239113268
+      },
+      "certificate": {
+        "area": 7.568429345795126,
+        "k16_violation": 9.921041765892369e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.020732681100193
+      }
+    },
+    {
+      "genus": 2,
+      "source_restart": 2,
+      "perturbation": 70,
+      "sigma": 0.028435101547919867,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9250977277988568
+      },
+      "certificate": {
+        "area": 7.61173797172753,
+        "k16_violation": 9.994938210411419e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.030977959480728
+      }
+    },
+    {
+      "genus": 2,
+      "source_restart": 3,
+      "perturbation": 71,
+      "sigma": 0.10949921844523043,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9596892023801047
+      },
+      "certificate": {
+        "area": 7.357058117317302,
+        "k16_violation": 5.773159728050814e-15,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0158322164799454
+      }
+    },
+    {
+      "genus": 0,
+      "source_restart": 0,
+      "perturbation": 72,
+      "sigma": 0.06552451233016407,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9530478455917546
+      },
+      "certificate": {
+        "area": 6.364984577012447,
+        "k16_violation": 9.99911264898401e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0025135330159025
+      }
+    },
+    {
+      "genus": 0,
+      "source_restart": 1,
+      "perturbation": 73,
+      "sigma": 0.06230578075666047,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9680395899840732
+      },
+      "certificate": {
+        "area": 6.437976246159829,
+        "k16_violation": 9.9979580170384e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0054334931759703
+      }
+    },
+    {
+      "genus": 0,
+      "source_restart": 2,
+      "perturbation": 74,
+      "sigma": 0.04980910447391865,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.8365820504159274
+      },
+      "certificate": {
+        "area": 6.573526776190446,
+        "k16_violation": 5.773159728050814e-15,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.000000000000244
+      }
+    },
+    {
+      "genus": 0,
+      "source_restart": 3,
+      "perturbation": 75,
+      "sigma": 0.05920703491800282,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9973065408657931
+      },
+      "certificate": {
+        "area": 6.391710577654855,
+        "k16_violation": 9.999068240063025e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0060487652006793
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 0,
+      "perturbation": 76,
+      "sigma": 0.1033913671299796,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.975445566918097
+      },
+      "certificate": {
+        "area": 6.669165409340842,
+        "k16_violation": 9.99715865646067e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0092407627107736
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 1,
+      "perturbation": 77,
+      "sigma": 0.12760755927397413,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 1.0
+      },
+      "certificate": {
+        "area": 6.824169466054279,
+        "k16_violation": 9.988987414999428e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0177431109909796
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 2,
+      "perturbation": 78,
+      "sigma": 0.03626105448621132,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.8317708333406699
+      },
+      "certificate": {
+        "area": 6.827454751345638,
+        "k16_violation": 5.773159728050814e-15,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0023362505922115
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 3,
+      "perturbation": 79,
+      "sigma": 0.14217281118611635,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9999999976434992
+      },
+      "certificate": {
+        "area": 6.7724480367307685,
+        "k16_violation": 9.99991200956174e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0127659700500673
+      }
+    },
+    {
+      "genus": 2,
+      "source_restart": 0,
+      "perturbation": 80,
+      "sigma": 0.041842795616736775,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 1.0
+      },
+      "certificate": {
+        "area": 7.009131437860904,
+        "k16_violation": 9.99911264898401e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.014889039132482
+      }
+    },
+    {
+      "genus": 2,
+      "source_restart": 1,
+      "perturbation": 81,
+      "sigma": 0.14407907720630603,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9354048705363311
+      },
+      "certificate": {
+        "area": 7.560410371819043,
+        "k16_violation": 5.773159728050814e-15,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0211388249162017
+      }
+    },
+    {
+      "genus": 2,
+      "source_restart": 2,
+      "perturbation": 82,
+      "sigma": 0.08911532341993812,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.999999999998181
+      },
+      "certificate": {
+        "area": 7.616361703814111,
+        "k16_violation": 9.96167592859365e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0290761604719885
+      }
+    },
+    {
+      "genus": 2,
+      "source_restart": 3,
+      "perturbation": 83,
+      "sigma": 0.026167710119637276,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9025368425545821
+      },
+      "certificate": {
+        "area": 7.340067081664127,
+        "k16_violation": 9.99982319171977e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0217152277333408
+      }
+    },
+    {
+      "genus": 0,
+      "source_restart": 0,
+      "perturbation": 84,
+      "sigma": 0.05729753466257606,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 1.0
+      },
+      "certificate": {
+        "area": 6.360828507004484,
+        "k16_violation": 9.998446515169235e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0077156779517549
+      }
+    },
+    {
+      "genus": 0,
+      "source_restart": 1,
+      "perturbation": 85,
+      "sigma": 0.013018957085922876,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.7348412479013859
+      },
+      "certificate": {
+        "area": 6.432053765413884,
+        "k16_violation": 9.99857974193219e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0062196812190844
+      }
+    },
+    {
+      "genus": 0,
+      "source_restart": 2,
+      "perturbation": 86,
+      "sigma": 0.12899602385551565,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9460515100054181
+      },
+      "certificate": {
+        "area": 6.594620623136013,
+        "k16_violation": 9.977307868780372e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0024140329720947
+      }
+    },
+    {
+      "genus": 0,
+      "source_restart": 3,
+      "perturbation": 87,
+      "sigma": 0.1170516395624748,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9634301609266913
+      },
+      "certificate": {
+        "area": 6.406579167136017,
+        "k16_violation": 9.995249072858314e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0000381250804669
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 0,
+      "perturbation": 88,
+      "sigma": 0.04499586665655283,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9999999999608917
+      },
+      "certificate": {
+        "area": 6.6578384016413,
+        "k16_violation": 9.999423511430905e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0125353755021804
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 1,
+      "perturbation": 89,
+      "sigma": 0.04160414828947725,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.999999999998181
+      },
+      "certificate": {
+        "area": 6.824169466054135,
+        "k16_violation": 9.997203065381655e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0177431109910795
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 2,
+      "perturbation": 90,
+      "sigma": 0.04526520531675299,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 1.0
+      },
+      "certificate": {
+        "area": 6.827388098000852,
+        "k16_violation": 9.991252269969664e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.014223022952617
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 3,
+      "perturbation": 91,
+      "sigma": 0.06058275562387146,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.7739918091619984
+      },
+      "certificate": {
+        "area": 6.820308291257142,
+        "k16_violation": 5.773159728050814e-15,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0000000000000742
+      }
+    },
+    {
+      "genus": 2,
+      "source_restart": 0,
+      "perturbation": 92,
+      "sigma": 0.13673053440285413,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 1.0
+      },
+      "certificate": {
+        "area": 7.009131437860904,
+        "k16_violation": 9.99911264898401e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.014889039132482
+      }
+    },
+    {
+      "genus": 2,
+      "source_restart": 1,
+      "perturbation": 93,
+      "sigma": 0.11930195170835488,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.963528280927676
+      },
+      "certificate": {
+        "area": 7.546534279461286,
+        "k16_violation": 9.904121966997081e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0258712747372631
+      }
+    },
+    {
+      "genus": 2,
+      "source_restart": 2,
+      "perturbation": 94,
+      "sigma": 0.12072764086112354,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9999999999836291
+      },
+      "certificate": {
+        "area": 7.61636170381092,
+        "k16_violation": 9.994405303359599e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0290761604690004
+      }
+    },
+    {
+      "genus": 2,
+      "source_restart": 3,
+      "perturbation": 95,
+      "sigma": 0.062492984091125255,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9587781731406722
+      },
+      "certificate": {
+        "area": 7.296227855521554,
+        "k16_violation": 9.936673706079091e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0209448561739694
+      }
+    },
+    {
+      "genus": 0,
+      "source_restart": 0,
+      "perturbation": 96,
+      "sigma": 0.13692908741866455,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 1.0
+      },
+      "certificate": {
+        "area": 6.360828507004484,
+        "k16_violation": 9.998446515169235e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0077156779517549
+      }
+    },
+    {
+      "genus": 0,
+      "source_restart": 1,
+      "perturbation": 97,
+      "sigma": 0.09403196119652925,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.999999999996362
+      },
+      "certificate": {
+        "area": 6.444682359131763,
+        "k16_violation": 9.990630545075874e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0080033705231677
+      }
+    },
+    {
+      "genus": 0,
+      "source_restart": 2,
+      "perturbation": 98,
+      "sigma": 0.026708199435758976,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9999999999799911
+      },
+      "certificate": {
+        "area": 6.595392767333299,
+        "k16_violation": 9.9988461954581e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0189790385612507
+      }
+    },
+    {
+      "genus": 0,
+      "source_restart": 3,
+      "perturbation": 99,
+      "sigma": 0.08860411464470921,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 1.0
+      },
+      "certificate": {
+        "area": 6.392963024254572,
+        "k16_violation": 9.997291883223625e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0060800693602527
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 0,
+      "perturbation": 100,
+      "sigma": 0.027074574984382753,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9883870100793501
+      },
+      "certificate": {
+        "area": 6.657157196756463,
+        "k16_violation": 9.99689220293476e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0124522394417688
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 1,
+      "perturbation": 101,
+      "sigma": 0.09248054646612001,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 1.0
+      },
+      "certificate": {
+        "area": 6.824169466054279,
+        "k16_violation": 9.988987414999428e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0177431109909796
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 2,
+      "perturbation": 102,
+      "sigma": 0.1146337714328594,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 1.0
+      },
+      "certificate": {
+        "area": 6.827388098000852,
+        "k16_violation": 9.991252269969664e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.014223022952617
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 3,
+      "perturbation": 103,
+      "sigma": 0.059745489639946164,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.8284996908469111
+      },
+      "certificate": {
+        "area": 6.747149539119624,
+        "k16_violation": 9.999867600640755e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0023229470752357
+      }
+    },
+    {
+      "genus": 2,
+      "source_restart": 0,
+      "perturbation": 104,
+      "sigma": 0.09704907445198992,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 1.0
+      },
+      "certificate": {
+        "area": 7.009131437860904,
+        "k16_violation": 9.99911264898401e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.014889039132482
+      }
+    },
+    {
+      "genus": 2,
+      "source_restart": 1,
+      "perturbation": 105,
+      "sigma": 0.113986510311189,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 1.0
+      },
+      "certificate": {
+        "area": 7.566453277296702,
+        "k16_violation": 9.958522895203714e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0277351006617554
+      }
+    },
+    {
+      "genus": 2,
+      "source_restart": 2,
+      "perturbation": 106,
+      "sigma": 0.02441010073498054,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.969824167380466
+      },
+      "certificate": {
+        "area": 7.613303434930678,
+        "k16_violation": 9.989609139893219e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0281298538527195
+      }
+    },
+    {
+      "genus": 2,
+      "source_restart": 3,
+      "perturbation": 107,
+      "sigma": 0.06971871456197513,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9715848827381706
+      },
+      "certificate": {
+        "area": 7.288971880723281,
+        "k16_violation": 9.922462851363889e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0216339773217817
+      }
+    },
+    {
+      "genus": 0,
+      "source_restart": 0,
+      "perturbation": 108,
+      "sigma": 0.04767990529901247,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9868521179714662
+      },
+      "certificate": {
+        "area": 6.361964282990497,
+        "k16_violation": 9.997114247539685e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0072351305228675
+      }
+    },
+    {
+      "genus": 0,
+      "source_restart": 1,
+      "perturbation": 109,
+      "sigma": 0.05457735197451988,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9542519735578026
+      },
+      "certificate": {
+        "area": 6.443957574402864,
+        "k16_violation": 9.99778038135446e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0090601310156968
+      }
+    },
+    {
+      "genus": 0,
+      "source_restart": 2,
+      "perturbation": 110,
+      "sigma": 0.09847043486358047,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.8975578879117165
+      },
+      "certificate": {
+        "area": 6.5975309740848385,
+        "k16_violation": 9.982770166061528e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0041584076782637
+      }
+    },
+    {
+      "genus": 0,
+      "source_restart": 3,
+      "perturbation": 111,
+      "sigma": 0.022173622346518162,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 1.0
+      },
+      "certificate": {
+        "area": 6.392963024254572,
+        "k16_violation": 9.997291883223625e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0060800693602527
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 0,
+      "perturbation": 112,
+      "sigma": 0.08988346534378149,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9999999999954525
+      },
+      "certificate": {
+        "area": 6.65783840163326,
+        "k16_violation": 9.998002425959385e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.01253537550046
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 1,
+      "perturbation": 113,
+      "sigma": 0.053259888194096494,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.8356320461534779
+      },
+      "certificate": {
+        "area": 6.847754993793112,
+        "k16_violation": 5.773159728050814e-15,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.001618827049609
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 2,
+      "perturbation": 114,
+      "sigma": 0.1370173666627129,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9629256124744643
+      },
+      "certificate": {
+        "area": 6.819629061684777,
+        "k16_violation": 9.953682322816348e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0063915828730694
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 3,
+      "perturbation": 115,
+      "sigma": 0.10245220675445198,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9020925727118083
+      },
+      "certificate": {
+        "area": 6.782701483266893,
+        "k16_violation": 5.773159728050814e-15,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0000000000001603
+      }
+    },
+    {
+      "genus": 2,
+      "source_restart": 0,
+      "perturbation": 116,
+      "sigma": 0.06871342701783775,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9903274630351007
+      },
+      "certificate": {
+        "area": 7.007177006175305,
+        "k16_violation": 9.996137251278014e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0151535959973041
+      }
+    },
+    {
+      "genus": 2,
+      "source_restart": 1,
+      "perturbation": 117,
+      "sigma": 0.019678996296131845,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.4030394051978874
+      },
+      "certificate": {
+        "area": 7.558431614441817,
+        "k16_violation": 5.773159728050814e-15,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0135201911561267
+      }
+    },
+    {
+      "genus": 2,
+      "source_restart": 2,
+      "perturbation": 118,
+      "sigma": 0.08116509094814232,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.999999999996362
+      },
+      "certificate": {
+        "area": 7.6163617038152225,
+        "k16_violation": 9.980771764617202e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.029076160471831
+      }
+    },
+    {
+      "genus": 2,
+      "source_restart": 3,
+      "perturbation": 119,
+      "sigma": 0.14302891751752544,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9699344478240164
+      },
+      "certificate": {
+        "area": 7.316203330331094,
+        "k16_violation": 5.773159728050814e-15,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0202407464356946
+      }
+    },
+    {
+      "genus": 0,
+      "source_restart": 0,
+      "perturbation": 120,
+      "sigma": 0.1311754422240622,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 1.0
+      },
+      "certificate": {
+        "area": 6.360828507004484,
+        "k16_violation": 9.998446515169235e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0077156779517549
+      }
+    },
+    {
+      "genus": 0,
+      "source_restart": 1,
+      "perturbation": 121,
+      "sigma": 0.024518558812259405,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9999999999517968
+      },
+      "certificate": {
+        "area": 6.444682359128895,
+        "k16_violation": 9.99991200956174e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0080033705236038
+      }
+    },
+    {
+      "genus": 0,
+      "source_restart": 2,
+      "perturbation": 122,
+      "sigma": 0.06383621079584319,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9999999998799467
+      },
+      "certificate": {
+        "area": 6.59539276733565,
+        "k16_violation": 9.99982319171977e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0189790385687432
+      }
+    },
+    {
+      "genus": 0,
+      "source_restart": 3,
+      "perturbation": 123,
+      "sigma": 0.14117422744643376,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 1.0
+      },
+      "certificate": {
+        "area": 6.392963024254572,
+        "k16_violation": 9.997291883223625e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0060800693602527
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 0,
+      "perturbation": 124,
+      "sigma": 0.03780295913840372,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9999999999972715
+      },
+      "certificate": {
+        "area": 6.657838401632885,
+        "k16_violation": 9.99778038135446e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0125353755011592
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 1,
+      "perturbation": 125,
+      "sigma": 0.08056735737328789,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9999999999990905
+      },
+      "certificate": {
+        "area": 6.824169466054445,
+        "k16_violation": 9.996670158329835e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0177431109909558
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 2,
+      "perturbation": 126,
+      "sigma": 0.1371249206038774,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9658918163040653
+      },
+      "certificate": {
+        "area": 6.834288872779519,
+        "k16_violation": 5.773159728050814e-15,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.006958751033125
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 3,
+      "perturbation": 127,
+      "sigma": 0.023702888858081278,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.8459281021541756
+      },
+      "certificate": {
+        "area": 6.794836961090142,
+        "k16_violation": 9.99600402451506e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0080510445638775
+      }
+    },
+    {
+      "genus": 2,
+      "source_restart": 0,
+      "perturbation": 128,
+      "sigma": 0.04841276492559022,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9789171656948383
+      },
+      "certificate": {
+        "area": 7.013430898605955,
+        "k16_violation": 9.990497318312919e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0137513840570505
+      }
+    },
+    {
+      "genus": 2,
+      "source_restart": 1,
+      "perturbation": 129,
+      "sigma": 0.08702557027289229,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9221908372055623
+      },
+      "certificate": {
+        "area": 7.535996746138895,
+        "k16_violation": 5.773159728050814e-15,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0206210101582522
+      }
+    },
+    {
+      "genus": 2,
+      "source_restart": 2,
+      "perturbation": 130,
+      "sigma": 0.08507678106446598,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9999999999708962
+      },
+      "certificate": {
+        "area": 7.616361703805191,
+        "k16_violation": 9.99627047804097e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.029076160471839
+      }
+    },
+    {
+      "genus": 2,
+      "source_restart": 3,
+      "perturbation": 131,
+      "sigma": 0.13988805091563639,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 1.0
+      },
+      "certificate": {
+        "area": 7.329871967122019,
+        "k16_violation": 9.99555993530521e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0212843852940838
+      }
+    },
+    {
+      "genus": 0,
+      "source_restart": 0,
+      "perturbation": 132,
+      "sigma": 0.11186183231480988,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 1.0
+      },
+      "certificate": {
+        "area": 6.360828507004484,
+        "k16_violation": 9.998446515169235e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0077156779517549
+      }
+    },
+    {
+      "genus": 0,
+      "source_restart": 1,
+      "perturbation": 133,
+      "sigma": 0.10706014148323592,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9999999999972715
+      },
+      "certificate": {
+        "area": 6.444682359131525,
+        "k16_violation": 9.993339489255959e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0080033705228066
+      }
+    },
+    {
+      "genus": 0,
+      "source_restart": 2,
+      "perturbation": 134,
+      "sigma": 0.10778338940020192,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.986938624868344
+      },
+      "certificate": {
+        "area": 6.595302125905568,
+        "k16_violation": 9.998979422221055e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0149450440721313
+      }
+    },
+    {
+      "genus": 0,
+      "source_restart": 3,
+      "perturbation": 135,
+      "sigma": 0.12456792278247908,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 1.0
+      },
+      "certificate": {
+        "area": 6.392963024254572,
+        "k16_violation": 9.997291883223625e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0060800693602527
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 0,
+      "perturbation": 136,
+      "sigma": 0.10030603832546536,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9999999999972715
+      },
+      "certificate": {
+        "area": 6.657838401633592,
+        "k16_violation": 9.997203065381655e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0125353755012723
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 1,
+      "perturbation": 137,
+      "sigma": 0.0995744286067879,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.909112801995434
+      },
+      "certificate": {
+        "area": 6.8371712877966235,
+        "k16_violation": 5.773159728050814e-15,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.013764289587833
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 2,
+      "perturbation": 138,
+      "sigma": 0.08607608567920107,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 1.0
+      },
+      "certificate": {
+        "area": 6.827388098000852,
+        "k16_violation": 9.991252269969664e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.014223022952617
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 3,
+      "perturbation": 139,
+      "sigma": 0.10663158505837317,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9663008536826965
+      },
+      "certificate": {
+        "area": 6.79000440114751,
+        "k16_violation": 9.989342686367308e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0104154122740197
+      }
+    },
+    {
+      "genus": 2,
+      "source_restart": 0,
+      "perturbation": 140,
+      "sigma": 0.10608221368474681,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9900667488464023
+      },
+      "certificate": {
+        "area": 7.01039388808031,
+        "k16_violation": 9.988498916868593e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0145157113066576
+      }
+    },
+    {
+      "genus": 2,
+      "source_restart": 1,
+      "perturbation": 141,
+      "sigma": 0.1085547377620964,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.8277625616638034
+      },
+      "certificate": {
+        "area": 7.621289980184606,
+        "k16_violation": 9.96682736342791e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0153874782537098
+      }
+    },
+    {
+      "genus": 2,
+      "source_restart": 2,
+      "perturbation": 142,
+      "sigma": 0.08756003584562869,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.999999999998181
+      },
+      "certificate": {
+        "area": 7.616361703815492,
+        "k16_violation": 9.910294807013997e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0290761604717913
+      }
+    },
+    {
+      "genus": 2,
+      "source_restart": 3,
+      "perturbation": 143,
+      "sigma": 0.051781581491508674,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.8987059327691895
+      },
+      "certificate": {
+        "area": 7.347792262637448,
+        "k16_violation": 5.773159728050814e-15,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0000000000000286
+      }
+    },
+    {
+      "genus": 0,
+      "source_restart": 0,
+      "perturbation": 144,
+      "sigma": 0.12194023800805336,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 1.0
+      },
+      "certificate": {
+        "area": 6.360828507004484,
+        "k16_violation": 9.998446515169235e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0077156779517549
+      }
+    },
+    {
+      "genus": 0,
+      "source_restart": 1,
+      "perturbation": 145,
+      "sigma": 0.10922810380883392,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.999999999998181
+      },
+      "certificate": {
+        "area": 6.444682359129992,
+        "k16_violation": 9.99724747430264e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0080033705234646
+      }
+    },
+    {
+      "genus": 0,
+      "source_restart": 2,
+      "perturbation": 146,
+      "sigma": 0.01905506954068095,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.05512110358631617
+      },
+      "certificate": {
+        "area": 6.70784903126244,
+        "k16_violation": 9.995959615594074e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0132594906965304
+      }
+    },
+    {
+      "genus": 0,
+      "source_restart": 3,
+      "perturbation": 147,
+      "sigma": 0.10615156779994582,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9670099680179192
+      },
+      "certificate": {
+        "area": 6.414713243404037,
+        "k16_violation": 5.773159728050814e-15,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.000000000000122
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 0,
+      "perturbation": 148,
+      "sigma": 0.13762100276658185,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9735387571863612
+      },
+      "certificate": {
+        "area": 6.673911218238366,
+        "k16_violation": 9.984102433691078e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0043798623356488
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 1,
+      "perturbation": 149,
+      "sigma": 0.10645699239325838,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9359996414632406
+      },
+      "certificate": {
+        "area": 6.853515182235144,
+        "k16_violation": 9.96327464974911e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0017096577949725
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 2,
+      "perturbation": 150,
+      "sigma": 0.05606283628772499,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.8692748876719634
+      },
+      "certificate": {
+        "area": 6.853208605674363,
+        "k16_violation": 9.981926396562812e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0073115363776493
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 3,
+      "perturbation": 151,
+      "sigma": 0.1231233821367107,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9437336371674974
+      },
+      "certificate": {
+        "area": 6.7842089972466315,
+        "k16_violation": 9.964029601405855e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0082074027485686
+      }
+    },
+    {
+      "genus": 2,
+      "source_restart": 0,
+      "perturbation": 152,
+      "sigma": 0.08824355582501302,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 1.0
+      },
+      "certificate": {
+        "area": 7.009131437860904,
+        "k16_violation": 9.99911264898401e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.014889039132482
+      }
+    },
+    {
+      "genus": 2,
+      "source_restart": 1,
+      "perturbation": 153,
+      "sigma": 0.0932853281745016,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9411260475826566
+      },
+      "certificate": {
+        "area": 7.554384168461623,
+        "k16_violation": 9.982903392824483e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0288311987450476
+      }
+    },
+    {
+      "genus": 2,
+      "source_restart": 2,
+      "perturbation": 154,
+      "sigma": 0.06071727053036888,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9542787606624188
+      },
+      "certificate": {
+        "area": 7.611460126274057,
+        "k16_violation": 9.986722560029193e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0301136630999124
+      }
+    },
+    {
+      "genus": 2,
+      "source_restart": 3,
+      "perturbation": 155,
+      "sigma": 0.08064534749900419,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.972194120066888
+      },
+      "certificate": {
+        "area": 7.335487973161592,
+        "k16_violation": 9.981171444906067e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0226192831911358
+      }
+    },
+    {
+      "genus": 0,
+      "source_restart": 0,
+      "perturbation": 156,
+      "sigma": 0.05869515555178029,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 1.0
+      },
+      "certificate": {
+        "area": 6.360828507004484,
+        "k16_violation": 9.998446515169235e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0077156779517549
+      }
+    },
+    {
+      "genus": 0,
+      "source_restart": 1,
+      "perturbation": 157,
+      "sigma": 0.029254383262423557,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9999999999481588
+      },
+      "certificate": {
+        "area": 6.444682359131942,
+        "k16_violation": 9.999867600640755e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0080033705228968
+      }
+    },
+    {
+      "genus": 0,
+      "source_restart": 2,
+      "perturbation": 158,
+      "sigma": 0.03635625952736151,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.648543872924165
+      },
+      "certificate": {
+        "area": 6.58592246210527,
+        "k16_violation": 5.773159728050814e-15,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.000000000000043
+      }
+    },
+    {
+      "genus": 0,
+      "source_restart": 3,
+      "perturbation": 159,
+      "sigma": 0.038580714640113666,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9999999999972715
+      },
+      "certificate": {
+        "area": 6.392963024254358,
+        "k16_violation": 9.999423511430905e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0060800693602558
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 0,
+      "perturbation": 160,
+      "sigma": 0.06217360061179243,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9887808706334908
+      },
+      "certificate": {
+        "area": 6.655874554844338,
+        "k16_violation": 9.994627347964524e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0119579831110126
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 1,
+      "perturbation": 161,
+      "sigma": 0.1338252347417913,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9513076813864245
+      },
+      "certificate": {
+        "area": 6.865992968690396,
+        "k16_violation": 9.999512329272875e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0172509928742328
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 2,
+      "perturbation": 162,
+      "sigma": 0.04943092155656961,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.8026915688078589
+      },
+      "certificate": {
+        "area": 6.801008115421291,
+        "k16_violation": 9.977929593674162e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0106093678717312
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 3,
+      "perturbation": 163,
+      "sigma": 0.12181492189667702,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9658808304338891
+      },
+      "certificate": {
+        "area": 6.742924362191898,
+        "k16_violation": 9.984546522900928e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0100473593472392
+      }
+    },
+    {
+      "genus": 2,
+      "source_restart": 0,
+      "perturbation": 164,
+      "sigma": 0.019631718945953558,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 1.0
+      },
+      "certificate": {
+        "area": 7.009131437860904,
+        "k16_violation": 9.99911264898401e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.014889039132482
+      }
+    },
+    {
+      "genus": 2,
+      "source_restart": 1,
+      "perturbation": 165,
+      "sigma": 0.01793019599753761,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.999999999992724
+      },
+      "certificate": {
+        "area": 7.566453277296818,
+        "k16_violation": 9.995781979910134e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.027735100661994
+      }
+    },
+    {
+      "genus": 2,
+      "source_restart": 2,
+      "perturbation": 166,
+      "sigma": 0.09855766856120966,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9999999999972715
+      },
+      "certificate": {
+        "area": 7.6163617038145475,
+        "k16_violation": 9.931921951533695e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0290761604720298
+      }
+    },
+    {
+      "genus": 2,
+      "source_restart": 3,
+      "perturbation": 167,
+      "sigma": 0.14229221298381423,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 1.0
+      },
+      "certificate": {
+        "area": 7.329871967122019,
+        "k16_violation": 9.99555993530521e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0212843852940838
+      }
+    },
+    {
+      "genus": 0,
+      "source_restart": 0,
+      "perturbation": 168,
+      "sigma": 0.060332752134594735,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9809470412265
+      },
+      "certificate": {
+        "area": 6.357256099075918,
+        "k16_violation": 9.980904991380157e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.00545613039481
+      }
+    },
+    {
+      "genus": 0,
+      "source_restart": 1,
+      "perturbation": 169,
+      "sigma": 0.07058082956116067,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9999999999827196
+      },
+      "certificate": {
+        "area": 6.444682359128655,
+        "k16_violation": 9.99893501330007e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.008003370523055
+      }
+    },
+    {
+      "genus": 0,
+      "source_restart": 2,
+      "perturbation": 170,
+      "sigma": 0.021743142619446185,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9999999999881766
+      },
+      "certificate": {
+        "area": 6.595392767333708,
+        "k16_violation": 9.990364091549964e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0189790385618356
+      }
+    },
+    {
+      "genus": 0,
+      "source_restart": 3,
+      "perturbation": 171,
+      "sigma": 0.14515973776869837,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 1.0
+      },
+      "certificate": {
+        "area": 6.392963024254572,
+        "k16_violation": 9.997291883223625e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0060800693602527
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 0,
+      "perturbation": 172,
+      "sigma": 0.14320783570816167,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.954129857253065
+      },
+      "certificate": {
+        "area": 6.697406091592834,
+        "k16_violation": 9.983214255271378e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0069000577426253
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 1,
+      "perturbation": 173,
+      "sigma": 0.10834428015773326,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9999999999954525
+      },
+      "certificate": {
+        "area": 6.824169466058397,
+        "k16_violation": 9.99840210624825e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0177431109910524
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 2,
+      "perturbation": 174,
+      "sigma": 0.06033561701592068,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9330009825089292
+      },
+      "certificate": {
+        "area": 6.816297672767086,
+        "k16_violation": 5.773159728050814e-15,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0000000000000278
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 3,
+      "perturbation": 175,
+      "sigma": 0.02760464178772573,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.7305861900649688
+      },
+      "certificate": {
+        "area": 6.739261735530745,
+        "k16_violation": 9.986100835135403e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0080879776909553
+      }
+    },
+    {
+      "genus": 2,
+      "source_restart": 0,
+      "perturbation": 176,
+      "sigma": 0.0616039825629542,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9723685714352541
+      },
+      "certificate": {
+        "area": 7.015302342429617,
+        "k16_violation": 9.989475913130264e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0135749404292531
+      }
+    },
+    {
+      "genus": 2,
+      "source_restart": 1,
+      "perturbation": 177,
+      "sigma": 0.12587965004355664,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9596820943852435
+      },
+      "certificate": {
+        "area": 7.5215761693553205,
+        "k16_violation": 9.865042116530276e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.026112701844101
+      }
+    },
+    {
+      "genus": 2,
+      "source_restart": 2,
+      "perturbation": 178,
+      "sigma": 0.10844108836225974,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.995054687308766
+      },
+      "certificate": {
+        "area": 7.614636111863788,
+        "k16_violation": 9.946043988406927e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0297079161776597
+      }
+    },
+    {
+      "genus": 2,
+      "source_restart": 3,
+      "perturbation": 179,
+      "sigma": 0.03264144501984658,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9434334292964195
+      },
+      "certificate": {
+        "area": 7.302881604424732,
+        "k16_violation": 9.994716165806494e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0217983385316993
+      }
+    },
+    {
+      "genus": 0,
+      "source_restart": 0,
+      "perturbation": 180,
+      "sigma": 0.10526948088436516,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 1.0
+      },
+      "certificate": {
+        "area": 6.360828507004484,
+        "k16_violation": 9.998446515169235e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0077156779517549
+      }
+    },
+    {
+      "genus": 0,
+      "source_restart": 1,
+      "perturbation": 181,
+      "sigma": 0.02177451355864235,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.8885169206841965
+      },
+      "certificate": {
+        "area": 6.441197295353997,
+        "k16_violation": 9.999867600640755e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0067633044115274
+      }
+    },
+    {
+      "genus": 0,
+      "source_restart": 2,
+      "perturbation": 182,
+      "sigma": 0.07020895082124824,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.8957116367146227
+      },
+      "certificate": {
+        "area": 6.666789652989938,
+        "k16_violation": 9.99991200956174e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0219938213849449
+      }
+    },
+    {
+      "genus": 0,
+      "source_restart": 3,
+      "perturbation": 183,
+      "sigma": 0.07848973306325367,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9940210262020628
+      },
+      "certificate": {
+        "area": 6.392261007912454,
+        "k16_violation": 9.978995407777802e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0058343805951462
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 0,
+      "perturbation": 184,
+      "sigma": 0.12445066377533869,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9872713350223421
+      },
+      "certificate": {
+        "area": 6.657087041933122,
+        "k16_violation": 9.965894776087225e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0088781689926298
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 1,
+      "perturbation": 185,
+      "sigma": 0.1312088588054748,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9495608250099394
+      },
+      "certificate": {
+        "area": 6.840591504612094,
+        "k16_violation": 5.773159728050814e-15,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0000000000003098
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 2,
+      "perturbation": 186,
+      "sigma": 0.14367110983675357,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9929739399540267
+      },
+      "certificate": {
+        "area": 6.8261587385178615,
+        "k16_violation": 9.994360894438614e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0134804352270872
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 3,
+      "perturbation": 187,
+      "sigma": 0.03655576630088176,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9999999999899956
+      },
+      "certificate": {
+        "area": 6.77244803723452,
+        "k16_violation": 9.986456106503283e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0127659700582692
+      }
+    },
+    {
+      "genus": 2,
+      "source_restart": 0,
+      "perturbation": 188,
+      "sigma": 0.0676563164406738,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9811758768355503
+      },
+      "certificate": {
+        "area": 7.009073474804816,
+        "k16_violation": 9.993472716018914e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.013335130700012
+      }
+    },
+    {
+      "genus": 2,
+      "source_restart": 1,
+      "perturbation": 189,
+      "sigma": 0.14098593472728,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9602391656599139
+      },
+      "certificate": {
+        "area": 7.548055253404618,
+        "k16_violation": 9.92503856878102e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0267210930079747
+      }
+    },
+    {
+      "genus": 2,
+      "source_restart": 2,
+      "perturbation": 190,
+      "sigma": 0.08572030376681898,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9298270501431034
+      },
+      "certificate": {
+        "area": 7.612611426561888,
+        "k16_violation": 9.941958367676307e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0320620603637891
+      }
+    },
+    {
+      "genus": 2,
+      "source_restart": 3,
+      "perturbation": 191,
+      "sigma": 0.12490096269306449,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.982601457319106
+      },
+      "certificate": {
+        "area": 7.331314155227842,
+        "k16_violation": 9.99902383114204e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.019750608864811
+      }
+    },
+    {
+      "genus": 0,
+      "source_restart": 0,
+      "perturbation": 192,
+      "sigma": 0.09424151538036009,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 1.0
+      },
+      "certificate": {
+        "area": 6.360828507004484,
+        "k16_violation": 9.998446515169235e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0077156779517549
+      }
+    },
+    {
+      "genus": 0,
+      "source_restart": 1,
+      "perturbation": 193,
+      "sigma": 0.12121094926135273,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9851612527609177
+      },
+      "certificate": {
+        "area": 6.450441387231449,
+        "k16_violation": 9.988365690105638e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0071544732294246
+      }
+    },
+    {
+      "genus": 0,
+      "source_restart": 2,
+      "perturbation": 194,
+      "sigma": 0.016326563674885112,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.42938595619489206
+      },
+      "certificate": {
+        "area": 6.592058875759161,
+        "k16_violation": 5.773159728050814e-15,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0000000000000193
+      }
+    },
+    {
+      "genus": 0,
+      "source_restart": 3,
+      "perturbation": 195,
+      "sigma": 0.06946604816371478,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9302368520147866
+      },
+      "certificate": {
+        "area": 6.435095015426281,
+        "k16_violation": 5.773159728050814e-15,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0000000000000744
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 0,
+      "perturbation": 196,
+      "sigma": 0.056411995969479205,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9937470421073158
+      },
+      "certificate": {
+        "area": 6.657253256509001,
+        "k16_violation": 9.991429905653604e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0123623933469212
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 1,
+      "perturbation": 197,
+      "sigma": 0.05164232715757233,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.7373915386569934
+      },
+      "certificate": {
+        "area": 6.894984821096449,
+        "k16_violation": 9.989076232841398e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0003052804878945
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 2,
+      "perturbation": 198,
+      "sigma": 0.060555442715066014,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.925119406903832
+      },
+      "certificate": {
+        "area": 6.849998401792417,
+        "k16_violation": 9.945955170564957e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.0043761723647857
+      }
+    },
+    {
+      "genus": 1,
+      "source_restart": 3,
+      "perturbation": 199,
+      "sigma": 0.05336171015945327,
+      "restore": {
+        "mode": "blend_to_start",
+        "t": 0.9999999999654392
+      },
+      "certificate": {
+        "area": 6.772448037231165,
+        "k16_violation": 9.999068240063025e-11,
+        "exact_lower_bound": 0.0,
+        "min_boundary_angle_over_pi": 1.012765970059056
+      }
+    }
+  ],
+  "total_seconds": 464.69
+}
