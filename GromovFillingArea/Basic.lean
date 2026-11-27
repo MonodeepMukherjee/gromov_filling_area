@@ -28,13 +28,16 @@ abbrev Circle2Pi := AddCircle (2 * Real.pi)
 
 /-- A compact metric space `M` is an **isometric filling** of `S¹` (of length `2π`)
 if there is an isometric embedding `ι : Circle2Pi → M` preserving boundary distances
-and satisfying a topological filling condition. -/
+and satisfying a topological filling condition. The field `no_boundary_retraction` says
+the boundary circle is not a retract of `M`: no continuous `r : M → Circle2Pi` restricts
+to the identity on `ι`. -/
 structure IsometricFilling (M : Type*) [MetricSpace M] [CompactSpace M]
     [MeasurableSpace M] [BorelSpace M] where
   ι : Circle2Pi → M
   isometry_ι : Isometry ι
   is_orientable_surface : Prop
   valid_topology : is_orientable_surface
+  no_boundary_retraction : ¬ ∃ r : M → Circle2Pi, Continuous r ∧ ∀ θ : Circle2Pi, r (ι θ) = θ
 
 /-- **Gromov's Filling Area Conjecture (1983):**
 Every orientable topological surface `M` isometrically filling a circle of length `2π`

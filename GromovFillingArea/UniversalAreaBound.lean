@@ -47,18 +47,17 @@ def fourierProjOneBoundaryHomeomorph (F : IsometricFilling M) :
   hg_cont.homeoOfEquivCompactToT2 (f := Equiv.ofBijective g hg_bij)
 
 /-- **Main Theorem (Gromov's Universal `4 / π` Filling Area Lower Bound):**
-Every isometric filling `F : IsometricFilling M` whose boundary admits no continuous
-retraction (`¬ ∃ r : M → Circle2Pi, Continuous r ∧ ∀ θ, r (F.ι θ) = θ`) has
-`2`-dimensional Hausdorff area at least `ENNReal.ofReal (4 / Real.pi)`. -/
-theorem gromov_universal_four_div_pi_bound (F : IsometricFilling M)
-    (h_no_retract : ¬ ∃ r : M → Circle2Pi, Continuous r ∧ ∀ θ : Circle2Pi, r (F.ι θ) = θ) :
+Every isometric filling `F : IsometricFilling M` has `2`-dimensional Hausdorff area at
+least `ENNReal.ofReal (4 / Real.pi)`. The boundary non-retraction condition is supplied by
+the structure field `F.no_boundary_retraction`. -/
+theorem gromov_universal_four_div_pi_bound (F : IsometricFilling M) :
     ENNReal.ofReal (4 / Real.pi) ≤
       MeasureTheory.Measure.hausdorffMeasure 2 (univ : Set M) := by
   have hcont : Continuous (fourierProj 1 ∘ kuratowskiBanach F) :=
     (fourierProj_lipschitzWith 1).continuous.comp (kuratowskiBanach_lipschitzWith F).continuous
   exact fundamental_mode_filling_area_bound F
     (disk_covered_of_no_retraction F (by positivity) (fourierProj 1 ∘ kuratowskiBanach F)
-      hcont (fourierProjOneBoundaryHomeomorph F) (fun _ => rfl) h_no_retract)
+      hcont (fourierProjOneBoundaryHomeomorph F) (fun _ => rfl) F.no_boundary_retraction)
 
 end
 
