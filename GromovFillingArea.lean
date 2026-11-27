@@ -39,3 +39,4 @@ public import GromovFillingArea.ConformalDiskArea
 public import GromovFillingArea.HemisphereCalibration
 public import GromovFillingArea.WeightedRadialBound
 public import GromovFillingArea.ConformalBoundaryLength
+public import GromovFillingArea.SharpFirstMode
