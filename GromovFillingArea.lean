@@ -37,3 +37,4 @@ public import GromovFillingArea.ConformalPuBound
 public import GromovFillingArea.RadialGeodesicBound
 public import GromovFillingArea.ConformalDiskArea
 public import GromovFillingArea.HemisphereCalibration
+public import GromovFillingArea.WeightedRadialBound
