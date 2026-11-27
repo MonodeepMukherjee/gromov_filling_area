@@ -641,120 +641,136 @@ isometric boundary condition.
 
 ## Numerical Exploration (Genus 0–2)
 
-`scripts/explore_genus2.py` is a small numerical side experiment that runs next to
+`scripts/explore_genus2.py` is a numerical side experiment that runs alongside
 the formal proofs. It builds orientable simplicial triangulations of genus
-`g ∈ {0, 1, 2}` with one boundary cycle of `n_b = 8` vertices. These come from an
-octahedron or from connected sums of 7-vertex tori, with one face punched out, one
-midpoint subdivision, and a boundary collar. Each mesh is checked for `χ = 1 − 2g`,
+`g ∈ {0, 1, 2}` with one boundary cycle of `n_b = 16` vertices. Each starts as an
+octahedron or a connected sum of 7-vertex tori. The script punches out one face,
+does one midpoint subdivision, adds a collar out to a 16-ring, and then adds a
+**second collar ring** of 4-split quads. Each mesh is checked for `χ = 1 − 2g`,
 coherent orientation, manifold vertex links, and a single boundary cycle.
+
+| Genus | V | E | F | Free edges | Faces / valence at each boundary vertex |
+| :---: | :---: | :---: | :---: | :---: | :---: |
+| 0 | 66 | 179 | 114 | 163 | 4 / 5 |
+| 1 | 76 | 215 | 138 | 199 | 4 / 5 |
+| 2 | 98 | 287 | 186 | 271 | 4 / 5 |
 
 The metric is given by **intrinsic edge lengths**, a piecewise-flat Riemannian
 metric with no embedding. Boundary edges are fixed at `2π/n_b`, so `∂M` has length
-exactly `2π`. The goal is to minimize total Heron area subject to:
+exactly `2π`. The script minimizes total Heron area subject to:
 
-- strict triangle inequalities `ℓ_a + ℓ_b − ℓ_c ≥ 10⁻³` on every face, and
+- strict triangle inequalities `ℓ_a + ℓ_b − ℓ_c ≥ 10⁻³` on every face;
+- **boundary cone angles** `Σ (incident angles at b_i) ≥ π`, so the boundary is
+  locally geodesic and no chord cuts a corner;
 - the isometric boundary condition `d(b_i, b_j) ≥ d_{S¹}(b_i, b_j)`, where `d` is
-  a shortest path (`scipy.sparse.csgraph.shortest_path`) on a **Steiner graph**:
-  `k` points per edge, plus straight segments inside each face unfolded in the
-  plane.
+  a shortest path on a **Steiner graph**. That graph has `k` points per edge,
+  plus straight segments inside each face unfolded in the plane.
 
-The solver is deterministic and has three stages:
+### Solver
 
-1. **Feasible start.** Each vertex gets a polar angle that decreases with its
-   combinatorial depth, from `π/2` on the boundary toward the pole. An edge gets
-   the length of the matching small step on the unit sphere (`ℓ_init`). This
-   reproduces the boundary edges exactly and makes the two spokes of every
-   boundary face equal. The interior lengths `c · ℓ_init` are then scaled up
-   (`c = 3.05`) until the `k = 3` and `k = 8` violations are `0` up to roundoff
-   (`≤ 4·10⁻¹⁵`).
-2. **Powell** (`maxiter=400`, capped at 4000 evaluations per genus) minimizes
-   Heron area `+ 10⁴ Σ max(0, d_{S¹} − d_{k=3})²` plus an extended log barrier
-   on the triangle slacks. It uses no gradients.
-3. **Polish.** The interior lengths are rescaled radially by bisection until the
-   `k = 8` violation is `≤ 10⁻⁴`. When rescaling would break a triangle
-   inequality, the polish instead blends back toward the feasible start. This
-   happened for all three genera here.
+There are 12 independent jobs (3 genera × 4 restarts), run in parallel on 8
+cores.
 
-Every result is certified on the `k = 8` Steiner graph. It is also checked
-two independent ways: an audit on a finer `k = 16` graph, and an **exact
-corner-cut lower bound** (see below).
+1. **Strictly feasible start.** Each vertex gets a polar angle that decreases
+   with its combinatorial depth, from `π/2` on the boundary toward the pole, and
+   each edge gets the matching small step on the unit sphere. Restarts 1–3 draw
+   a random depth exponent and jitter the interior polar angles. The interior
+   lengths are scaled by the smallest `c` (found by bisection) at which every
+   constraint holds. Every start is already strictly feasible.
+2. **Powell** (`maxiter=2000`, up to 60 000 evaluations), then **adaptive
+   Nelder-Mead** (20 000 evaluations). Both minimize
+   Heron area `+ 10⁴ Σ max(0, d_{S¹} − d_{k=5})² + 10⁴ Σ max(0, π + 10⁻³ − ∠b_i)²`
+   plus an extended log barrier on the triangle slacks.
+3. **Restoration.** The script tries a radial rescale of the interior lengths
+   and a blend back toward the start, each tuned by bisection. It keeps the
+   cheaper of the two among points that pass every constraint with a `k = 16`
+   violation `≤ 10⁻¹²`, i.e. zero up to floating-point roundoff.
 
-Results (`benchmarks/genus_search.json`, total runtime ≈ 21 s on an M1):
+**Certification.** A solution is certified when its `k = 16` violation is
+`≤ 10⁻⁴`, the **exact corner-cut lower bound** is `0.0`, every triangle slack is
+`≥ 10⁻³`, and every boundary angle is `≥ π`. All 12 restarts pass, and all 12
+are also *strictly* feasible: the largest `k = 16` violation over all restarts is
+`1.0·10⁻¹²`.
 
-| Filling | Area | `A / 2π` | Median fatness `2r/R` | `k = 8` violation | `k = 16` audit | Exact lower bound |
-| :--- | :---: | :---: | :---: | :---: | :---: | :---: |
-| g = 0, flat Tutte embedding in ℝ² | 2.98 | 0.47 | — | **1.09** | — | — |
-| g = 0, feasible start (`c · ℓ_init`) | 62.95 | 10.02 | 0.97 | 4·10⁻¹⁵ | 0.016 | 0.017 |
-| g = 0, Powell → polished | **34.93** | 5.56 | 0.54 | 1.0·10⁻⁴ | 0.029 | 0.025 |
-| g = 1, feasible start | 91.52 | 14.57 | 0.93 | 4·10⁻¹⁵ | 0.016 | 0.017 |
-| g = 1, Powell → polished | **77.60** | 12.35 | 0.91 | 1.0·10⁻⁴ | 0.028 | 0.028 |
-| g = 2, feasible start | 171.24 | 27.25 | 0.97 | 2·10⁻¹⁵ | 0.018 | 0.019 |
-| g = 2, Powell → polished | **95.88** | 15.26 | 0.75 | 1.0·10⁻⁴ | 0.026 | 0.019 |
+### Results
 
-All three genera now meet the `k = 8` criterion (`≤ 10⁻⁴`), including genus 2,
-which the earlier COBYLA run never did. The last two columns show that this
-criterion is **not** strict feasibility.
+Results are in `benchmarks/genus_search.json`, which holds the full per-restart
+telemetry and the final edge lengths. The run takes 18 min wall time on an M1
+(4 performance + 4 efficiency cores):
+
+```bash
+.venv/bin/python3 scripts/explore_genus2.py --n-boundary 16 --maxiter 2000 --restarts 4
+```
+
+Here are the minimum areas over the four restarts. Every row has zero
+violation: `k = 16` violation `≤ 10⁻¹²` and an exact lower bound of `0.0`.
+
+| Filling | Best area `A` | `A / 2π` | Restart | Min boundary angle | Median fatness `2r/R` |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| g = 0, flat Tutte embedding in ℝ² (infeasible) | 3.10 | 0.49 | — | — | — |
+| **g = 0** | **7.704** | **1.226** | 2 | 1.002 π | 0.57 |
+| **g = 1** | **11.997** | **1.909** | 2 | 1.147 π | 0.82 |
+| **g = 2** | **16.009** | **2.548** | 1 | 1.138 π | 0.82 |
+
+The flat embedding has a `k = 16` violation of `1.13`.
+
+Here is every restart. Each column is the area after that stage; every final
+point is strictly feasible.
+
+| g | r | Start | Powell | Nelder-Mead | Final `A` | `A / 2π` | Restoration |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
+| 0 | 0 | 11.52 | 11.52 | 11.32 | 11.275 | 1.795 | scale 0.998 |
+| 0 | 1 | 12.97 | 7.72 | 7.73 | 8.472 | 1.348 | blend `t = 0.069` |
+| 0 | 2 | 12.92 | 7.50 | 7.41 | **7.704** | **1.226** | scale 1.022 |
+| 0 | 3 | 12.61 | 12.61 | 11.64 | 11.764 | 1.872 | scale 1.006 |
+| 1 | 0 | 12.68 | 12.68 | 12.53 | 12.517 | 1.992 | scale 1.000 |
+| 1 | 1 | 14.46 | 14.46 | 14.01 | 13.840 | 2.203 | scale 0.993 |
+| 1 | 2 | 12.24 | 12.24 | 11.67 | **11.997** | **1.909** | scale 1.015 |
+| 1 | 3 | 12.51 | 12.51 | 12.12 | 12.159 | 1.935 | blend `t = 0.082` |
+| 2 | 0 | 16.12 | 16.12 | 16.03 | 16.019 | 2.549 | scale 1.000 |
+| 2 | 1 | 16.51 | 16.51 | 16.06 | **16.009** | **2.548** | scale 0.998 |
+| 2 | 2 | 23.27 | 23.27 | 22.83 | 22.590 | 3.595 | scale 0.995 |
+| 2 | 3 | 16.78 | 16.78 | 16.37 | 16.415 | 2.613 | scale 1.001 |
+
+### What changed, and why it matters
+
+Earlier collar meshes had boundary vertices that lay in only two faces. Their
+cone angle was always `< π` (`0.88–0.91 π`), so a straight chord between the two
+boundary neighbours cut the corner. That gave a true violation of `≈ 0.02` that
+no amount of optimization could remove, and the `k = 8` check could not see it.
+The second collar ring puts four faces at every boundary vertex, and the angle
+penalty keeps every boundary angle `≥ π`. With that, the exact corner-cut bound
+is `0.0` and the `k = 16` violation is at roundoff level. The best strictly
+feasible areas (`7.70`, `12.00`, `16.01`) are also far below the previous
+`k = 8`-only polished areas (`34.9`, `77.6`, `95.9`).
 
 ### Why flat fillings fail
 
-A flat disk whose boundary has length `2π` has area about `π`. Here the Tutte
-embedding gives `2.98`, and `π` is the isoperimetric maximum. The disk is too
-small to be an isometric filling, though. Antipodal boundary points are joined by
-a straight chord of length `≈ 2.05`, but the boundary arc between them has length
-`π ≈ 3.14`, so the isometric condition is violated by `≈ 1.09`. To satisfy
-`d ≥ d_{S¹}`, a filling must bulge out of the plane. The round hemisphere does
-this with area exactly `2π ≈ 6.283`, and the conjecture says nothing smaller is
-possible.
-
-### Why coarse distance graphs are not enough
-
-The solver keeps running into the same exploit: a coarse distance graph lets the
-optimizer satisfy the constraint with **needle triangles**. In the earlier
-COBYLA run (edge-graph constraint, paths only along mesh edges), the median
-fatness was `0.003` and the area `7.98`, but the `k = 8` check found a real
-violation of `1.84`. The same thing happens one level finer. Before polishing,
-the Powell optimum satisfies the `k = 3` constraint to `≈ 10⁻⁴` with median
-fatness `≈ 0.01` and area `12.7` (g = 0). The `k = 8` graph still finds shortcuts
-of `0.16–0.43` through the collapsed faces, and the polish has to give back most
-of that area.
-
-### Why `k = 8 ≤ 10⁻⁴` is not strict feasibility
-
-A Steiner graph only gives an *upper* bound on intrinsic distance. A violation
-it reports is real, but a reading of zero does not prove feasibility. On this
-mesh the gap can be computed exactly. Boundary vertices in the middle of a
-collar fan lie in only two faces, and their total angle is `< π` (`0.88–0.91 π`
-here). Unfold those two faces into the plane: the straight chord between the
-two boundary neighbours is a genuine path in the surface, and it is shorter than
-the boundary arc `2 · 2π/n_b`. That gives an exact lower bound of `0.017–0.028`
-on the true violation, in line with the `k = 16` audit. The `k = 8` graph
-misses it because its Steiner points are not close enough to the corner.
-
-Scaling up does not fix this. As `c → ∞` the boundary angles tend to `π` from
-below (`0.905 π` at `c = 3.05`, `0.988 π` at `c = 24`), so the violation shrinks
-but never reaches zero. A strictly feasible discrete filling needs every
-boundary vertex angle to be `≥ π`, as on the round hemisphere, where the
-boundary is a geodesic. That means a different collar (more faces at each
-boundary vertex) or an explicit angle constraint.
+A flat disk whose boundary has length `2π` has area at most `π`, the
+isoperimetric maximum; the Tutte embedding here gives `3.10`. But its antipodal
+boundary points are joined by a straight chord far shorter than the boundary
+arc `π`, so `d ≥ d_{S¹}` fails by `≈ 1.1`. An isometric filling has to bulge out
+of the plane. The round hemisphere does so with area exactly `2π ≈ 6.283`, and
+the conjecture says nothing smaller is possible.
 
 ### What this run does and does not show
 
-- It shows a fast (`≈ 21 s`), deterministic pipeline that meets the `k = 8`
-  criterion for g = 0, 1, 2, with well-shaped faces after polishing (median
-  fatness `0.54–0.91`).
-- It does **not** produce strictly feasible fillings: the exact corner-cut
-  bound shows a true violation of about `0.02` in every case.
-- **The areas have not converged.** The polished areas (`34.9`, `77.6`,
-  `95.9`) are far above `2π`. Most of the Powell gain is lost when the polish
-  blends back toward the start to undo needle shortcuts. Getting closer to `2π`
-  would take a boundary-angle constraint, a penalty graph fine enough to resist
-  needles, and finer meshes. Theory gives the lower bound for genus 0
-  (Pu/Ivanov) and genus 1 (Bangert–Croke–Ivanov–Katz).
-
-```bash
-.venv/bin/python3 scripts/explore_genus2.py            # ≈ 21 s, writes benchmarks/genus_search.json
-.venv/bin/python3 scripts/explore_genus2.py --maxfev 20000 --n-boundary 12
-```
+- It produces **strictly feasible** discrete fillings for g = 0, 1, 2. They have
+  zero exact corner-cut bound, a `k = 16` violation `≤ 10⁻¹²`, every boundary
+  angle `≥ π`, and well-shaped faces (median fatness `0.57–0.95`).
+- Every area found is above `2π` (best genus 0: `1.226 · 2π`), as theory
+  predicts for g = 0 (Pu/Ivanov) and g = 1 (Bangert–Croke–Ivanov–Katz).
+- A Steiner graph only gives an *upper* bound on intrinsic distance. A zero
+  `k = 16` reading is therefore strong numerical evidence of feasibility, not a
+  proof.
+- **The areas are not converged minima.** Powell stopped on its own tolerance
+  after 1–3 sweeps (4 000–19 000 evaluations, well below its cap). For most
+  restarts it made no progress from the start, which sits on the constraint
+  boundary, and Nelder-Mead (in 163–271 dimensions) gains only a few percent.
+  The spread across restarts (`7.70–11.76` for g = 0) shows how much depends on
+  the start. Getting closer to the infimum would need gradient-based constrained
+  optimization, finer meshes, and more restarts. The larger areas at higher
+  genus come from these meshes and this optimizer, not from any proven bound.
 
 ---
 
