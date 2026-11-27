@@ -29,3 +29,4 @@ public import GromovFillingArea.FundamentalDiskBound
 public import GromovFillingArea.MultiHarmonicBound
 public import GromovFillingArea.TopologicalFilling
 public import GromovFillingArea.BoundaryWinding
+public import GromovFillingArea.RadialRetraction
