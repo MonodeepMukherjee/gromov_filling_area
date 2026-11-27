@@ -52,7 +52,7 @@ theorem angularMean_sq_le (f : ℝ → ℝ) (hf : Continuous f) :
     simp only [sub_zero, smul_eq_mul]
   have hI : (∫ θ in (0 : ℝ)..(2 * Real.pi), f θ) = 2 * Real.pi * c := by
     rw [hc, angularMean, ← mul_assoc, mul_inv_cancel₀ hL.ne', one_mul]
-  show c ^ 2 ≤ (2 * Real.pi)⁻¹ * (∫ θ in (0 : ℝ)..(2 * Real.pi), f θ ^ 2)
+  change c ^ 2 ≤ (2 * Real.pi)⁻¹ * (∫ θ in (0 : ℝ)..(2 * Real.pi), f θ ^ 2)
   rw [le_inv_mul_iff₀ hL]
   rw [hexp, hI] at h0
   nlinarith

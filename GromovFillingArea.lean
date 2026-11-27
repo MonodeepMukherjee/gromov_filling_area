@@ -35,3 +35,4 @@ public import GromovFillingArea.UniversalAreaBound
 public import GromovFillingArea.PuSymmetrization
 public import GromovFillingArea.ConformalPuBound
 public import GromovFillingArea.RadialGeodesicBound
+public import GromovFillingArea.ConformalDiskArea
