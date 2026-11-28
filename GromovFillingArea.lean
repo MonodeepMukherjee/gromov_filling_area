@@ -44,3 +44,4 @@ public import GromovFillingArea.QuarterCircleSquare
 public import GromovFillingArea.DiamondGeometry
 public import GromovFillingArea.DiamondAreaBound
 public import GromovFillingArea.ThreePointEmbedding
+public import GromovFillingArea.PuFullDiskBound
