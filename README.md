@@ -1048,6 +1048,74 @@ these meshes and this optimizer, not a property of true minimizers.
 - As above, a Steiner graph only upper-bounds intrinsic distance, so the certification
   is numerical evidence, not a proof.
 
+### Overnight High-Resolution Convergence (`n_b = 24`, genus 0–2)
+
+`scripts/overnight_genus_convergence.py` reruns the same engine at a finer boundary
+(24 boundary vertices: genus 0/1/2 meshes with 90/100/122 vertices and 243/279/351
+edges). Settings:
+
+- 8 restarts per genus;
+- up to 10 000 L-BFGS-B iterations per penalty stage (`10² → 10³ → 10⁴`, at most 60
+  L-BFGS-B cycles each);
+- strict certification on the `k = 24` Steiner graph with tolerance `10⁻¹⁰`, plus the
+  exact corner-cut lower bound.
+
+Restart 0 starts from the scaled hemisphere. Restarts 1–7 add 25 % multiplicative jitter.
+Each objective evaluation is logged every 250 evaluations, giving the convergence curves
+in `benchmarks/overnight_convergence.json`. The run took 100 min on 8 cores.
+
+Areas below are Riemannian (Heron) areas, so the hemisphere is `2π`.
+
+| Genus | strictly feasible | best certified `A` | `A / 2π` | median `A` | best penalized `A` (before polish) |
+| :---: | :---: | :---: | :---: | :---: | :---: |
+| 0 | 8/8 | **6.4153** | **1.0210** | 8.694 | 4.270 |
+| 1 | 8/8 | **6.9199** | **1.1013** | 7.849 | 5.257 |
+| 2 | 8/8 | **7.0580** | **1.1233** | 11.339 | 5.835 |
+
+All 24 final metrics satisfy every `k = 24` Steiner-graph distance to within `10⁻¹⁰`, and
+`exact_lower_bound` is `0.0` for each.
+
+Convergence of the best restart (restart 0, hemisphere start) per genus, as area after
+`N` objective evaluations:
+
+| Genus | `N = 250` | 5 250 | 10 250 | end of `w = 10²` | end of `w = 10⁴` | after polish |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| 0 | 6.760 | 6.257 | 6.255 | 6.255 (12 750) | 6.259 (18 750) | 6.415 |
+| 1 | 7.164 | 6.417 | 6.381 | 6.370 (12 000) | 6.367 (31 250) | 6.920 |
+| 2 | 7.855 | 6.705 | 6.678 | 6.663 (12 000) | 6.660 (30 000) | 7.058 |
+
+**Findings.**
+
+- **No certified area is below `2π`.**
+  - Genus 0 reaches `1.021 · 2π`. That is slightly *above* the `n_b = 16` result
+    (`1.012 · 2π`), as expected: 24 boundary vertices impose more boundary-distance
+    constraints.
+  - The best area rises with genus (`6.42 < 6.92 < 7.06`). Handles do not help, which is
+    consistent with the conjecture.
+- **The hemisphere start wins in every genus.**
+  - Its penalized area plateaus within ~6 000 evaluations, and later stages change it by
+    less than `10⁻²`. So this basin is converged at this resolution.
+  - The remaining `2.1 %` gap to `2π` at genus 0 is the cost of strict feasibility
+    (polishing adds `0.16`) on a 24-gon boundary.
+- **The jittered restarts end far higher** (`A/2π` up to 1.7 at genus 0). Four of them
+  (g1 r6, g2 r1, r5, r6) stopped within 0–124 iterations at areas 18–30. L-BFGS-B
+  terminated immediately from a strongly distorted start. These are optimizer failures,
+  not local minima.
+- **Penalized areas far below `2π` are artefacts of the `k = 5` training graph.**
+  - Genus-0 restart 7 reached a penalized `4.27` with `k = 5` violations of only
+    `2.8 · 10⁻⁵`.
+  - Making it feasible on the `k = 24` graph raised it to `10.71`. The optimizer finds
+    shortcuts that the coarse `k = 5` Steiner graph cannot see.
+  - So sub-`2π` penalized values (here and in the `n_b = 16` run above) do **not** mean a
+    near-feasible metric below `2π`. Training on a finer Steiner graph is the obvious next
+    step.
+- Same caveat as above: Steiner graphs only upper-bound intrinsic distances, so this is
+  numerical evidence, not a proof.
+
+```bash
+.venv/bin/python3 scripts/overnight_genus_convergence.py --n-boundary 24 --restarts 8
+```
+
 ## Neuro-Symbolic Invariant Discovery (Genus 0–2)
 
 `scripts/conjecture_discovery.py` runs a closed-loop search for lower-bound functionals
@@ -1350,11 +1418,13 @@ scripts/
   conjecture_discovery.py # lower-bound functional search; optimal calibration → 14ζ(3)/π
   linf_multi_point_search.py # n-anchor L^∞_n filling ceilings, n = 2…16, n → ∞ fit
   linf_reduced_rerun.py # re-optimize antipodally redundant (even n) configurations
+  overnight_genus_convergence.py # n_b = 24 genus 0–2 runs with convergence curves
 benchmarks/results.jsonl
 benchmarks/genus_search.json
 benchmarks/extremal_discovery.json
 benchmarks/conjecture_discovery.json
 benchmarks/linf_multi_point.json
+benchmarks/overnight_convergence.json
 .github/workflows/lean_action_ci.yml
 ```
 
