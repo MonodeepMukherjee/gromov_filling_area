@@ -57,3 +57,4 @@ public import GromovFillingArea.StokesCalibration
 public import GromovFillingArea.CalibrationPullback
 public import GromovFillingArea.MultiModeVectorEmbedding
 public import GromovFillingArea.HarmonicTorusBoundary
+public import GromovFillingArea.HarmonicTorusArea
