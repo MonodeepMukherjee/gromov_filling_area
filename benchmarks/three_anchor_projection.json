@@ -1,0 +1,41 @@
+{
+ "units": "Mathlib unnormalized mu_H^2; hemisphere = 8",
+ "pair_projections": {
+  "01": {
+   "shoelace_area": 4.386490844928563,
+   "exact": 4.386490844928604,
+   "distinct_samples": 360000,
+   "samples": 360000
+  },
+  "12": {
+   "shoelace_area": 4.386490844928654,
+   "exact": 4.386490844928604,
+   "distinct_samples": 360000,
+   "samples": 360000
+  },
+  "20": {
+   "shoelace_area": 4.386490844928585,
+   "exact": 4.386490844928604,
+   "distinct_samples": 360000,
+   "samples": 360000
+  }
+ },
+ "min_density_over_projection_sum": 0.44444444444444414,
+ "expected_min": 0.4444444444444444,
+ "density_at": {
+  "diagonal": 0.4444444444444444,
+  "coordinate": 1.0,
+  "edge_diagonal": 0.5000000000000001
+ },
+ "bounds": {
+  "unconditional_single_projection": 4.386490844928604,
+  "unconditional_elementary_sum": 4.386490844928604,
+  "rectifiable_sum": 5.848654459904804,
+  "sixteen_pi_sq_over_27": 5.848654459904805,
+  "pi_sq_over_2": 4.934802200544679,
+  "n3_linf_ceiling": 5.992840802523578,
+  "cone_from_centre_2pi_sq_over_3": 6.579736267392906,
+  "sixteen_sqrt3_over_3": 9.237604307034012,
+  "hemisphere": 8.0
+ }
+}

@@ -1349,6 +1349,56 @@ reduced rerun, on 8 cores. Reproduce with:
 .venv/bin/python3 scripts/linf_reduced_rerun.py        # re-optimize even n in an existing JSON
 ```
 
+### Three anchors: what coordinate projections can and cannot prove
+
+The plan was a kernel-checked bound above `π²/2` from the three coordinate-pair
+projections `π₁₂, π₂₃, π₃₁ : (Fin 3 → ℝ) → (Fin 2 → ℝ)` of `threePointMap`. Each
+projection is 1-Lipschitz, and on the sup-norm plane `μH[2]` is Lebesgue measure. The
+numbers below are checked by `scripts/three_anchor_projection_check.py`
+(`benchmarks/three_anchor_projection.json`).
+
+1. **Each pair projection of `γ₃` is a rectangle of area `4π²/9 ≈ 4.386`.** Anchor
+   distance `φ = 2π/3` gives area `2φ(π − φ)`; the curve is simple. By the
+   `DiamondAreaBound` covering argument, each projection of `M` covers its rectangle.
+   So the unconditional bound from one projection is `4π²/9`, **below** `π²/2`. No single
+   planar projection can beat `π²/2` for any anchors; see "Two structural facts" above.
+2. **Adding the three projections does not help for arbitrary sets.**
+   - A set of sup-diameter `d` lies in a cube whose three projections have area `d²` each.
+     So `∑ λ(πᵢⱼ S) ≤ 3 μH[2](S)`, and this is sharp: the cube attains it.
+   - The resulting bound `(1/3) · 3 · 4π²/9` is again `4π²/9`.
+   - The abstract `IsometricFilling` (an arbitrary compact metric space, with no
+     rectifiability) gives nothing better. **A Lean theorem strictly above `π²/2` along
+     this route is therefore not possible with the current definitions.** No
+     `ThreePointAreaBound` module was added.
+3. **For 2-rectifiable images the sum works: `μH[2] ≥ 16π²/27 ≈ 5.849`.**
+   - On a 2-plane `P ⊂ ℝ³` with unit normal `n`, the sup-norm Hausdorff density is
+     `4/λ(B_P)`. It is at least `(4/9)(|n₁| + |n₂| + |n₃|)`, the projection-area density.
+     Equality holds exactly on the diagonal plane, where `B_P` is a hexagon of area `3√3`.
+   - With the area formula this gives
+     `μH[2](S) ≥ (4/9) ∑ λ(πᵢⱼ S) ≥ (4/9) · 3 · 4π²/9 = 16π²/27`.
+   - That is 18.5 % above `π²/2` and within 2.4 % of the numerical `L^∞_3` ceiling
+     `5.993`. So `16π²/27 ≤ FillArea_{L^∞_3}(γ₃) ≤ 5.993`.
+   - For Riemannian fillings, whose Lipschitz image is rectifiable, this means
+     **Area ≥ 4π³/27 ≈ 4.593 ≈ 0.731 · 2π**, compared with the formal `π³/8 ≈ 0.617 · 2π`.
+   - For a general filling with `μH[2] < ∞`, the Besicovitch–Federer projection theorem
+     should reduce to the rectifiable part: covering holds for every plane near a
+     coordinate plane. This is a paper argument and was not checked in detail.
+   - Neither the area formula for rectifiable sets in normed spaces nor Besicovitch–Federer
+     is in Mathlib, so this is not formalized. Novelty was not checked against the
+     literature.
+4. **Targets that are impossible.** Any lower bound obtained through `q₃` is at most
+   `FillArea_{L^∞_3}(γ₃) ≤ 5.993`, and every filling has `μH[2] ≤ 8` for the hemisphere.
+   So `2π²/3 ≈ 6.580` (the cone from the centre, a competitor) and `16√3/3 ≈ 9.238`
+   cannot be lower bounds.
+
+**What would make (3) formal.** One option is a rectifiability field in
+`IsometricFilling`, for example a Lipschitz parametrization by a planar domain. The other
+is a Riemannian sub-structure. Either needs, in addition:
+
+- the area formula for Lipschitz maps into `Fin 3 → ℝ` with the sup norm, weighted by the
+  plane density `4/λ(B_P)`;
+- the elementary inequality `λ(B_P) · ‖n‖₁ ≤ 9` for central sections of the cube.
+
 ---
 
 ## Reproducing
@@ -1424,12 +1474,14 @@ scripts/
   conjecture_discovery.py # lower-bound functional search; optimal calibration → 14ζ(3)/π
   linf_multi_point_search.py # n-anchor L^∞_n filling ceilings, n = 2…16, n → ∞ fit
   linf_reduced_rerun.py # re-optimize antipodally redundant (even n) configurations
+  three_anchor_projection_check.py # 4π²/9 pair rectangles; 4/9 density ⇒ 16π²/27 (rectifiable)
   overnight_genus_convergence.py # n_b = 24 genus 0–2 runs with convergence curves
 benchmarks/results.jsonl
 benchmarks/genus_search.json
 benchmarks/extremal_discovery.json
 benchmarks/conjecture_discovery.json
 benchmarks/linf_multi_point.json
+benchmarks/three_anchor_projection.json
 benchmarks/overnight_convergence.json
 .github/workflows/lean_action_ci.yml
 ```
@@ -1440,6 +1492,8 @@ benchmarks/overnight_convergence.json
 - Fourier-coefficient decay for 1-Lipschitz periodic functions, and the Wirtinger
   energy inequality.
 - Combine these into a formal (non-sharp) universal area lower bound.
+- Add rectifiability (e.g. a Lipschitz parametrization) to `IsometricFilling` and the area
+  formula in `Fin 3 → ℝ`, to formalize the three-anchor bound `16π²/27 > π²/2`.
 - Formalize the optimal pair calibration (`14ζ(3)/π` in the limit) from Neuro-Symbolic
   Invariant Discovery. This needs a.e. differentiability and Stokes, which the abstract
   `IsometricFilling` does not provide.
