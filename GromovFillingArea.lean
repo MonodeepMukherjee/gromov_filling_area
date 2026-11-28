@@ -50,3 +50,4 @@ public import GromovFillingArea.AntipodalBallPartition
 public import GromovFillingArea.AveragedBallBound
 public import GromovFillingArea.IncidenceFubini
 public import GromovFillingArea.AngularCapExcess
+public import GromovFillingArea.CapDeficitIdentity
