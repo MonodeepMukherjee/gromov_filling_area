@@ -19,7 +19,8 @@ theorem gromov_universal_pi_sq_div_two_bound (F : IsometricFilling M) :
 ```
 
 Every isometric filling of the circle of length `2π` has 2-dimensional Hausdorff measure at
-least `π²/2 ≈ 4.9348`, which is `0.785 · 2π`. `IsometricFilling` includes the field
+least `π²/2 ≈ 4.9348` (see **Normalization** below: in these units the round hemisphere
+has `μH[2] = 8`, so this is `0.617` of the hemisphere). `IsometricFilling` includes the field
 `no_boundary_retraction`, which says the boundary is not a retract of the filling. This is
 fully kernel-checked. `#print axioms gromov_universal_pi_sq_div_two_bound` reports only
 Lean's standard `propext`, `Classical.choice` and `Quot.sound`: no `sorry` and no custom
@@ -58,12 +59,20 @@ then formalized in four modules: `QuarterCircleSquare`, `DiamondGeometry`,
   surface topology. The field also rules out degenerate "fillings" such as `M = Circle2Pi`
   with `ι = id`, which retracts onto itself. Every analytic and metric step, including the
   former `h_fill` covering hypothesis, is discharged.
-- **Not the conjecture.** `π²/2 ≈ 4.93` is below the conjectured sharp bound `2π ≈ 6.28`.
+- **Not the conjecture.** `π²/2 ≈ 4.93` is below the hemisphere's `μH[2] = 8`.
   `PuSymmetrization` proves the sharp `2π` bound only for rotationally symmetric radial
   profiles `φ ≥ sin`, not for general fillings.
-- **Normalization.** Mathlib's `μH[2]` is the unnormalized Hausdorff measure. On Euclidean
-  `ℂ` it dominates Lebesgue area. On the sup-norm plane `Fin 2 → ℝ` it *equals* Lebesgue
-  area, which is why the `π²/2` proof maps into that plane rather than `ℂ`.
+- **Normalization (important).** Mathlib's `μH[2]` is the unnormalized Hausdorff measure.
+  On the sup-norm plane `Fin 2 → ℝ` it *equals* Lebesgue area, which is why the `π²/2`
+  proof maps into that plane. On Euclidean `ℂ`, and hence on any Riemannian surface, it is
+  `(4/π) ·` area (isodiametric inequality), so the round hemisphere of area `2π` has
+  `μH[2] = 8`. Consequences:
+  - In Riemannian terms the main theorem says **area ≥ π³/8 ≈ 3.88 ≈ 0.617 · 2π**.
+  - `gromov_filling_area_conjecture` in `Basic.lean` (`2π ≤ μH[2]`) is therefore the
+    statement *Riemannian area ≥ π²/2*, which is weaker than Gromov's conjecture
+    (area ≥ 2π, i.e. `8 ≤ μH[2]`). The definition has not been changed.
+  - Ratios such as "`π/2π`" or "`4/π` vs `2π`" quoted elsewhere in this README compare
+    `μH[2]` with a Riemannian area. Compare `μH[2]` bounds against `8`.
 
 ---
 
@@ -1138,6 +1147,101 @@ fillings. Only the `proof-sketch` rows carry an argument.
 
 ---
 
+## Multi-Point `L^∞` Fillings: how far can `n` anchors go?
+
+The main theorem uses two anchors. With `n` anchors `θ₁, …, θₙ` the map
+`q_n(x) = (d(x, ι θᵢ))ᵢ` is 1-Lipschitz into the sup-norm space `L^∞_n = (ℝⁿ, ‖·‖_∞)`, and it
+sends `∂M` to a fixed closed curve `γ_n` (the `n`-anchor Kuratowski curve). If every disk
+in `L^∞_n` bounded by `γ_n` has `μH[2] ≥ c_n`, then every filling has `μH[2] ≥ c_n`, provided
+the image of `M` is shown to contain such a disk. `scripts/linf_multi_point_search.py`
+estimates `c_n` numerically.
+
+**Units.** All numbers here are Mathlib's unnormalized `μH[2]`, the unit of the main theorem.
+In these units the round hemisphere has `μH[2] = 8` (Riemannian area `2π` times `4/π`).
+`14ζ(3)/π ≈ 5.357` (Riemannian) corresponds to `6.820`. See **Normalization** under Main Result.
+
+**Method.**
+
+- `γ_n` is piecewise linear in `L^∞_n`, with breaks at every `θᵢ` and `θᵢ + π`.
+- Disks are triangulated polar meshes with that exact boundary (levels of 24/48/96+ boundary
+  points with 4/8/12 rings). A flat triangle with edge vectors `u, v` has
+  `μH[2] = 2 / area{(s, t) : ‖s u + t v‖_∞ ≤ 1}`, which is a convex-hull computation.
+  Its exact gradient (checked to `1e-10` against finite differences) feeds L-BFGS-B.
+- Each mesh starts from two surfaces:
+  - the hemisphere image (the hemisphere is an isometric filling, so its `q_n` image is a
+    competitor);
+  - the cone from the centre `(π/2, …, π/2)`.
+- The results are **upper bounds ("ceilings") for `c_n`**, not lower bounds. A ceiling shows
+  how much an `n`-anchor argument *could* give at most. It proves nothing about `M`.
+
+**Two structural facts.**
+
+- *Planar projections are capped at `π²/2`.* Any proof that pushes `M` into a normed
+  plane `X` by a 1-Lipschitz map, then covers the region bounded by the boundary image, gives at most
+  `L²/(λ(B) λ(B°)) ≤ L²/8 = π²/2` for a boundary image of length `L ≤ 2π`. This follows from
+  Busemann's isoperimetric inequality in normed planes and the planar Mahler inequality.
+  The best anchor pair gives `2φ(π − φ)` (`φ` = their distance), maximal at `φ = π/2`.
+  So the main theorem is **optimal among all planar-target arguments**. Going beyond
+  `π²/2` needs a genuinely higher-dimensional covering argument in `L^∞_n` for `n ≥ 3`.
+- *Antipodal anchors are redundant.* `d(t, a + π) = π − d(t, a)`, so the coordinate of an
+  antipodal anchor is a reflection of its partner. Equidistant `γ_n` with `n` even is
+  sup-norm isometric to `γ` on the `m = n/2` anchors `kπ/m`. For example, `n = 4` is the quarter
+  pair and `n = 6` is the equidistant triple. The effective number of anchors is `m = n` (odd)
+  or `n/2` (even).
+  In the redundant form every sup-norm maximum is a permanent tie, and L-BFGS-B stopped
+  after 0–6 iterations. So the even `n` were re-optimized in reduced form
+  (`scripts/linf_reduced_rerun.py`). The reduced `m = 3` result (5.9929) matches the direct
+  `n = 3` result (5.9928).
+
+| `n` (eff. `m`) | best pair lower bound | cone from centre | hemisphere image | ceiling (finest mesh) |
+| :---: | :---: | :---: | :---: | :---: |
+| 2 (2), 4 (2) | 4.9348 = `π²/2` | 4.9348 | 4.9348 | **4.9348** (planar, exact) |
+| 3 (3), 6 (3) | 4.3865 = `4π²/9` | 6.5797 | 6.0257 | **5.9928** |
+| 8 (4) | 4.9348 | 7.4022 | 6.5409 | **6.5047** |
+| 5 (5) | 4.7374 | 7.8957 | 6.8444 | **6.8085** |
+| 12 (6) | 4.9348 | 8.3071 | 7.0459 | **7.0127** |
+| 16 (8) | 4.9348 | 8.6359 | 7.2972 | **7.2682** |
+
+**Findings.**
+
+- **`n = 3`.**
+  - Scanning 48 anchor triples (gaps in units of `π/12`), the largest ceiling is at the
+    **equidistant** triple `0, 2π/3, 4π/3`. That is why the "optimized" triple coincides with it.
+  - Its ceiling `5.993` is **21 % above `π²/2`**. So `c_3` has room to beat the main theorem,
+    and three anchors are not excluded.
+  - Its best planar bound (`4π²/9 ≈ 4.39`) is *below* `π²/2`, however. Realizing the gain
+    requires bounding fillings of the space curve `γ_3`, not just projecting.
+  - The cone from the centre (`6.58`) is far from minimal. It is a competitor, not a bound,
+    so "the cone beats `π²/2`" is not a theorem.
+  - `ThreePointEmbedding.lean` formalizes the ingredients: the map, Lipschitz bound,
+    boundary injectivity and exact sup-distances from the centre.
+- **`m → ∞`.**
+  - The ceilings fit `a + b/m` on `m = 4, 5, 6, 8` with limit **`8.031`** and maximal
+    residual `0.001`. On `m = 3…8` the limit is `8.033`.
+  - That is within 0.4 % of the hemisphere's `8`, i.e. Riemannian `2π`. A `1/m²` fit is
+    worse (residual 0.03–0.09) and gives 7.38–7.48.
+  - Already `m = 6` (7.01) and `m = 8` (7.27) exceed the `14ζ(3)/π` level `6.820`.
+  - So the data point to `2π`, not `14ζ(3)/π`, as the `n → ∞` limit. This is consistent
+    with the hemisphere being an isometric filling: as `m → ∞` its `q_m` image converges to
+    the hemisphere itself.
+  - Caveats:
+    - the ceilings still drop by ~0.03 under mesh refinement;
+    - these are local minima of fixed-topology disks;
+    - five points in `m` are thin evidence for a limit.
+- For `m ≥ 4` the optimizer improves the hemisphere image by only 0.3–0.6 %. In the
+  sup norm the hemisphere image is nearly a minimal disk for `γ_m`.
+
+Results, including every run, the `n = 3` scan and the fits, are in
+`benchmarks/linf_multi_point.json`. Runtime was 66 min for the main run plus a shorter reduced rerun,
+on 8 cores. Reproduce with:
+
+```bash
+.venv/bin/python3 scripts/linf_multi_point_search.py   # even n now reduced automatically
+.venv/bin/python3 scripts/linf_reduced_rerun.py        # re-optimize even n in an existing JSON
+```
+
+---
+
 ## Reproducing
 
 ```bash
@@ -1208,10 +1312,13 @@ scripts/
   explore_genus2.py    # genus 0–2 discrete filling-area search (numerical)
   discover_extremal_metrics.py # L-BFGS-B with exact (sub)gradients, genus 0–2
   conjecture_discovery.py # lower-bound functional search; optimal calibration → 14ζ(3)/π
+  linf_multi_point_search.py # n-anchor L^∞_n filling ceilings, n = 2…16, n → ∞ fit
+  linf_reduced_rerun.py # re-optimize antipodally redundant (even n) configurations
 benchmarks/results.jsonl
 benchmarks/genus_search.json
 benchmarks/extremal_discovery.json
 benchmarks/conjecture_discovery.json
+benchmarks/linf_multi_point.json
 .github/workflows/lean_action_ci.yml
 ```
 
