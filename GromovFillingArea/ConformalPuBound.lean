@@ -61,7 +61,7 @@ theorem angularMean_sq_le (f : ℝ → ℝ) (hf : Continuous f) :
 For any non-negative radial weight `w : ℝ → ℝ` (`0 ≤ w r` on `[0, 1]`) and
 continuous `λ : ℝ → ℝ → ℝ`, integrating `w r * (angularMean (λ r)) ^ 2` over
 `r ∈ [0, 1]` is at most `∫ r in 0..1, w r * angularMean (fun θ => (λ r θ) ^ 2)`. -/
-theorem radial_symmetrized_area_le (w : ℝ → ℝ) (hw_cont : Continuous w)
+theorem radial_symmetrized_area_le (w : ℝ → ℝ) (_hw_cont : Continuous w)
     (hw_nonneg : ∀ r ∈ Icc (0 : ℝ) 1, 0 ≤ w r)
     (lam : ℝ → ℝ → ℝ) (hlam_cont : ∀ r, Continuous (lam r))
     (h_int_cont : Continuous (fun r => w r * angularMean (fun θ => (lam r θ) ^ 2))) :

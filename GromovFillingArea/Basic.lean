@@ -15,6 +15,15 @@ public import Mathlib.MeasureTheory.Measure.Hausdorff
 This file defines an isometric filling of the Riemannian circle `S¹` of length `2π`
 using metric geometry and 2-dimensional Hausdorff measure, and states Gromov's
 Filling Area Conjecture (`Area(M) ≥ 2π`).
+
+## Normalization
+
+Mathlib's `MeasureTheory.Measure.hausdorffMeasure 2` (`μH[2]`) is the *unnormalized*
+Hausdorff measure: covers are weighted by `diam ^ 2`, with no factor `π / 4`. By the
+isodiametric inequality it equals `(4 / π) * Area` on the Euclidean plane, hence on every
+Riemannian surface. The round hemisphere of Riemannian area `2π` therefore has
+`μH[2] = 8`, and Gromov's bound `Area(M) ≥ 2π` reads `8 ≤ μH[2] (univ : Set M)`.
+On the sup-norm plane `Fin 2 → ℝ`, by contrast, `μH[2]` equals Lebesgue measure.
 -/
 
 open MeasureTheory Metric
@@ -41,11 +50,14 @@ structure IsometricFilling (M : Type*) [MetricSpace M] [CompactSpace M]
 
 /-- **Gromov's Filling Area Conjecture (1983):**
 Every orientable topological surface `M` isometrically filling a circle of length `2π`
-has 2-dimensional Hausdorff measure (area) at least `2π`. -/
+has area at least `2π`, the area of the round hemisphere.
+
+In Mathlib's unnormalized `μH[2]`, which is `(4 / π) * Area` on a Riemannian surface (see
+the module docstring), the hemisphere has `μH[2] = 8`, so the conjecture is `8 ≤ μH[2]`. -/
 def GromovFillingAreaConjecture : Prop :=
   ∀ (M : Type) [MetricSpace M] [CompactSpace M] [MeasurableSpace M] [BorelSpace M],
     Nonempty (IsometricFilling M) →
-    ENNReal.ofReal (2 * Real.pi) ≤ MeasureTheory.Measure.hausdorffMeasure 2 (Set.univ : Set M)
+    (8 : ENNReal) ≤ MeasureTheory.Measure.hausdorffMeasure 2 (Set.univ : Set M)
 
 /-- **Milestone 1 Sanity Check:** `2π` is strictly positive, ensuring non-triviality. -/
 theorem two_pi_pos : (0 : ℝ) < 2 * Real.pi := by

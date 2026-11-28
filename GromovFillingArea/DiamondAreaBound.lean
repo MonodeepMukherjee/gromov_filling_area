@@ -95,7 +95,7 @@ theorem norm_diamondToComplex (p : Fin 2 → ℝ) : ‖diamondToComplex p‖ = d
 theorem diamondFromComplex_diamondToComplex (p : Fin 2 → ℝ) :
     diamondFromComplex (diamondToComplex p) = p := by
   by_cases hz : diamondVec p = 0
-  · have h0 : diamondToComplex p = 0 := by rw [diamondToComplex_eq, if_pos hz]
+  · have h0 : diamondToComplex p = 0 := by rw [diamondToComplex_eq, ite_eq_left hz]
     have hre := congrArg Complex.re hz
     have him := congrArg Complex.im hz
     rw [diamondVec_re, Complex.zero_re] at hre
@@ -111,7 +111,7 @@ theorem diamondFromComplex_diamondToComplex (p : Fin 2 → ℝ) :
       rw [hr]
       positivity
     have hG : diamondToComplex p = (r : ℂ) * diamondVec p := by
-      rw [diamondToComplex_eq, if_neg hz, hr]
+      rw [diamondToComplex_eq, ite_eq_right hz, hr]
     have hre : (diamondToComplex p).re = r * (p 0 - Real.pi / 2) := by
       rw [hG, Complex.re_ofReal_mul, diamondVec_re]
     have him : (diamondToComplex p).im = r * (p 1 - Real.pi / 2) := by
@@ -141,7 +141,7 @@ theorem diamondVec_diamondFromComplex (w : ℂ) :
 
 theorem abs_re_add_abs_im_pos {w : ℂ} (hw : w ≠ 0) : 0 < |w.re| + |w.im| := by
   by_contra h
-  push_neg at h
+  push Not at h
   have h1 : w.re = 0 := abs_eq_zero.mp
     (le_antisymm (by linarith [abs_nonneg w.im]) (abs_nonneg _))
   have h2 : w.im = 0 := abs_eq_zero.mp
@@ -172,7 +172,7 @@ theorem diamondToComplex_diamondFromComplex {w : ℂ} (hw : w ≠ 0) :
   have hne : diamondVec (diamondFromComplex w) ≠ 0 := by
     rw [hvec]
     exact mul_ne_zero (by exact_mod_cast hs0.ne') hw
-  rw [diamondToComplex_eq, if_neg hne, diamondGauge_diamondFromComplex hw, hvec, norm_mul,
+  rw [diamondToComplex_eq, ite_eq_right hne, diamondGauge_diamondFromComplex hw, hvec, norm_mul,
     Complex.norm_real, Real.norm_eq_abs, abs_of_pos hs0, ← mul_assoc, ← Complex.ofReal_mul,
     show ‖w‖ / (s * ‖w‖) * s = 1 by field_simp, Complex.ofReal_one, one_mul]
 
@@ -188,7 +188,7 @@ theorem continuous_diamondToComplex : Continuous diamondToComplex := by
   rw [continuous_iff_continuousAt]
   intro p
   by_cases hz : diamondVec p = 0
-  · have h0 : diamondToComplex p = 0 := by rw [diamondToComplex_eq, if_pos hz]
+  · have h0 : diamondToComplex p = 0 := by rw [diamondToComplex_eq, ite_eq_left hz]
     rw [ContinuousAt, h0, tendsto_zero_iff_norm_tendsto_zero]
     simp_rw [norm_diamondToComplex]
     have := hgauge.tendsto p
@@ -201,7 +201,7 @@ theorem continuous_diamondToComplex : Continuous diamondToComplex := by
         (hgauge.continuousAt.div hvec.norm.continuousAt (norm_ne_zero_iff.mpr hz))).mul
         hvec.continuousAt
     refine hform.congr (Filter.eventuallyEq_of_mem hU fun q hq => ?_)
-    rw [diamondToComplex_eq, if_neg hq]
+    rw [diamondToComplex_eq, ite_eq_right hq]
 
 /-- The quarter pair map on the boundary is `θ ↦ ![d(θ, 0), d(θ, π/2)]`. -/
 theorem quarterPairMap_boundary_apply (F : IsometricFilling M) (θ : Circle2Pi) :

@@ -30,7 +30,7 @@ def radialRayLength (lam : ℝ → ℝ → ℝ) (θ : ℝ) : ℝ :=
 If `L : ℝ → ℝ` is continuous and `2π`-periodic and satisfies `π ≤ L θ + L (θ + π)`
 for all `θ`, then `(2 * π)⁻¹ * ∫ θ in 0..(2 * π), L θ ≥ π / 2`. -/
 theorem angularMean_ge_half_pi_of_antipodal_sum (L : ℝ → ℝ)
-    (hL_cont : Continuous L) (hL_per : Function.Periodic L (2 * Real.pi))
+    (hL_cont : Continuous L) (_hL_per : Function.Periodic L (2 * Real.pi))
     (hL_anti : ∀ θ : ℝ, Real.pi ≤ L θ + L (θ + Real.pi)) :
     Real.pi / 2 ≤ angularMean L := by
   have hL_int : ∀ a b : ℝ, IntervalIntegrable L volume a b := fun a b =>
