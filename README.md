@@ -1711,6 +1711,42 @@ for it.
 Results are in `benchmarks/genus2_invariant_search.json`. Units are Riemannian; multiply
 areas by `4/π` for `μH[2]`.
 
+### Angular Visibility Cap & Collar Decomposition (`g = 0..2`)
+
+`scripts/analyze_angular_caps.py` (about 12 s) evaluates the discrete
+`angularCap` of `IncidenceFubini` on the same three certified metrics. At every point `x` of a
+`16 × 16` sub-triangle quadrature it computes `inradius(x) = min_θ d(x, ι θ)` and
+`cap_frac(x) = |{θ : d(x, ι θ) < π/2}| / 2π`. It uses 288 uniform `θ` samples on the boundary
+and the same Steiner-graph distance field as the slice profile, with `K = 23`. The collar is
+`U = {inradius < π/2}`, and `cap_frac = 0` outside it.
+
+| genus | `Area(U)/Area` | `mean_U cap_frac` | `π / Area` (needed) | `∫ cap_frac dA` | invariant search (24 vertices) |
+| :---: | :---: | :---: | :---: | :---: | :---: |
+| hemisphere | 1 | 1/2 | 1/2 | `π = 3.1416` | `π` |
+| 0 | 1.0000 | 0.4948 | 0.4953 | 3.1379 (`0.999π`) | 3.1409 |
+| 1 | 0.9997 | 0.4863 | 0.4793 | 3.1866 (`1.014π`) | 3.1888 |
+| 2 | 1.0000 | 0.4891 | 0.4570 | 3.3627 (`1.070π`) | 3.3659 |
+
+**Findings.**
+- **The Tonelli identity checks out.** `∫ cap_frac dA` and `mean_θ Area(B(ι θ, π/2))` are
+  computed independently: a pointwise quadrature agrees within `0.01 %`. Restricted to the 24
+  vertex anchors, the mean ball area matches `genus2_invariant_search.json` within `0.04 %`.
+  The 288-sample values run about `0.1 %` low. One reason is that the face field uses every second Steiner node,
+  which can only overestimate distances.
+- **There is no deep core.** Every point lies within `π/2` of the boundary, except `0.03 %` of
+  the area on genus 1. The capped maximum inradius is `1.546`, `1.585` and `1.551`. The
+  collar is the whole surface, and handles do not create cap-free regions.
+- **Caps are nearly half-circles everywhere.** The mean cap is `0.486–0.495`, against the
+  formal ceiling `1/2` (`haarAddCircle_angularCap_le_half`). The pointwise maximum,
+  `145/288 = 0.5035`, exceeds `1/2` by one sample, which is sampling resolution. So the
+  half-area bound `∫ cap_frac ≤ Area/2` of `AngularCapExcess` loses only 1–3 %.
+- **What `h_mean` asks.** Since `U ≈ M`, the open hypothesis `mean_θ Area(B) ≥ π` is equivalent
+  to `mean cap_frac ≥ π / Area`. For a filling with area near `2π`, that forces the
+  average cap to be almost exactly a half-circle. Genus 1 and 2 clear the threshold with
+  margin. Genus 0 sits on it within discretization (`0.4948` vs `0.4953`).
+
+Results are in `benchmarks/angular_cap_analysis.json`. Units are Riemannian.
+
 ### What is formal, what is conditional, what is numerical
 
 | claim | status |
@@ -1727,6 +1763,7 @@ areas by `4/π` for `μH[2]`.
 | `haar(cap) ≤ 1/2`; `∫⁻ μH[2](B(ι θ, π/2)) dθ = ∫⁻ haar(cap_x) dμH[2]` (`IncidenceFubini`, assumes `SFinite`) | **Lean, 0 sorry / 0 axioms** |
 | `∫⁻ μH[2](B(ι θ, π/2)) dθ ≤ μH[2]/2`; integrability automatic; `4 ≤ mean` ⇒ `8 ≤ μH[2]` without `h_int` (`AngularCapExcess`, assumes `SFinite`) | **Lean, 0 sorry / 0 axioms** |
 | `mean_θ Area(B(ι θ, π/2)) ≥ π`, i.e. the hypothesis above | numerical: `0.9998π`, `1.015π`, `1.071π` (g0–g2); unproved |
+| `∫ cap_frac = mean_θ Area(B)`; collar `= M`; mean cap `0.486–0.495` vs ceiling `1/2` | numerical (g0–g2), `analyze_angular_caps.py` |
 | slice hypothesis `c sin t ≤ L(t; b)` of `SliceCoareaBound` | fails numerically on the certified g0–g2 metrics (boundary and centre anchors) |
 
 **Takeaway.** Lean proves the coordinate-projection route up to `π²/2`, and that is the most a
@@ -1821,6 +1858,7 @@ scripts/
   overnight_genus_convergence.py # n_b = 24 genus 0–2 runs with convergence curves
   discover_extremal_bound.py # projection LP vs L^∞_n ceilings; k = 48 certified metric search
   search_genus2_invariant.py # distance-sphere slice profiles L_g(t; b_i) on certified g0–g2 metrics
+  analyze_angular_caps.py # angular caps cap_frac(x), π/2-collar, Tonelli check on g0–g2
 benchmarks/results.jsonl
 benchmarks/genus_search.json
 benchmarks/extremal_discovery.json
@@ -1828,6 +1866,7 @@ benchmarks/conjecture_discovery.json
 benchmarks/linf_multi_point.json
 benchmarks/three_anchor_projection.json
 benchmarks/genus2_invariant_search.json
+benchmarks/angular_cap_analysis.json
 benchmarks/overnight_convergence.json
 benchmarks/extremal_bound_discovery.json
 .github/workflows/lean_action_ci.yml
