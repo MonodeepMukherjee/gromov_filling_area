@@ -46,3 +46,4 @@ public import GromovFillingArea.DiamondAreaBound
 public import GromovFillingArea.ThreePointEmbedding
 public import GromovFillingArea.PuFullDiskBound
 public import GromovFillingArea.SliceCoareaBound
+public import GromovFillingArea.AntipodalBallPartition

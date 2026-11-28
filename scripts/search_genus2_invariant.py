@@ -258,6 +258,13 @@ def analyse(genus: int, run: dict) -> dict:
             "mean_profile": int_mean,
             "per_anchor_min": float(int_per_anchor.min()),
             "per_anchor_max": float(int_per_anchor.max()),
+            "per_anchor_ball_area": int_per_anchor.tolist(),
+            # b_i and b_{i + n_b/2} are antipodal: AntipodalBallPartition proves
+            # Area(B(b_i, pi/2)) + Area(B(b_{i+12}, pi/2)) <= Area(M).
+            "antipodal_pair_sums": (int_per_anchor[:N_B // 2]
+                                    + int_per_anchor[N_B // 2:]).tolist(),
+            "antipodal_pair_sum_max_over_area": float(
+                np.max(int_per_anchor[:N_B // 2] + int_per_anchor[N_B // 2:]) / area),
             "centre_anchor": int_centre,
             "hemisphere_boundary_anchor": float(np.pi),
             "hemisphere_pole": float(2 * np.pi),
