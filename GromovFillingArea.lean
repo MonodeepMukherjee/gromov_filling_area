@@ -51,3 +51,4 @@ public import GromovFillingArea.AveragedBallBound
 public import GromovFillingArea.IncidenceFubini
 public import GromovFillingArea.AngularCapExcess
 public import GromovFillingArea.CapDeficitIdentity
+public import GromovFillingArea.CapExcessThreshold
