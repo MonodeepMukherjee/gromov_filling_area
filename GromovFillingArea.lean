@@ -49,3 +49,4 @@ public import GromovFillingArea.SliceCoareaBound
 public import GromovFillingArea.AntipodalBallPartition
 public import GromovFillingArea.AveragedBallBound
 public import GromovFillingArea.IncidenceFubini
+public import GromovFillingArea.AngularCapExcess
