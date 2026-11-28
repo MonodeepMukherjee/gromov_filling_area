@@ -1533,6 +1533,65 @@ result counts only if the maximum boundary-distance violation is at most `1e-10`
 - **Training on the fine graph fixes the old `k = 5` shortcut problem.** Every run passed
   `k = 48` certification. In earlier runs, `k = 5` optima often failed on finer graphs.
 
+### Distance-Sphere Slice Profile (`g = 0..2`)
+
+`scripts/search_genus2_invariant.py` (about 10 s) tests the slice hypothesis of
+`SliceCoareaBound` on the best `k = 48` certified metrics of Part B, which are reloaded from
+their stored edge vectors with no re-optimization: g0 `1.0094`, g1 `1.0431`, g2 `1.0942` (×2π). For each boundary
+vertex `b_i` (`i = 0..23`) it measures `L_g(t; b_i) = length{x : d(x, b_i) = t}`.
+
+**Method.**
+- `d(b_i, ·)` comes from Dijkstra on the `K = 24` Steiner graph. Inside each unfolded face it
+  is `min_q d(b_i, q) + |q − x|` over the face's boundary nodes, which is exact because
+  geodesics are straight in a flat face.
+- Each face is refined into 16 linear sub-triangles.
+- `L(t)` is taken as `dA/dt` with `A(t) = area{d < t}`. Sublevel areas of linear triangles have
+  closed forms, and `|∇d| = 1` a.e., so this is the coarea-consistent slice length. Integrals
+  over `[0, π/2]` are therefore ball areas `A(π/2)`.
+- The direct PL level-set length is also stored as a cross-check. It runs about 2–3 % low,
+  because interpolation across the many small kinks of the Steiner distance field averages
+  unit gradients.
+
+**Benchmarks.** A distance sphere around a *boundary* point of the round hemisphere is a
+half-circle of length `π sin t`. The `2π sin t` profile belongs to the *pole*. So for boundary
+anchors, the hemisphere gives `∫₀^{π/2} L dt = π`, not `2π`. An interior centre anchor (the
+vertex farthest from the boundary) is reported too, since `2π sin t` is the right comparison
+for it.
+
+| genus | `∫₀^{π/2} min_i L` | `∫₀^{π/2} mean_i L` | per-anchor `A(b_i, π/2)` | centre anchor | `min_i L ≥ πt` / `≥ π sin t` on the grid |
+| :---: | :---: | :---: | :---: | :---: | :---: |
+| hemisphere | `π = 3.1416` | `π` | `π` | `2π = 6.2832` | yes / yes |
+| 0 | 3.0115 | 3.1409 | 3.081 – 3.200 | 5.9707 (`0.950·2π`) | no / no |
+| 1 | 3.0600 | 3.1888 | 3.121 – 3.242 | 6.3842 (`1.016·2π`) | no / no |
+| 2 | 3.0548 | 3.3659 | 3.231 – 3.486 | 6.7036 (`1.067·2π`) | no / no |
+
+**Findings.**
+- **Neither boundary profile comes near `2π` on any genus, including genus 2.** This is
+  forced, not a numerical failure. `∫₀^{π/2} L(t; b) dt` is the area of the ball
+  `B(b, π/2)`, which is about half the surface, and it equals only `π` on the hemisphere. The
+  `2π` threshold of the request is the wrong target for boundary anchors.
+- **The mean profile beats the hemisphere value `π` and grows with genus**: `1.000π`,
+  `1.015π` and `1.071π` for genus 0, 1 and 2. The worst-case integral `∫ min_i L` is about
+  `0.96–0.97π`, slightly below `π`. Part of that gap is resolution: going from `K = 12` to
+  `K = 36` raises it on genus 2 from 2.992 to 3.075, while the mean and centre values move by
+  under 0.5 %.
+- **The pointwise slice hypothesis `c sin t ≤ L(t)` fails at every genus.** `min_i L / (π sin t)`
+  ranges over `0.81–1.11`, and `min_i L / (πt)` over `0.64–1.01`. At small `t` this is
+  partly a resolution artifact: a boundary vertex has cone angle `≥ π`, so `L ≈ αt ≥ πt`, but
+  the first ring of sub-triangles is coarse. Near `t = π/2` the shortfall is genuine,
+  because distance spheres reach the boundary early. The centre anchor fails too: its
+  distance to the boundary is `1.39–1.54 < π/2`, so its slices exit the surface before
+  `t = π/2`. On genus 0, where Pu's theorem holds, this already breaks
+  `2π sin t ≤ L`.
+- **Consequence for `SliceCoareaBound`.** Its hypotheses (a sine lower bound on single-anchor
+  distance slices, integrated only over `[0, π/2]`) do not hold on near-extremal genus-0 to
+  genus-2 fillings. Proving the conjecture this way would need a different slicing, for
+  example integrating over the full range `[0, max d] = [0, π]`, where coarea returns the
+  whole area, or averaging over anchors rather than taking one anchor.
+
+Results are in `benchmarks/genus2_invariant_search.json`. Units are Riemannian; multiply
+areas by `4/π` for `μH[2]`.
+
 ### What is formal, what is conditional, what is numerical
 
 | claim | status |
@@ -1544,6 +1603,7 @@ result counts only if the maximum boundary-distance violation is at most `1e-10`
 | any planar-target projection argument | capped at `π²/2`, so the current formal method is exhausted |
 | pair-projection LPs, any `n` | appear capped near `6.3`, below `14ζ(3)/π` and `8` |
 | discrete metrics: g0 `1.0094`, g1 `1.0431`, g2 `1.0942` (×2π) | numerical upper bounds on the discrete infimum, `k = 48` certified |
+| slice hypothesis `c sin t ≤ L(t; b)` of `SliceCoareaBound` | fails numerically on the certified g0–g2 metrics (boundary and centre anchors) |
 
 **Takeaway.** Lean proves the coordinate-projection route up to `π²/2`, and that is the most a
 planar target can give. To go further, the filling needs more structure (rectifiability or a
@@ -1632,12 +1692,14 @@ scripts/
   three_anchor_projection_check.py # 4π²/9 pair rectangles; 4/9 density ⇒ 16π²/27 (rectifiable)
   overnight_genus_convergence.py # n_b = 24 genus 0–2 runs with convergence curves
   discover_extremal_bound.py # projection LP vs L^∞_n ceilings; k = 48 certified metric search
+  search_genus2_invariant.py # distance-sphere slice profiles L_g(t; b_i) on certified g0–g2 metrics
 benchmarks/results.jsonl
 benchmarks/genus_search.json
 benchmarks/extremal_discovery.json
 benchmarks/conjecture_discovery.json
 benchmarks/linf_multi_point.json
 benchmarks/three_anchor_projection.json
+benchmarks/genus2_invariant_search.json
 benchmarks/overnight_convergence.json
 benchmarks/extremal_bound_discovery.json
 .github/workflows/lean_action_ci.yml
