@@ -58,3 +58,4 @@ public import GromovFillingArea.CalibrationPullback
 public import GromovFillingArea.MultiModeVectorEmbedding
 public import GromovFillingArea.HarmonicTorusBoundary
 public import GromovFillingArea.HarmonicTorusArea
+public import GromovFillingArea.OddModeDiskCovering
