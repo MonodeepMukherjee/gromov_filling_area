@@ -1401,6 +1401,113 @@ is a Riemannian sub-structure. Either needs, in addition:
 
 ---
 
+## Discovery & Formalization Synthesis
+
+`scripts/discover_extremal_bound.py` (results in `benchmarks/extremal_bound_discovery.json`,
+about 4 h on 8 cores) asks two questions. The first is how far coordinate-pair projections of the
+`n`-anchor map can push a *provable* lower bound. The second is how close certified discrete
+metrics come to the conjectured optimum. All `μH` values use Mathlib's unnormalized `μH[2]`,
+where the hemisphere is `8` and Riemannian area is `(π/4)·μH`.
+
+> The file is named `extremal_bound_discovery.json`, not `extremal_discovery.json`, so that the
+> earlier gradient-search data cited above is not overwritten.
+
+### Part A: projection lower bounds vs `L^∞_n` ceilings
+
+For anchors `2πk/n` and every non-antipodal pair `(i, j)`, the projection of `γ_n` is a
+rectangle of area `2φ(π−φ)`. Here `φ` is the anchor distance. The script solves a semi-infinite LP:
+
+```
+maximize    Σ w_ij · A_ij
+subject to  Σ w_ij · |p_ij(P)| · λ(B_P)/4 ≤ 1    for every 2-plane P ⊂ ℝⁿ,  w ≥ 0.
+```
+
+Here `p_ij` are Plücker coordinates and `B_P` is the sup-norm unit ball of `P`. The LP is solved
+by cutting planes: HiGHS plus a Nelder–Mead search for the most violated plane, for at most 60
+rounds. Any feasible `w` gives `μH(S) ≥ Σ w_ij A_ij` for every **2-rectifiable** filling image
+`S`. If the plane search still finds a violation ratio `r > 1`, the weights are rescaled by
+`1/r`, and the reported bound is `LP/r`. Ceilings come from the 96-boundary-point finest level of
+`benchmarks/linf_multi_point.json`.
+
+| `n` | pairs | best single pair | rectifiable bound | final ratio | `L^∞_n` ceiling |
+|---:|---:|---:|---:|---:|---:|
+| 3  | 3   | 4.3865 | **5.8487** (= 16π²/27) | 1.0000001 | 5.9928 |
+| 4  | 4   | 4.9348 | 4.9348 (= π²/2)        | 1.0000000 | 4.9348 |
+| 5  | 10  | 4.7374 | **6.3164**             | 1.0000375 | 6.8085 |
+| 6  | 12  | 4.3865 | 5.8370                 | 1.0029    | 5.9929 |
+| 8  | 24  | 4.9348 | 6.0206                 | 1.043     | 6.5047 |
+| 10 | 40  | 4.7374 | 5.3679 (≥ 6.3164 via n = 5) | 1.26 | 6.8085 (≅ n = 5) |
+| 12 | 60  | 4.9348 | 6.1304                 | 1.12      | 7.0127 |
+| 16 | 112 | 4.9348 | 5.9886                 | 1.31      | 7.2682 |
+
+Reading the table:
+
+- **The bounds are monotone under anchor inclusion.** Deleting coordinates is 1-Lipschitz for
+  the sup norm, so the `n`-anchor bound holds for every multiple of `n`. The valid envelope is
+  therefore `6.3164` for `n = 5, 10`, and `≥ 6.13` for `n = 12, 16`.
+- **The raw LP values for `n ≥ 8` are not converged.** The final ratio stays above 1, and for
+  `n = 10` the raw value falls below the `n = 5` value it must exceed. These rows are
+  conservative lower estimates, not the LP optima.
+- **No convergence to `8` or to `14ζ(3)/π ≈ 6.820`.** The best value, `6.316` (Riemannian area
+  `≈ 0.790·2π`), sits below both. Meanwhile the ceilings keep rising (`5.99 → 7.27`) toward the
+  `≈ 8.03` extrapolation. The gap between what projections certify and what the `n`-anchor
+  geometry allows *widens* with `n`. Pair projections use only 2-dimensional information about
+  the image. That loses about 15–20 % against the true sup-norm filling area once `n ≥ 5`.
+- **The LP reproduces the earlier results:** `16π²/27` at `n = 3`, with uniform weights `4/9`
+  and the diagonal plane as the tight cut, and `π²/2` at `n = 4`, the formal main theorem. For
+  `n = 4`, `n = 6` and every even `n` the antipodal pairs drop out. The n = 4 ceiling equals the
+  projection bound, so the formal `π²/2` theorem is sharp *for its own method*.
+
+### Part B: fine certified metric search (`n_b = 24`, genus 0–2)
+
+Each run trains on the `k = 5` Steiner graph (penalty weights `1e2` and then `1e3`, up to 10 000
+L-BFGS-B iterations). It then runs a fine `k = 12` stage at `w = 1e4`, polishes with Powell
+(2000 evaluations), restores strict feasibility, and is **certified on the `k = 48` graph**. A
+result counts only if the maximum boundary-distance violation is at most `1e-10`. There were
+32 runs (12/10/10) with start jitters `0, 0.03, 0.06, 0.1`.
+
+| genus | strict / runs | best `A` | best `A/2π` | median `A` | previous best `A/2π` |
+|---:|---:|---:|---:|---:|---:|
+| 0 | 12/12 | 6.3422 | **1.0094** | 6.3916 | 1.021 |
+| 1 | 10/10 | 6.5543 | **1.0431** | 6.5777 | 1.101 |
+| 2 | 10/10 | 6.8749 | **1.0942** | 6.8887 | 1.123 |
+
+- **Genus 0** improved from `1.021·2π` to `1.0094·2π`. That is within 1 % of the hemisphere, but
+  it does not reach the `1.005·2π` target. The pre-restore iterate had `A = 6.3042`
+  (`1.0033·2π`). Restoring `k = 48` feasibility costs about `0.6 %`, which is the current
+  discretization floor. The genus-0 case is Gromov's theorem (area `≥ 2π`), so all 12 runs
+  correctly stay above it.
+- **Genus 1 and genus 2 stay strictly above `2π`** in all 20 runs (`all_above_2pi = true`). Both
+  improved substantially over the overnight run. The ordering `g0 < g1 < g2` persists: adding
+  handles costs area. This is consistent with the conjecture that the hemisphere is the minimizer
+  among all genera.
+- **Powell polishing is negligible**, with gains of `< 1e-6` in area. The L-BFGS-B iterate is
+  already a local optimum of the penalized objective. The remaining gap is therefore
+  discretization, not optimization.
+- **Training on the fine graph fixes the old `k = 5` shortcut problem.** Every run passed
+  `k = 48` certification. In earlier runs, `k = 5` optima often failed on finer graphs.
+
+### What is formal, what is conditional, what is numerical
+
+| claim | status |
+|---|---|
+| `π²/2 ≤ μH[2] M` for every `IsometricFilling` (Riemannian area `≥ π³/8 ≈ 0.617·2π`) | **Lean, 0 sorry / 0 axioms** |
+| conjecture `8 ≤ μH[2] univ` (hemisphere = 8) | stated in `Basic.lean`, open |
+| `16π²/27 ≈ 5.849` for 2-rectifiable fillings (3 anchors) | proof on paper; needs the area formula, which is not in Mathlib |
+| `≈ 6.316` for 2-rectifiable fillings (5 anchors, LP weights) | numerical certificate, with a heuristic global plane search |
+| any planar-target projection argument | capped at `π²/2`, so the current formal method is exhausted |
+| pair-projection LPs, any `n` | appear capped near `6.3`, below `14ζ(3)/π` and `8` |
+| discrete metrics: g0 `1.0094`, g1 `1.0431`, g2 `1.0942` (×2π) | numerical upper bounds on the discrete infimum, `k = 48` certified |
+
+**Takeaway.** Lean proves the coordinate-projection route up to `π²/2`, and that is the most a
+planar target can give. To go further, the filling needs more structure (rectifiability or a
+Riemannian sub-structure). Even then, pair projections stall near `6.3 μH`. Reaching
+`14ζ(3)/π` or `8` requires genuinely higher-dimensional information, such as the full `L^∞_n`
+filling area or a calibration argument. Numerically, every genus tested so far sits above the
+hemisphere.
+
+---
+
 ## Reproducing
 
 ```bash
@@ -1476,6 +1583,7 @@ scripts/
   linf_reduced_rerun.py # re-optimize antipodally redundant (even n) configurations
   three_anchor_projection_check.py # 4π²/9 pair rectangles; 4/9 density ⇒ 16π²/27 (rectifiable)
   overnight_genus_convergence.py # n_b = 24 genus 0–2 runs with convergence curves
+  discover_extremal_bound.py # projection LP vs L^∞_n ceilings; k = 48 certified metric search
 benchmarks/results.jsonl
 benchmarks/genus_search.json
 benchmarks/extremal_discovery.json
@@ -1483,6 +1591,7 @@ benchmarks/conjecture_discovery.json
 benchmarks/linf_multi_point.json
 benchmarks/three_anchor_projection.json
 benchmarks/overnight_convergence.json
+benchmarks/extremal_bound_discovery.json
 .github/workflows/lean_action_ci.yml
 ```
 
