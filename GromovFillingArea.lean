@@ -59,3 +59,4 @@ public import GromovFillingArea.MultiModeVectorEmbedding
 public import GromovFillingArea.HarmonicTorusBoundary
 public import GromovFillingArea.HarmonicTorusArea
 public import GromovFillingArea.OddModeDiskCovering
+public import GromovFillingArea.MultiBandAreaBound
